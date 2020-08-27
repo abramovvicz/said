@@ -33,7 +33,8 @@ buildNumber.properties
 .idea/**/gradle.xml
 .idea/**/libraries
 
-
+#project files
+*.iml
 
 *.md
 *.cmd
@@ -109,7 +110,6 @@ fabric.properties
 .idea/**/markdown-navigator/
 
 
-.idea/*.iml
 # Cache file creation bug
 # See https://youtrack.jetbrains.com/issue/JBR-2257
 .idea/$CACHE_FILE$
