@@ -32,6 +32,7 @@ buildNumber.properties
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
+.idea/
 
 #project files
 *.iml
