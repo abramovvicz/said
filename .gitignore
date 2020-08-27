@@ -33,6 +33,13 @@ buildNumber.properties
 .idea/**/gradle.xml
 .idea/**/libraries
 
+
+
+*.md
+*.cmd
+
+mvnm
+
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
 # since they will be recreated, and may cause churn.  Uncomment if using
@@ -101,6 +108,8 @@ fabric.properties
 .idea/**/markdown-navigator-enh.xml
 .idea/**/markdown-navigator/
 
+
+.idea/*.iml
 # Cache file creation bug
 # See https://youtrack.jetbrains.com/issue/JBR-2257
 .idea/$CACHE_FILE$
