@@ -1,5 +1,6 @@
 package com.saidproject.saidproject;
 
+import com.saidproject.saidproject.repo.MainImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,7 +9,7 @@ public class SaidprojectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SaidprojectApplication.class, args);
-		System.out.println("Hello WORLD!!!!!!");
+		MainImpl mainImpl = new MainImpl();
 	}
 
 }
