@@ -3,7 +3,6 @@ package com.saidproject.saidproject.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
@@ -20,12 +19,10 @@ public class TestConfiguration {
     @Bean
     public DataSource dataSource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        EmbeddedDatabase build = builder.setType(EmbeddedDatabaseType.H2)
+        return builder.setType(EmbeddedDatabaseType.H2)
                 .generateUniqueName(false)
                 .addScript("db/schema.sql")
                 .addScript("db/test-data-base.sql")
                 .build();
-
-        return build;
     }
 }

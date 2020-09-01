@@ -1,6 +1,7 @@
 package com.saidproject.saidproject.dao;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class Measurement {
@@ -11,6 +12,15 @@ public class Measurement {
     private HydrantSubType hydrantSubType;
     private HydrantDiameter hydrantDiameter;
     private Date dateOfMeasurement;
+    private List<Description> descriptions;
+
+    public List<Description> getDescriptions() {
+        return descriptions;
+    }
+
+    public void setDescriptions(List<Description> details) {
+        this.descriptions = details;
+    }
 
     public int getId() {
         return id;
@@ -69,12 +79,13 @@ public class Measurement {
                 hydrantType == that.hydrantType &&
                 hydrantSubType == that.hydrantSubType &&
                 hydrantDiameter == that.hydrantDiameter &&
-                dateOfMeasurement.equals(that.dateOfMeasurement);
+                dateOfMeasurement.equals(that.dateOfMeasurement) &&
+                descriptions.equals(that.descriptions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(address, hydrantType, hydrantSubType, hydrantDiameter, dateOfMeasurement);
+        return Objects.hash(address, hydrantType, hydrantSubType, hydrantDiameter, dateOfMeasurement, descriptions);
     }
 
     @Override
@@ -86,6 +97,7 @@ public class Measurement {
                 ", hydrantSubType=" + hydrantSubType +
                 ", hydrantDiameter=" + hydrantDiameter +
                 ", dateOfMeasurement=" + dateOfMeasurement +
+                ", descriptions=" + descriptions +
                 '}';
     }
 }

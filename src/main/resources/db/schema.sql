@@ -10,10 +10,10 @@ CREATE TABLE measurements (
     measurement_date DATE
 );
 
-CREATE TABLE details (
+CREATE TABLE description (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     measurement_id INT NOT NULL,
     status INT,
-    description VARCHAR(50)
+    comments VARCHAR(50)
 );
