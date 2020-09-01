@@ -23,6 +23,7 @@ public class TestConfiguration {
         EmbeddedDatabase build = builder.setType(EmbeddedDatabaseType.H2)
                 .generateUniqueName(false)
                 .addScript("db/schema.sql")
+                .addScript("db/test-data-base.sql")
                 .build();
 
         return build;
