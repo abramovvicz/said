@@ -7,7 +7,7 @@ public class Measurement {
     int id;
     String address;
     Date dateOfMeasurement;
-
+    HydrantType typeOfHydrant;
 
     public int getId() {
         return id;

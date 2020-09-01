@@ -1,9 +1,9 @@
 package com.saidproject.saidproject.repo;
 
 import com.saidproject.saidproject.dao.Measurement;
+import com.saidproject.saidproject.dao.mappers.MeasurementRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -13,19 +13,10 @@ import java.util.Map;
 @Repository
 public class MeasurementRepo implements IMeasurementRepo {
 
-    protected RowMapper<Measurement> rowMapper = (resultSet, rowNum) -> {
-        var id = resultSet.getInt("id");
-        var address = resultSet.getString("address");
-        var dateOfMeasurement = resultSet.getDate("dateOfMeasurement");
-
-        Measurement measurement = new Measurement();
-        measurement.setId(id);
-        measurement.setAddress(address);
-        measurement.setDateOfMeasurement(dateOfMeasurement);
-        return measurement;
-    };
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    private MeasurementRowMapper measurementRowMapper = new MeasurementRowMapper();
 
     @Override
     public Measurement findById(long ID) {
@@ -39,7 +30,8 @@ public class MeasurementRepo implements IMeasurementRepo {
     @Override
     public List<Measurement> findAll() {
         var sql = "select * from user";
-        return new ArrayList<>(jdbcTemplate.query(sql, rowMapper));
+        List<MeasurementRowMapper> measurementRowMappers = jdbcTemplate.queryForList(sql, MeasurementRowMapper.class);
+        return new ArrayList<>(jdbcTemplate.query(sql, measurementRowMapper.rowMapper));
     }
 
     @Override
