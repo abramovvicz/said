@@ -69,6 +69,17 @@
 			<artifactId>log4j-core</artifactId>
 			<version>2.13.3</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-webflux -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webflux</artifactId>
+			<version>5.2.8.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.simpleflatmapper</groupId>
+			<artifactId>sfm-springjdbc-jre9</artifactId>
+			<version>8.2.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>

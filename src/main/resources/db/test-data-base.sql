@@ -5,4 +5,7 @@ VALUES ('dupa', 'INSIDE', 'UNDEFINED', 'DN25', '2004-12-31'),
   ('dupa3', 'OUTSIDE','GROUND', 'DN100','1982-11-12');
 
 INSERT INTO description (measurement_id, name, status, comments)
-VALUES (1, 'parametr pierwszy', 0, 'test comments'), (1, 'parametr drugi', 1, 'test comments of the same obj'), (2,'parametr pierwszy', 2, 'comments');
+VALUES (1, 'parametr pierwszy', 0, 'test comments')
+, (1, 'parametr drugi', 1, 'test comments of the same obj')
+, (2,'parametr pierwszy', 2, 'comments')
+, (100, 'parametr 100 ', 1, 'chuj' );

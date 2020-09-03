@@ -33,7 +33,7 @@ public class MeasurementRepo implements IMeasurementRepo {
 
     @Override
     public List<Measurement> findAll() {
-        var sql = "select * from user";
+        var sql = "SELECT * FROM measurements right join description on measurements.id = description.measurement_id;";
         List<MeasurementRowMapper> measurementRowMappers = jdbcTemplate.queryForList(sql, MeasurementRowMapper.class);
         return new ArrayList<>(jdbcTemplate.query(sql, measurementRowMapper.rowMapper));
     }
