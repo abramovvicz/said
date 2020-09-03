@@ -4,11 +4,14 @@ import com.saidproject.saidproject.dao.HydrantDiameter;
 import com.saidproject.saidproject.dao.HydrantSubType;
 import com.saidproject.saidproject.dao.HydrantType;
 import com.saidproject.saidproject.dao.Measurement;
+import com.saidproject.saidproject.repo.IMeasurementRepo;
 import org.springframework.jdbc.core.RowMapper;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
-public class MeasurementRowMapper {
+public class MeasurementRowMapper{
 
     public RowMapper<Measurement> rowMapper = (resultSet, rowNum) -> {
 
@@ -17,7 +20,7 @@ public class MeasurementRowMapper {
         var hydrantType = resultSet.getString("hydrant_type");
         var hydrantSubType = resultSet.getString("hydrant_subtype");
         var hydrantDiameter = resultSet.getString("hydrant_diameter");
-        var measurementDate = resultSet.getDate("measurementDate");
+        var measurementDate = resultSet.getDate("measurement_date");
 
         Measurement measurement = new Measurement();
         measurement.setId(id);
