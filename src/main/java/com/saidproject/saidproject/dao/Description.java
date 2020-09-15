@@ -4,6 +4,16 @@ public class Description {
 
     private int id;
 
+    private int measurementId;
+
+    public int getMeasurementId() {
+        return measurementId;
+    }
+
+    public void setMeasurementId(int measurementId) {
+        this.measurementId = measurementId;
+    }
+
     private String name;
 
     private int status;

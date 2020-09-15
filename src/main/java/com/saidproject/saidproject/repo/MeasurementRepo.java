@@ -1,7 +1,7 @@
 package com.saidproject.saidproject.repo;
 
 import com.saidproject.saidproject.dao.Measurement;
-import com.saidproject.saidproject.dao.mappers.MeasurementRowMapper;
+import com.saidproject.saidproject.dao.mappers.MeasurementExtractor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +18,9 @@ public class MeasurementRepo implements IMeasurementRepo {
     private static final Logger logger = LogManager.getLogger(MeasurementRepo.class.getSimpleName());
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
-    private MeasurementRowMapper measurementRowMapper = new MeasurementRowMapper();
+    private MeasurementExtractor measurementMapper = new MeasurementExtractor();
 
     @Override
     public Measurement findById(long ID) {
@@ -33,8 +33,8 @@ public class MeasurementRepo implements IMeasurementRepo {
 
     @Override
     public List<Measurement> findAll() {
-        var sql = "SELECT * FROM measurements right join description on measurements.id = description.measurement_id;";
-        return new ArrayList<>(jdbcTemplate.query(sql, measurementRowMapper.rowMapper));
+        var sql = "SELECT * FROM measurements right join descriptions on measurements.id = descriptions.measurement_id;";
+        return new ArrayList<>(jdbcTemplate.query(sql, measurementMapper));
     }
 
     @Override
