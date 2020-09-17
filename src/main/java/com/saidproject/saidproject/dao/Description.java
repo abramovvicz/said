@@ -6,14 +6,6 @@ public class Description {
 
     private int measurementId;
 
-    public int getMeasurementId() {
-        return measurementId;
-    }
-
-    public void setMeasurementId(int measurementId) {
-        this.measurementId = measurementId;
-    }
-
     private String name;
 
     private int status;
@@ -50,6 +42,14 @@ public class Description {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public int getMeasurementId() {
+        return measurementId;
+    }
+
+    public void setMeasurementId(int measurementId) {
+        this.measurementId = measurementId;
     }
 
     @Override

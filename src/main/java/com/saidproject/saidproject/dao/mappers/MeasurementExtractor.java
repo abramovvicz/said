@@ -27,6 +27,7 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
             var measurementId = resultSet.getInt("measurements.id");
             var measurement = measurementMap.get(Objects.isNull(measurementId) ? 0 : measurementId);
             if (measurement == null) {
+                var id = resultSet.getInt("id");
                 var address = resultSet.getString("address");
                 var hydrantType = resultSet.getString("hydrant_type");
                 var hydrantSubType = resultSet.getString("hydrant_subtype");
@@ -36,6 +37,7 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
                 Date date = new Date(time);
 
                 measurement = new Measurement();
+                measurement.setId(id);
                 measurement.setAddress(StringUtils.isEmpty(address) ? "" : address);
                 measurement.setHydrantType(StringUtils.isEmpty(hydrantType) ? HydrantType.UNDEFINED : HydrantType.valueOf(hydrantType));
                 measurement.setHydrantSubType(StringUtils.isEmpty(hydrantSubType) ? HydrantSubType.UNDEFINED : HydrantSubType.valueOf(hydrantSubType));
