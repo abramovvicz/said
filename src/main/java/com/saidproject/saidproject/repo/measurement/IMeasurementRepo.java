@@ -6,10 +6,14 @@ import java.util.List;
 
 public interface IMeasurementRepo {
 
-    Measurement findById(long ID);
+    Measurement findById(int ID);
 
     List<Measurement> findAll();
 
-    void save();
+    void save(Measurement measurement);
+
+    void update(Measurement measurement);
+
+    void delete(int ID);
 
 }

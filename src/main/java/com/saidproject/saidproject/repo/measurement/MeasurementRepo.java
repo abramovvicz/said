@@ -19,19 +19,14 @@ public class MeasurementRepo implements IMeasurementRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private MeasurementExtractor measurementExtractor = new MeasurementExtractor();
-
+    @Autowired
+    private MeasurementExtractor measurementExtractor;
 
     @Override
-    public Measurement findById(long id) {
-        Measurement measurement = new Measurement();
-        List<Measurement> all = findAll();
-        for (Measurement data : all) {
-            if (data.getId() == id) {
-                return data;
-            }
-        }
-        return measurement;
+    public Measurement findById(int id) {
+        var sql = "select * from measurements inner join descriptions on descriptions.measurement_id = measurements.id where measurements.id = " + id;
+        ArrayList<Measurement> measurements = new ArrayList<>(jdbcTemplate.query(sql, measurementExtractor));
+        return measurements.stream().findFirst().orElse(new Measurement());
     }
 
     @Override
@@ -41,8 +36,17 @@ public class MeasurementRepo implements IMeasurementRepo {
     }
 
     @Override
-    public void save() {
-
+    public void save(Measurement measurement) {
+        //TODO
     }
 
+    @Override
+    public void update(Measurement measurement) {
+        //TODO
+    }
+
+    @Override
+    public void delete(int ID) {
+        //TODO
+    }
 }

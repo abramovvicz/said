@@ -1,6 +1,7 @@
 package com.saidproject.saidproject.controller;
 
 import com.saidproject.saidproject.dao.Description;
+import com.saidproject.saidproject.repo.description.DescriptionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,7 +21,7 @@ public class DescriptionController {
 
     @GetMapping(value = "/descriptions", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Description>> getAllDescriptionByMeasurementId(@PathVariable("id") Integer id) {
-        List<Description> allByMeasurementId = descriptionRepo.findAllByMeasurementId(id);
+        List<Description> allByMeasurementId = descriptionRepo.findAllForMeasurement(id);
         return new ResponseEntity<>(allByMeasurementId, HttpStatus.OK);
     }
 }

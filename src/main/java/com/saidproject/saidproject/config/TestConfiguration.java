@@ -1,5 +1,6 @@
 package com.saidproject.saidproject.config;
 
+import com.saidproject.saidproject.dao.mappers.MeasurementExtractor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,5 +25,10 @@ public class TestConfiguration {
                 .addScript("db/schema.sql")
                 .addScript("db/test-data-base.sql")
                 .build();
+    }
+
+    @Bean
+    public MeasurementExtractor measurementExtractor() {
+        return new MeasurementExtractor();
     }
 }
