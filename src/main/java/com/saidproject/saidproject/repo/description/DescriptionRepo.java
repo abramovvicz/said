@@ -16,12 +16,23 @@ public class DescriptionRepo implements IDescriptionRepo {
 
     @Override
     public List<Description> findAllForMeasurement(Integer measurementId) {
-        //
+        //TODO
         return null;
     }
 
     @Override
-    public Description findById(Integer descriptionId) {
+    public void saveAll(List<Description> descriptionList) {
+        //TODO
+    }
+
+    @Override
+    public Description findById(int id) {
+        //TODO
+        return null;
+    }
+
+    @Override
+    public List<Description> findAll() {
         //TODO
         return null;
     }
@@ -32,17 +43,13 @@ public class DescriptionRepo implements IDescriptionRepo {
     }
 
     @Override
-    public void saveAll(List<Description> descriptionList) {
-        //TODO
-    }
-
-    @Override
     public void update(Description description) {
         //TODO
     }
 
     @Override
-    public void delete(Integer descriptionId) {
+    public void delete(int id) {
         //TODO
     }
+
 }

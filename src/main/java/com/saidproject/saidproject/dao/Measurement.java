@@ -1,17 +1,16 @@
 package com.saidproject.saidproject.dao;
 
-import java.util.Date;
+import com.google.common.base.Objects;
+import com.saidproject.saidproject.repo.AbstractEntity;
+
 import java.util.List;
-import java.util.Objects;
 
-public class Measurement {
+public class Measurement extends AbstractEntity {
 
-    private int id;
     private String address;
     private HydrantType hydrantType;
     private HydrantSubType hydrantSubType;
     private HydrantDiameter hydrantDiameter;
-    private Date dateOfMeasurement;
     private List<Description> descriptions;
 
     public List<Description> getDescriptions() {
@@ -22,28 +21,12 @@ public class Measurement {
         this.descriptions = details;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public Date getDateOfMeasurement() {
-        return dateOfMeasurement;
-    }
-
-    public void setDateOfMeasurement(Date dateOfMeasurement) {
-        this.dateOfMeasurement = dateOfMeasurement;
     }
 
     public HydrantType getHydrantType() {
@@ -71,33 +54,33 @@ public class Measurement {
     }
 
     @Override
+    public String toString() {
+        return "Measurement{" +
+                "id='" + getId() + '\'' +
+                "address='" + address + '\'' +
+                ", hydrantType=" + hydrantType +
+                ", hydrantSubType=" + hydrantSubType +
+                ", hydrantDiameter=" + hydrantDiameter +
+                ", descriptions=" + descriptions +
+                ", createdAt=" + getCreatedAt() +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Measurement that = (Measurement) o;
-        return address.equals(that.address) &&
+        return Objects.equal(address, that.address) &&
                 hydrantType == that.hydrantType &&
                 hydrantSubType == that.hydrantSubType &&
                 hydrantDiameter == that.hydrantDiameter &&
-                dateOfMeasurement.equals(that.dateOfMeasurement) &&
-                descriptions.equals(that.descriptions);
+                Objects.equal(descriptions, that.descriptions) &&
+                Objects.equal(getCreatedAt(), that.getCreatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(address, hydrantType, hydrantSubType, hydrantDiameter, dateOfMeasurement, descriptions);
-    }
-
-    @Override
-    public String toString() {
-        return "Measurement{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", hydrantType=" + hydrantType +
-                ", hydrantSubType=" + hydrantSubType +
-                ", hydrantDiameter=" + hydrantDiameter +
-                ", dateOfMeasurement=" + dateOfMeasurement +
-                ", descriptions=" + descriptions +
-                '}';
+        return Objects.hashCode(address, hydrantType, hydrantSubType, hydrantDiameter, descriptions, getCreatedAt());
     }
 }

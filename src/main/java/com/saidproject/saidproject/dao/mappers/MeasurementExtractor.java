@@ -32,9 +32,12 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
                 var hydrantType = resultSet.getString("hydrant_type");
                 var hydrantSubType = resultSet.getString("hydrant_subtype");
                 var hydrantDiameter = resultSet.getString("hydrant_diameter");
-                var measurementDate = resultSet.getDate("measurement_date");
-                long time = Objects.isNull(measurementDate) ? 0L : measurementDate.getTime();
-                Date date = new Date(time);
+                var createdAt = resultSet.getDate("created_at");
+                var updatedAt = resultSet.getDate("updated_at");
+                long createdAtTime = Objects.isNull(createdAt) ? 0L : createdAt.getTime();
+                long updatedAtTime = Objects.isNull(updatedAt) ? 0L : updatedAt.getTime();
+                Date createdAtDate = new Date(createdAtTime);
+                Date updatedAtDate = new Date(updatedAtTime);
 
                 measurement = new Measurement();
                 measurement.setId(id);
@@ -42,7 +45,8 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
                 measurement.setHydrantType(StringUtils.isEmpty(hydrantType) ? HydrantType.UNDEFINED : HydrantType.valueOf(hydrantType));
                 measurement.setHydrantSubType(StringUtils.isEmpty(hydrantSubType) ? HydrantSubType.UNDEFINED : HydrantSubType.valueOf(hydrantSubType));
                 measurement.setHydrantDiameter(StringUtils.isEmpty(hydrantDiameter) ? HydrantDiameter.UNDEFINED : HydrantDiameter.valueOf(hydrantDiameter));
-                measurement.setDateOfMeasurement(date);
+                measurement.setCreatedAt(createdAtDate);
+                measurement.setUpdatedAt(updatedAtDate);
                 measurement.setDescriptions(new ArrayList<>());
             }
 

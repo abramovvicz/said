@@ -2,6 +2,7 @@ package com.saidproject.saidproject.controller;
 
 import com.saidproject.saidproject.dao.Measurement;
 import com.saidproject.saidproject.repo.measurement.MeasurementRepo;
+import com.saidproject.saidproject.service.MeasurementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,34 +23,34 @@ import java.util.List;
 public class MeasurementController {
 
     @Autowired
-    private MeasurementRepo measurementRepo;
+    private MeasurementService measurementService;
 
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Measurement>> getAllMeasurements() {
-        List<Measurement> all = measurementRepo.findAll();
+        List<Measurement> all = measurementService.findAll();
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Measurement> getMeasurement(@PathVariable("id") Integer id) {
-        Measurement measurementByIdById = measurementRepo.findById(id);
+        Measurement measurementByIdById = measurementService.findById(id);
         return new ResponseEntity<>(measurementByIdById, HttpStatus.OK);
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void save(Measurement measurement) {
-        measurementRepo.save(measurement);
+        measurementService.save(measurement);
     }
 
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(Measurement measurement) {
-        measurementRepo.update(measurement);
+        measurementService.update(measurement);
     }
 
     @DeleteMapping(value = "/{id}")
     public void delete(@PathParam("id") Integer ID) {
-        measurementRepo.delete(ID);
+        measurementService.delete(ID);
     }
 
 }

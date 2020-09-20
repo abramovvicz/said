@@ -7,7 +7,8 @@ CREATE TABLE measurements (
     hydrant_type VARCHAR(20) NOT NULL,
     hydrant_subtype VARCHAR (20) NOT NULL,
     hydrant_diameter VARCHAR (20) NOT NULL,
-    measurement_date DATE
+    created_at DATE,
+    updated_at DATE
 );
 
 CREATE TABLE descriptions (
@@ -15,5 +16,7 @@ CREATE TABLE descriptions (
     measurement_id INT NOT NULL,
     name VARCHAR(50) NOT NULL,
     status INT,
-    comments VARCHAR(50)
+    comments VARCHAR(50),
+    created_at DATE,
+    updated_at DATE
 );

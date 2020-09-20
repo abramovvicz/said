@@ -1,8 +1,8 @@
 package com.saidproject.saidproject.dao;
 
-public class Description {
+import com.saidproject.saidproject.repo.AbstractEntity;
 
-    private int id;
+public class Description extends AbstractEntity {
 
     private int measurementId;
 
@@ -11,14 +11,6 @@ public class Description {
     private int status;
 
     private String comments;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -55,7 +47,7 @@ public class Description {
     @Override
     public String toString() {
         return "Description{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", name='" + name + '\'' +
                 ", status=" + status +
                 ", comments='" + comments + '\'' +
