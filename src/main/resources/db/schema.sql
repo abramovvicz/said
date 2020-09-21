@@ -1,5 +1,6 @@
 DROP TABLE if exists measurements;
 DROP TABLE if exists details;
+DROP TABLE if exists users;
 
 CREATE TABLE measurements (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -19,4 +20,15 @@ CREATE TABLE descriptions (
     comments VARCHAR(50),
     created_at DATE,
     updated_at DATE
+);
+
+CREATE TABLE users (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(50) NOT NULL,
+        surname VARCHAR(50) NOT NULL,
+        username VARCHAR(50) NOT NULL,
+        password VARCHAR(50) NOT NULL,
+        role VARCHAR(50) NOT NULL,
+        created_at DATE,
+        updated_at DATE
 );

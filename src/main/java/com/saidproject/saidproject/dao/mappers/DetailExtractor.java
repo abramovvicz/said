@@ -1,6 +1,6 @@
 package com.saidproject.saidproject.dao.mappers;
 
-import com.saidproject.saidproject.dao.Description;
+import com.saidproject.saidproject.dao.description.Description;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.util.StringUtils;

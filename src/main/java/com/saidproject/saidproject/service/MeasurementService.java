@@ -1,9 +1,9 @@
 package com.saidproject.saidproject.service;
 
-import com.saidproject.saidproject.dao.Description;
-import com.saidproject.saidproject.dao.Measurement;
-import com.saidproject.saidproject.repo.description.DescriptionRepo;
-import com.saidproject.saidproject.repo.measurement.MeasurementRepo;
+import com.saidproject.saidproject.dao.description.Description;
+import com.saidproject.saidproject.dao.measurement.Measurement;
+import com.saidproject.saidproject.repo.description.IDescriptionRepo;
+import com.saidproject.saidproject.repo.measurement.IMeasurementRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,13 +12,13 @@ import java.util.List;
 
 @Service
 @Transactional
-public class MeasurementService {
+public class MeasurementService implements  IMeasurementService{
 
     @Autowired
-    private MeasurementRepo measurementRepo;
+    private IMeasurementRepo measurementRepo;
 
     @Autowired
-    private DescriptionRepo descriptionRepo;
+    private IDescriptionRepo descriptionRepo;
 
     public void save(Measurement measurement) {
         measurementRepo.save(measurement);

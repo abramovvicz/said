@@ -1,4 +1,4 @@
-package com.saidproject.saidproject.dao;
+package com.saidproject.saidproject.dao.description;
 
 import com.saidproject.saidproject.repo.AbstractEntity;
 

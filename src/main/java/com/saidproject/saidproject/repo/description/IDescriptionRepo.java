@@ -1,6 +1,6 @@
 package com.saidproject.saidproject.repo.description;
 
-import com.saidproject.saidproject.dao.Description;
+import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.repo.IRepo;
 
 import java.util.List;

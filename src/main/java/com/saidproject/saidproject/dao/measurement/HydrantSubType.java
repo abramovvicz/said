@@ -1,4 +1,4 @@
-package com.saidproject.saidproject.dao;
+package com.saidproject.saidproject.dao.measurement;
 
 public enum HydrantSubType {
 

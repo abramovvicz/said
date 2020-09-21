@@ -1,7 +1,7 @@
 package com.saidproject.saidproject.repo.measurement;
 
 import com.google.common.collect.Iterables;
-import com.saidproject.saidproject.dao.Measurement;
+import com.saidproject.saidproject.dao.measurement.Measurement;
 import com.saidproject.saidproject.dao.mappers.MeasurementExtractor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,6 +1,7 @@
-package com.saidproject.saidproject.dao;
+package com.saidproject.saidproject.dao.measurement;
 
 import com.google.common.base.Objects;
+import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.repo.AbstractEntity;
 
 import java.util.List;

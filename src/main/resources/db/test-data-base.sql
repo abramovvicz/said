@@ -9,3 +9,8 @@ VALUES (1, 'parametr pierwszy', 0, 'test comments')
 , (1, 'parametr drugi', 1, 'test comments of the same obj')
 , (2,'parametr pierwszy', 2, 'comments')
 , (3, 'parametr 100 ', 1, 'chuj' );
+
+INSERT INTO users (name, surname, username, password, role)
+VALUES ('bartosz', 'abramovvicz', 'dzik_programowania', 'trudne_haslo', 'admin')
+, ('lukasz', 'tarala', 'ogorek', 'latwe_haslo', 'admin')
+, ('imie', 'nazwisko', 'nicknejm', 'dupa123', 'user');

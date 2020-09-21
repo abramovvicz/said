@@ -1,7 +1,6 @@
 package com.saidproject.saidproject.repo.description;
 
-import com.saidproject.saidproject.dao.Description;
-import com.saidproject.saidproject.repo.description.IDescriptionRepo;
+import com.saidproject.saidproject.dao.description.Description;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

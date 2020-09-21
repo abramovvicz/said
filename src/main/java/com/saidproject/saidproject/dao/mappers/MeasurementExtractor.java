@@ -1,10 +1,10 @@
 package com.saidproject.saidproject.dao.mappers;
 
-import com.saidproject.saidproject.dao.Description;
-import com.saidproject.saidproject.dao.HydrantDiameter;
-import com.saidproject.saidproject.dao.HydrantSubType;
-import com.saidproject.saidproject.dao.HydrantType;
-import com.saidproject.saidproject.dao.Measurement;
+import com.saidproject.saidproject.dao.description.Description;
+import com.saidproject.saidproject.dao.measurement.HydrantDiameter;
+import com.saidproject.saidproject.dao.measurement.HydrantSubType;
+import com.saidproject.saidproject.dao.measurement.HydrantType;
+import com.saidproject.saidproject.dao.measurement.Measurement;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.util.StringUtils;

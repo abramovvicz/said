@@ -1,8 +1,7 @@
-package com.saidproject.saidproject.controller;
+package com.saidproject.saidproject.controller.measurement;
 
-import com.saidproject.saidproject.dao.Measurement;
-import com.saidproject.saidproject.repo.measurement.MeasurementRepo;
-import com.saidproject.saidproject.service.MeasurementService;
+import com.saidproject.saidproject.dao.measurement.Measurement;
+import com.saidproject.saidproject.service.IMeasurementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,22 +19,23 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/measurements")
-public class MeasurementController {
+public class MeasurementController implements IMeasurementController {
 
     @Autowired
-    private MeasurementService measurementService;
+    private IMeasurementService measurementService;
 
-
-    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Measurement>> getAllMeasurements() {
-        List<Measurement> all = measurementService.findAll();
-        return new ResponseEntity<>(all, HttpStatus.OK);
-    }
-
+    @Override
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Measurement> getMeasurement(@PathVariable("id") Integer id) {
+    public ResponseEntity<Measurement> findById(@PathVariable("id") int id) {
         Measurement measurementByIdById = measurementService.findById(id);
         return new ResponseEntity<>(measurementByIdById, HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Measurement>> findAll() {
+        List<Measurement> all = measurementService.findAll();
+        return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -46,6 +46,11 @@ public class MeasurementController {
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(Measurement measurement) {
         measurementService.update(measurement);
+    }
+
+    @Override
+    public void delete(int id) {
+
     }
 
     @DeleteMapping(value = "/{id}")

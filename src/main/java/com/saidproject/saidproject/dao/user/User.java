@@ -1,10 +1,23 @@
-package com.saidproject.saidproject.dao;
+package com.saidproject.saidproject.dao.user;
 
-public class User {
+import com.google.common.base.Objects;
+import com.saidproject.saidproject.repo.AbstractEntity;
+
+public class User extends AbstractEntity {
 
     private String name;
     private String surname;
     private String userName;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     private Role role;
 
     public String getName() {
@@ -37,6 +50,22 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equal(name, user.name) &&
+                Objects.equal(surname, user.surname) &&
+                Objects.equal(userName, user.userName) &&
+                role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name, surname, userName, role);
     }
 
     @Override
