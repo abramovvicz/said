@@ -1,4 +1,4 @@
-package com.saidproject.saidproject.service;
+package com.saidproject.saidproject.service.user;
 
 import com.saidproject.saidproject.dao.user.User;
 import com.saidproject.saidproject.repo.user.IUserRepo;

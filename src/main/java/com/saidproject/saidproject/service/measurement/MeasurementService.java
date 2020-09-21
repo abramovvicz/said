@@ -1,4 +1,4 @@
-package com.saidproject.saidproject.service;
+package com.saidproject.saidproject.service.measurement;
 
 import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.dao.measurement.Measurement;
