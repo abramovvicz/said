@@ -8,6 +8,7 @@ CREATE TABLE measurements (
     hydrant_type VARCHAR(20) NOT NULL,
     hydrant_subtype VARCHAR (20) NOT NULL,
     hydrant_diameter VARCHAR (20) NOT NULL,
+    photo blob,
     created_at DATE,
     updated_at DATE
 );

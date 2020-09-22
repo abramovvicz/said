@@ -13,6 +13,15 @@ public class Measurement extends AbstractEntity {
     private HydrantSubType hydrantSubType;
     private HydrantDiameter hydrantDiameter;
     private List<Description> descriptions;
+    private byte[] photo;
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
 
     public List<Description> getDescriptions() {
         return descriptions;
