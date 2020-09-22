@@ -1,7 +1,7 @@
 package com.saidproject.saidproject.controller.measurement;
 
 import com.saidproject.saidproject.dao.measurement.Measurement;
-import com.saidproject.saidproject.service.IMeasurementService;
+import com.saidproject.saidproject.service.measurement.IMeasurementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

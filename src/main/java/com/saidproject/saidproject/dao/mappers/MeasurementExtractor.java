@@ -9,6 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.util.StringUtils;
 
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,6 +48,9 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
                 measurement.setHydrantDiameter(StringUtils.isEmpty(hydrantDiameter) ? HydrantDiameter.UNDEFINED : HydrantDiameter.valueOf(hydrantDiameter));
                 measurement.setCreatedAt(createdAtDate);
                 measurement.setUpdatedAt(updatedAtDate);
+
+                measurement.setPhoto(resultSet.getBytes("photo"));
+
                 measurement.setDescriptions(new ArrayList<>());
             }
 
@@ -62,7 +66,6 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
             description.setName(StringUtils.isEmpty(descriptionName) ? "" : descriptionName);
             description.setComments(StringUtils.isEmpty(descriptionComments) ? "" : descriptionComments);
             description.setStatus(Objects.isNull(descriptionStatus) ? 0 : descriptionStatus);
-
             measurement.getDescriptions().add(description);
 
             measurementMap.put(measurementId, measurement);
