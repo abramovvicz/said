@@ -1,8 +1,8 @@
 package com.saidproject.saidproject.repo.measurement;
 
 import com.google.common.collect.Iterables;
-import com.saidproject.saidproject.dao.measurement.Measurement;
 import com.saidproject.saidproject.dao.mappers.MeasurementExtractor;
+import com.saidproject.saidproject.dao.measurement.Measurement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class MeasurementRepo implements IMeasurementRepo {
     public Measurement findById(int id) {
         var sql = "select * from measurements inner join descriptions on descriptions.measurement_id = measurements.id where measurements.id = " + id;
         ArrayList<Measurement> measurements = new ArrayList<>(jdbcTemplate.query(sql, measurementExtractor));
-        return Iterables.getFirst(measurements , new Measurement());
+        return Iterables.getFirst(measurements, new Measurement());
     }
 
     @Override
@@ -38,16 +38,20 @@ public class MeasurementRepo implements IMeasurementRepo {
 
     @Override
     public void save(Measurement measurement) {
-        //TODO
+        var sql = "insert into measurements (address,hydrant_type,hydrant_subtype,hydrant_diameter,created_at)" + "values (?,?,?,?,?)";
+        jdbcTemplate.update(sql, measurement.getAddress(), measurement.getHydrantType(), measurement.getHydrantSubType(), measurement.getHydrantDiameter(), measurement.getCreatedAt());
     }
 
     @Override
     public void update(Measurement measurement) {
-        //TODO
+        var sql = "update measurements set address = ?, hydrant_type = ?, hydrant_subtype = ?, hydrant_diameter = ?, created_at = ? WHERE id = " + measurement.getId();
+        int update = jdbcTemplate.update(sql, measurement.getAddress(), measurement.getHydrantType(), measurement.getHydrantSubType(), measurement.getHydrantDiameter(), measurement.getCreatedAt());
+
     }
 
     @Override
     public void delete(int ID) {
-        //TODO
+        var sql = "DELETE from measurements where ID=  " + ID;
+        jdbcTemplate.update(sql);
     }
 }

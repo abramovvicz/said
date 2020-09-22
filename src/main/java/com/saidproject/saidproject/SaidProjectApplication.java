@@ -5,10 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SaidprojectApplication {
+public class SaidProjectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SaidprojectApplication.class, args);
+		SpringApplication.run(SaidProjectApplication.class, args);
 		MainImpl mainImpl = new MainImpl();
 	}
 

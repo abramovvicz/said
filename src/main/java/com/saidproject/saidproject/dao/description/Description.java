@@ -2,6 +2,8 @@ package com.saidproject.saidproject.dao.description;
 
 import com.saidproject.saidproject.repo.AbstractEntity;
 
+import java.util.Objects;
+
 public class Description extends AbstractEntity {
 
     private int measurementId;
@@ -54,4 +56,19 @@ public class Description extends AbstractEntity {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Description that = (Description) o;
+        return measurementId == that.measurementId &&
+                status == that.status &&
+                name.equals(that.name) &&
+                comments.equals(that.comments);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(measurementId, name, status, comments);
+    }
 }

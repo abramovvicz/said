@@ -12,5 +12,5 @@ import java.util.List;
 public interface IDescriptionController extends IController<Description> {
 
     @GetMapping(value = "/descriptions", produces = MediaType.APPLICATION_JSON_VALUE)
-     ResponseEntity<List<Description>> findAllByMeasurementId(@PathVariable("id") Integer id);
+    ResponseEntity<List<Description>> findAllByMeasurementId(@PathVariable("id") Integer id);
 }
