@@ -38,8 +38,8 @@ public class MeasurementRepo implements IMeasurementRepo {
 
     @Override
     public void save(Measurement measurement) {
-        var sql = "insert into measurements (address,hydrant_type,hydrant_subtype,hydrant_diameter,created_at)" + "values (?,?,?,?,?)";
-        jdbcTemplate.update(sql, measurement.getAddress(), measurement.getHydrantType(), measurement.getHydrantSubType(), measurement.getHydrantDiameter(), measurement.getCreatedAt());
+        var sql = "insert into measurements (address, hydrant_type, hydrant_subtype, hydrant_diameter, created_at, photo)" + "values (?,?,?,?,?,?)";
+        jdbcTemplate.update(sql, measurement.getAddress(), measurement.getHydrantType(), measurement.getHydrantSubType(), measurement.getHydrantDiameter(), measurement.getCreatedAt(), measurement.getPhoto());
     }
 
     @Override

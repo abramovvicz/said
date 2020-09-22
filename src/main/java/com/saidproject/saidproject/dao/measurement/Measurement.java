@@ -3,14 +3,20 @@ package com.saidproject.saidproject.dao.measurement;
 import com.google.common.base.Objects;
 import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.repo.AbstractEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
 
+@ApiModel
 public class Measurement extends AbstractEntity {
 
     private String address;
+    @ApiModelProperty
     private HydrantType hydrantType;
+    @ApiModelProperty
     private HydrantSubType hydrantSubType;
+    @ApiModelProperty
     private HydrantDiameter hydrantDiameter;
     private List<Description> descriptions;
     private byte[] photo;

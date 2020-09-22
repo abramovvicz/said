@@ -5,9 +5,9 @@ DROP TABLE if exists users;
 CREATE TABLE measurements (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     address VARCHAR(50) NOT NULL,
-    hydrant_type VARCHAR(20) NOT NULL,
-    hydrant_subtype VARCHAR (20) NOT NULL,
-    hydrant_diameter VARCHAR (20) NOT NULL,
+    hydrant_type VARCHAR(255) NOT NULL,
+    hydrant_subtype VARCHAR (255) NOT NULL,
+    hydrant_diameter VARCHAR (255) NOT NULL,
     photo blob,
     created_at DATE,
     updated_at DATE

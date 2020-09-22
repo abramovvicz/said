@@ -1,10 +1,15 @@
 package com.saidproject.saidproject.repo;
 
+import org.springframework.data.jpa.repository.Temporal;
+
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 public abstract class AbstractEntity {
     private int id;
+
     private Date createdAt;
+
     private Date updatedAt;
 
     public int getId() {

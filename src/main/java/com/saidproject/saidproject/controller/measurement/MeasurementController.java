@@ -3,6 +3,7 @@ package com.saidproject.saidproject.controller.measurement;
 import com.saidproject.saidproject.dao.measurement.Measurement;
 import com.saidproject.saidproject.service.measurement.IMeasurementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,8 @@ public class MeasurementController implements IMeasurementController {
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public void save(Measurement measurement) {
         measurementService.save(measurement);
     }
