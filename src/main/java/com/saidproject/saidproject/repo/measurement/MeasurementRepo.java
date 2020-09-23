@@ -50,8 +50,8 @@ public class MeasurementRepo implements IMeasurementRepo {
     }
 
     @Override
-    public void delete(int ID) {
-        var sql = "DELETE from measurements where ID=  " + ID;
+    public void delete(int id) {
+        var sql = "DELETE from measurements where ID=  " + id;
         jdbcTemplate.update(sql);
     }
 }

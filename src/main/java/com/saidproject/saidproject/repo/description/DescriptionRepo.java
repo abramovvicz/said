@@ -1,6 +1,9 @@
 package com.saidproject.saidproject.repo.description;
 
 import com.saidproject.saidproject.dao.description.Description;
+import com.saidproject.saidproject.dao.mappers.DescriptionMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -10,45 +13,54 @@ import java.util.List;
 @Repository
 public class DescriptionRepo implements IDescriptionRepo {
 
+    private static final Logger logger = LogManager.getLogger(DescriptionRepo.class.getSimpleName());
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private DescriptionMapper descriptionMapper;
+
     @Override
     public List<Description> findAllForMeasurement(Integer measurementId) {
-        //TODO
-        return null;
+        var sql = "select * from descriptions where MEASUREMENT_ID= " + measurementId;
+        return jdbcTemplate.query(sql, descriptionMapper);
     }
 
     @Override
     public void saveAll(List<Description> descriptionList) {
         //TODO
+        //to mnie zastanawia co to za funkcjonalność CAALLLAA trzeba zrobić na ten temat
     }
 
     @Override
     public Description findById(int id) {
-        //TODO
-        return null;
+        var sql = "select * from descriptions where id= " + id;
+        return jdbcTemplate.queryForObject(sql, descriptionMapper);
     }
 
     @Override
     public List<Description> findAll() {
-        //TODO
-        return null;
+        var sql = "select * from descriptions";
+        return jdbcTemplate.query(sql, descriptionMapper);
     }
 
     @Override
     public void save(Description description) {
-        //TODO
+        var sql = "insert into descriptions (measurement_id, name, status, comments, created_at) values(?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, description.getMeasurementId(), description.getName(), description.getStatus(), description.getComments(), description.getCreatedAt());
     }
 
     @Override
     public void update(Description description) {
-        //TODO
+        var sql = "update descriptions set measurement_id = ?, name = ?, status = ?, comments = ?, updated_at =? where id = " + description.getId();
+        jdbcTemplate.update(sql, description.getMeasurementId(), description.getName(), description.getStatus(), description.getComments(), description.getUpdatedAt());
     }
 
     @Override
     public void delete(int id) {
-        //TODO
+        var sql = "delete descriptions where id = " + id;
+        jdbcTemplate.update(sql, id);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.saidproject.saidproject.config;
 
+import com.saidproject.saidproject.dao.mappers.DescriptionMapper;
 import com.saidproject.saidproject.dao.mappers.MeasurementExtractor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,5 +31,10 @@ public class TestConfiguration {
     @Bean
     public MeasurementExtractor measurementExtractor() {
         return new MeasurementExtractor();
+    }
+
+    @Bean
+    public DescriptionMapper descriptionMapper(){
+        return new DescriptionMapper();
     }
 }

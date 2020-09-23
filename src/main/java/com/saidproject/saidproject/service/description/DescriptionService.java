@@ -1,34 +1,45 @@
 package com.saidproject.saidproject.service.description;
 
 import com.saidproject.saidproject.dao.description.Description;
+import com.saidproject.saidproject.repo.description.IDescriptionRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DescriptionService implements IDescriptionService {
+
+    @Autowired
+    private IDescriptionRepo descriptionRepo;
+
     @Override
     public Description findById(int id) {
-        //TODO
-        return null;
+        return descriptionRepo.findById(id);
     }
 
     @Override
     public List<Description> findAll() {
-        //TODO
-        return null;
+        return descriptionRepo.findAll();
+    }
+
+    @Override
+    public List<Description> findAllForMeasurement(int id) {
+        return descriptionRepo.findAllForMeasurement(id);
     }
 
     @Override
     public void save(Description entity) {
-        //TODO
+        descriptionRepo.save(entity);
     }
 
     @Override
     public void update(Description entity) {
-        //TODO
+        descriptionRepo.update(entity);
     }
 
     @Override
     public void delete(int id) {
-        //TODO
+        descriptionRepo.delete(id);
     }
 }
