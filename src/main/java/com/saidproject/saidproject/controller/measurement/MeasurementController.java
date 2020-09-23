@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,14 +40,15 @@ public class MeasurementController implements IMeasurementController {
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public void save(Measurement measurement) {
+    public void save(@RequestBody Measurement measurement) {
         measurementService.save(measurement);
     }
 
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(Measurement measurement) {
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public void update(@RequestBody Measurement measurement) {
         measurementService.update(measurement);
     }
 

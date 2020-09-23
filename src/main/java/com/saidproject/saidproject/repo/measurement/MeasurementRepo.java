@@ -39,13 +39,13 @@ public class MeasurementRepo implements IMeasurementRepo {
     @Override
     public void save(Measurement measurement) {
         var sql = "insert into measurements (address, hydrant_type, hydrant_subtype, hydrant_diameter, created_at, photo)" + "values (?,?,?,?,?,?)";
-        jdbcTemplate.update(sql, measurement.getAddress(), measurement.getHydrantType(), measurement.getHydrantSubType(), measurement.getHydrantDiameter(), measurement.getCreatedAt(), measurement.getPhoto());
+        jdbcTemplate.update(sql, measurement.getAddress(), measurement.getHydrantType().toString(), measurement.getHydrantSubType().toString(), measurement.getHydrantDiameter().toString(), measurement.getCreatedAt(), measurement.getPhoto());
     }
 
     @Override
     public void update(Measurement measurement) {
-        var sql = "update measurements set address = ?, hydrant_type = ?, hydrant_subtype = ?, hydrant_diameter = ?, created_at = ? WHERE id = " + measurement.getId();
-        int update = jdbcTemplate.update(sql, measurement.getAddress(), measurement.getHydrantType(), measurement.getHydrantSubType(), measurement.getHydrantDiameter(), measurement.getCreatedAt());
+        var sql = "update measurements set address = ?, hydrant_type = ?, hydrant_subtype = ?, hydrant_diameter = ?, created_at = ?, photo = ? WHERE id = " + measurement.getId();
+        int update = jdbcTemplate.update(sql, measurement.getAddress(), measurement.getHydrantType().toString(), measurement.getHydrantSubType().toString(), measurement.getHydrantDiameter().toString(), measurement.getCreatedAt(), measurement.getPhoto());
 
     }
 
