@@ -53,6 +53,14 @@ public class DescriptionController implements IDescriptionController {
         descriptionService.save(entity);
     }
 
+    @PostMapping(value = "/all" , consumes = MediaType.APPLICATION_JSON_VALUE )
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public void saveAll(@RequestBody List<Description> descriptions){
+        descriptionService.saveAll(descriptions);
+    }
+
+
+
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public void update(@RequestBody Description entity) {
@@ -60,7 +68,7 @@ public class DescriptionController implements IDescriptionController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void delete(@PathParam("id") int id) {
+    public void delete(@PathParam("id") Integer id) {
         descriptionService.delete(id);
     }
 }

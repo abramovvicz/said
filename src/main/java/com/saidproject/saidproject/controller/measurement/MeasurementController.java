@@ -52,14 +52,9 @@ public class MeasurementController implements IMeasurementController {
         measurementService.update(measurement);
     }
 
-    @Override
-    public void delete(int id) {
-
-    }
-
     @DeleteMapping(value = "/{id}")
-    public void delete(@PathParam("id") Integer ID) {
-        measurementService.delete(ID);
+    public void delete(@PathParam("id") Integer id) {
+        measurementService.delete(id);
     }
 
 }

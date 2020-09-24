@@ -10,5 +10,5 @@ public interface IController <T extends AbstractEntity> {
     ResponseEntity<List<T>> findAll();
     void save (T entity);
     void update (T entity);
-    void delete (int id);
+    void delete (Integer id);
 }

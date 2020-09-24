@@ -2,6 +2,7 @@ package com.saidproject.saidproject.dao.user;
 
 import com.google.common.base.Objects;
 import com.saidproject.saidproject.repo.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
 
 public class User extends AbstractEntity {
 
@@ -10,6 +11,9 @@ public class User extends AbstractEntity {
     private String userName;
     private String password;
 
+    @ApiModelProperty
+    public Role role;
+
     public String getPassword() {
         return password;
     }
@@ -17,8 +21,6 @@ public class User extends AbstractEntity {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    private Role role;
 
     public String getName() {
         return name;

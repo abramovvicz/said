@@ -8,4 +8,6 @@ import java.util.List;
 public interface IDescriptionService extends IService<Description> {
 
     List<Description> findAllForMeasurement(int id);
+
+    void saveAll(List<Description> descriptions);
 }

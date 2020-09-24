@@ -1,8 +1,5 @@
 package com.saidproject.saidproject.repo;
 
-import org.springframework.data.jpa.repository.Temporal;
-
-import javax.persistence.TemporalType;
 import java.util.Date;
 
 public abstract class AbstractEntity {

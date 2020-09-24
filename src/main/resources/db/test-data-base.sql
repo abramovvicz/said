@@ -11,6 +11,6 @@ VALUES (1, 'parametr pierwszy', 0, 'test comments')
 , (3, 'parametr 100 ', 1, 'chuj' );
 
 INSERT INTO users (name, surname, username, password, role)
-VALUES ('bartosz', 'abramovvicz', 'dzik_programowania', 'trudne_haslo', 'admin')
-, ('lukasz', 'tarala', 'ogorek', 'latwe_haslo', 'admin')
-, ('imie', 'nazwisko', 'nicknejm', 'dupa123', 'user');
+VALUES ('bartosz', 'abramovvicz', 'dzik_programowania', 'trudne_haslo', 'ADMIN')
+, ('lukasz', 'tarala', 'ogorek', 'latwe_haslo', 'ADMIN')
+, ('imie', 'nazwisko', 'nicknejm', 'dupa123', 'USER');

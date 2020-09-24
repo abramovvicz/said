@@ -13,5 +13,5 @@ public interface IService <T extends AbstractEntity> {
 
     void update(T entity);
 
-    void delete(int id);
+    void delete(Integer id);
 }

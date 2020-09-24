@@ -38,7 +38,7 @@ public class MeasurementService implements  IMeasurementService{
         measurementRepo.update(measurement);
     }
 
-    public void delete(int id) {
+    public void delete(Integer id) {
         measurementRepo.delete(id);
     }
 }

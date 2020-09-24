@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -28,9 +29,10 @@ public class DescriptionRepo implements IDescriptionRepo {
     }
 
     @Override
-    public void saveAll(List<Description> descriptionList) {
-        //TODO
-        //to mnie zastanawia co to za funkcjonalność CAALLLAA trzeba zrobić na ten temat
+    public void saveAll(List<Description> descriptions) {
+        var sql = "insert into descriptions (measurement_id, name, status, comments, created_at) values(?, ?, ?, ?, ?)";
+        jdbcTemplate.batchUpdate(sql, setParameters(descriptions));
+
     }
 
     @Override
@@ -63,4 +65,11 @@ public class DescriptionRepo implements IDescriptionRepo {
         jdbcTemplate.update(sql, id);
     }
 
+    private List<Object[]> setParameters(List<Description> descriptions) {
+        List<Object[]> objects = new ArrayList<>();
+        for (Description description : descriptions) {
+            objects.add(new Object[]{description.getMeasurementId(), description.getName(), description.getStatus(), description.getComments(), description.getUpdatedAt()});
+        }
+        return objects;
+    }
 }

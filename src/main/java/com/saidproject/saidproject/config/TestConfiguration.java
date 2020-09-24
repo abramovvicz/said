@@ -2,6 +2,7 @@ package com.saidproject.saidproject.config;
 
 import com.saidproject.saidproject.dao.mappers.DescriptionMapper;
 import com.saidproject.saidproject.dao.mappers.MeasurementExtractor;
+import com.saidproject.saidproject.dao.mappers.UserMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,7 +35,12 @@ public class TestConfiguration {
     }
 
     @Bean
-    public DescriptionMapper descriptionMapper(){
+    public DescriptionMapper descriptionMapper() {
         return new DescriptionMapper();
+    }
+
+    @Bean
+    public UserMapper userMapper() {
+        return new UserMapper();
     }
 }

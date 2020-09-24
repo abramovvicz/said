@@ -29,6 +29,11 @@ public class DescriptionService implements IDescriptionService {
     }
 
     @Override
+    public void saveAll(List<Description> descriptions) {
+        descriptionRepo.saveAll(descriptions);
+    }
+
+    @Override
     public void save(Description entity) {
         descriptionRepo.save(entity);
     }
@@ -39,7 +44,7 @@ public class DescriptionService implements IDescriptionService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
         descriptionRepo.delete(id);
     }
 }
