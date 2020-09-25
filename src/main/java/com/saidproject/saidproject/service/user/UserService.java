@@ -27,17 +27,17 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void save(User entity) {
-        userRepo.save(entity);
+    public boolean save(User entity) {
+        return userRepo.save(entity);
     }
 
     @Override
-    public void update(User entity) {
-        userRepo.update(entity);
+    public boolean update(User entity) {
+        return userRepo.update(entity);
     }
 
     @Override
-    public void delete(Integer id) {
-        userRepo.delete(id);
+    public boolean delete(Integer id) {
+        return userRepo.delete(id);
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public class MeasurementRepo implements IMeasurementRepo {
 
-    private static final Logger logger = LogManager.getLogger(MeasurementRepo.class.getSimpleName());
+    private static final int SQL_OPERATION_SUCCESS = 1;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -37,21 +37,20 @@ public class MeasurementRepo implements IMeasurementRepo {
     }
 
     @Override
-    public void save(Measurement measurement) {
+    public boolean save(Measurement measurement) {
         var sql = "insert into measurements (address, hydrant_type, hydrant_subtype, hydrant_diameter, created_at, photo)" + "values (?,?,?,?,?,?)";
-        jdbcTemplate.update(sql, measurement.getAddress(), measurement.getHydrantType().toString(), measurement.getHydrantSubType().toString(), measurement.getHydrantDiameter().toString(), measurement.getCreatedAt(), measurement.getPhoto());
+        return jdbcTemplate.update(sql, measurement.getAddress(), measurement.getHydrantType().toString(), measurement.getHydrantSubType().toString(), measurement.getHydrantDiameter().toString(), measurement.getCreatedAt(), measurement.getPhoto()) == SQL_OPERATION_SUCCESS;
     }
 
     @Override
-    public void update(Measurement measurement) {
+    public boolean update(Measurement measurement) {
         var sql = "update measurements set address = ?, hydrant_type = ?, hydrant_subtype = ?, hydrant_diameter = ?, created_at = ?, photo = ? WHERE id = " + measurement.getId();
-        int update = jdbcTemplate.update(sql, measurement.getAddress(), measurement.getHydrantType().toString(), measurement.getHydrantSubType().toString(), measurement.getHydrantDiameter().toString(), measurement.getCreatedAt(), measurement.getPhoto());
-
+        return jdbcTemplate.update(sql, measurement.getAddress(), measurement.getHydrantType().toString(), measurement.getHydrantSubType().toString(), measurement.getHydrantDiameter().toString(), measurement.getCreatedAt(), measurement.getPhoto()) == SQL_OPERATION_SUCCESS;
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(Integer id) {
         var sql = "DELETE from measurements where ID=  " + id;
-        jdbcTemplate.update(sql);
+        return jdbcTemplate.update(sql) == SQL_OPERATION_SUCCESS;
     }
 }

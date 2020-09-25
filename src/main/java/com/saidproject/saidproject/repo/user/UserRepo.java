@@ -14,8 +14,7 @@ import java.util.List;
 @Repository
 public class UserRepo extends AbstractEntity implements IUserRepo {
 
-    private static final Logger logger = LogManager.getLogger(UserRepo.class.getSimpleName());
-
+    private static final int SQL_OPERATION_SUCCESS = 1;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -42,21 +41,21 @@ public class UserRepo extends AbstractEntity implements IUserRepo {
     }
 
     @Override
-    public void save(User entity) {
+    public boolean save(User entity) {
         var sql = "insert into users (name, surname, username, password, role, created_at, updated_at) values(?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, entity.getName(), entity.getSurname(), entity.getUserName(), entity.getPassword(), entity.getRole().toString(), entity.getCreatedAt(), entity.getUpdatedAt());
+        return jdbcTemplate.update(sql, entity.getName(), entity.getSurname(), entity.getUserName(), entity.getPassword(), entity.getRole().toString(), entity.getCreatedAt(), entity.getUpdatedAt()) == SQL_OPERATION_SUCCESS;
     }
 
     @Override
-    public void update(User entity) {
+    public boolean update(User entity) {
         var sql = "update users set name= ?, surname= ?, username= ?, password= ?, role= ? ,created_at = ? , updated_at= ? where id = " + entity.getId();
-        jdbcTemplate.update(sql, entity.getName(), entity.getSurname(), entity.getUserName(), entity.getPassword(), entity.getRole().toString(), entity.getCreatedAt(), entity.getUpdatedAt());
+        return jdbcTemplate.update(sql, entity.getName(), entity.getSurname(), entity.getUserName(), entity.getPassword(), entity.getRole().toString(), entity.getCreatedAt(), entity.getUpdatedAt()) == SQL_OPERATION_SUCCESS;
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(Integer id) {
         var sql = "delete users where id = " + id;
-        jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, id) == SQL_OPERATION_SUCCESS;
     }
 
 }

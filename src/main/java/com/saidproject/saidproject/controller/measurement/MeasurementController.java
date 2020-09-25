@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/measurements")
@@ -27,10 +28,11 @@ public class MeasurementController implements IMeasurementController {
     private IMeasurementService measurementService;
 
     @Override
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Measurement> findById(@PathVariable("id") int id) {
-        Measurement measurementByIdById = measurementService.findById(id);
-        return new ResponseEntity<>(measurementByIdById, HttpStatus.OK);
+    @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Measurement> findById(@PathVariable("id") Integer id) {
+        Measurement measurement = measurementService.findById(id);
+        return Objects.isNull(measurement) ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(measurement, HttpStatus.OK);
+
     }
 
     @Override
@@ -40,21 +42,27 @@ public class MeasurementController implements IMeasurementController {
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
+
+    @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public void save(@RequestBody Measurement measurement) {
-        measurementService.save(measurement);
+    public ResponseEntity save(@RequestBody Measurement measurement) {
+        boolean isSaved = measurementService.save(measurement);
+        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
     }
 
+    @Override
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public void update(@RequestBody Measurement measurement) {
-        measurementService.update(measurement);
+    public ResponseEntity update(@RequestBody Measurement measurement) {
+        boolean isSaved = measurementService.update(measurement);
+        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void delete(@PathParam("id") Integer id) {
-        measurementService.delete(id);
+    @Override
+    @DeleteMapping(value = "/{id}/")
+    public ResponseEntity delete(@PathVariable("id") Integer id) {
+        boolean isDeleted = measurementService.delete(id);
+        return new ResponseEntity(isDeleted ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
     }
-
 }

@@ -18,19 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
 public class UserController implements IUserController {
 
-
     @Autowired
     public UserService userService;
 
     @Override
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> findById(@PathVariable("id") int id) {
-        return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
+    @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> findById(@PathVariable("id") Integer id) {
+        User user = userService.findById(id);
+        return Objects.isNull(user) ?  new ResponseEntity<>( HttpStatus.NOT_FOUND) : new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @Override
@@ -42,19 +43,23 @@ public class UserController implements IUserController {
     @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @DateTimeFormat(pattern = "YYYY-mm-dd")
-    public void save(@RequestBody User entity) {
-        userService.save(entity);
+    public ResponseEntity save(@RequestBody User entity) {
+        boolean isSaved = userService.save(entity);
+        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
     }
 
     @Override
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public void update(@RequestBody User entity) {
-        userService.update(entity);
+    public ResponseEntity update(@RequestBody User entity) {
+        boolean isSaved = userService.update(entity);
+        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void delete(@PathParam("id") Integer id) {
-        userService.delete(id);
+    @Override
+    @DeleteMapping(value = "/{id}/")
+    public ResponseEntity delete(@PathParam("id") Integer id) {
+        boolean isDeleted = userService.delete(id);
+        return new ResponseEntity(isDeleted ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }

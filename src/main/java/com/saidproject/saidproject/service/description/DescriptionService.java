@@ -29,22 +29,22 @@ public class DescriptionService implements IDescriptionService {
     }
 
     @Override
-    public void saveAll(List<Description> descriptions) {
-        descriptionRepo.saveAll(descriptions);
+    public boolean saveAll(List<Description> descriptions) {
+        return descriptionRepo.saveAll(descriptions);
     }
 
     @Override
-    public void save(Description entity) {
-        descriptionRepo.save(entity);
+    public boolean save(Description entity) {
+        return descriptionRepo.save(entity);
     }
 
     @Override
-    public void update(Description entity) {
-        descriptionRepo.update(entity);
+    public boolean update(Description entity) {
+        return descriptionRepo.update(entity);
     }
 
     @Override
-    public void delete(Integer id) {
-        descriptionRepo.delete(id);
+    public boolean delete(Integer id) {
+        return descriptionRepo.delete(id);
     }
 }

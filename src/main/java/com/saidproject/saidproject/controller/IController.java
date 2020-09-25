@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface IController <T extends AbstractEntity> {
-    ResponseEntity<T> findById (int id);
+    ResponseEntity<T> findById (Integer id);
     ResponseEntity<List<T>> findAll();
-    void save (T entity);
-    void update (T entity);
-    void delete (Integer id);
+    ResponseEntity save (T entity);
+    ResponseEntity update (T entity);
+    ResponseEntity delete (Integer id);
 }

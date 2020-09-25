@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/descriptions")
@@ -27,17 +28,17 @@ public class DescriptionController implements IDescriptionController {
     public IDescriptionService descriptionService;
 
     @Override
-    @GetMapping(value = "/descriptions/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Description>> findAllByMeasurementId(@PathVariable("id") Integer id) {
-        List<Description> allByMeasurementId = descriptionService.findAllForMeasurement(id);
+    @GetMapping(value = "for/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Description>> findAllByMeasurementId(@PathVariable("id") Integer measurementId) {
+        List<Description> allByMeasurementId = descriptionService.findAllForMeasurement(measurementId);
         return new ResponseEntity<>(allByMeasurementId, HttpStatus.OK);
     }
 
     @Override
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Description> findById(@PathVariable int id) {
-        Description descriptionById = descriptionService.findById(id);
-        return new ResponseEntity<>(descriptionById, HttpStatus.OK);
+    @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Description> findById(@PathVariable Integer id) {
+        Description description = descriptionService.findById(id);
+        return Objects.isNull(description) ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(description, HttpStatus.OK);
     }
 
     @Override
@@ -47,29 +48,36 @@ public class DescriptionController implements IDescriptionController {
         return new ResponseEntity<>(descriptions, HttpStatus.OK);
     }
 
+    @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public void save(@RequestBody Description entity) {
-        descriptionService.save(entity);
+    public ResponseEntity save(@RequestBody Description entity) {
+        boolean isSaved = descriptionService.save(entity);
+        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping(value = "/all" , consumes = MediaType.APPLICATION_JSON_VALUE )
+    @Override
+    @PostMapping(value = "/addAll/" , consumes = MediaType.APPLICATION_JSON_VALUE )
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public void saveAll(@RequestBody List<Description> descriptions){
-        descriptionService.saveAll(descriptions);
+    public ResponseEntity saveAll(@RequestBody List<Description> descriptions) {
+        boolean isSaved = descriptionService.saveAll(descriptions);
+        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
     }
 
 
-
+    @Override
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public void update(@RequestBody Description entity) {
-        descriptionService.update(entity);
+    public ResponseEntity update(@RequestBody Description entity) {
+        boolean isSaved = descriptionService.update(entity);
+        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void delete(@PathParam("id") Integer id) {
-        descriptionService.delete(id);
+    @Override
+    @DeleteMapping(value = "/{id}/")
+    public ResponseEntity delete(@PathVariable("id") Integer id) {
+        boolean isDeleted = descriptionService.delete(id);
+        return new ResponseEntity(isDeleted ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }
 

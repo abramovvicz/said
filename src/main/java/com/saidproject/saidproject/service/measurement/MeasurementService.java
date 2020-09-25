@@ -20,10 +20,11 @@ public class MeasurementService implements  IMeasurementService{
     @Autowired
     private IDescriptionRepo descriptionRepo;
 
-    public void save(Measurement measurement) {
-        measurementRepo.save(measurement);
+    public boolean save(Measurement measurement) {
+        boolean measurementSaved = measurementRepo.save(measurement);
         List<Description> descriptions = measurement.getDescriptions();
-        descriptionRepo.saveAll(descriptions);
+        boolean descriptionsSaved = descriptionRepo.saveAll(descriptions);
+        return measurementSaved && descriptionsSaved;
     }
 
     public List<Measurement> findAll() {
@@ -34,11 +35,11 @@ public class MeasurementService implements  IMeasurementService{
         return measurementRepo.findById(id);
     }
 
-    public void update(Measurement measurement) {
-        measurementRepo.update(measurement);
+    public boolean update(Measurement measurement) {
+        return measurementRepo.update(measurement);
     }
 
-    public void delete(Integer id) {
-        measurementRepo.delete(id);
+    public boolean delete(Integer id) {
+        return measurementRepo.delete(id);
     }
 }
