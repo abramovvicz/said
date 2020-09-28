@@ -8,7 +8,7 @@ import java.util.List;
 public interface IController <T extends AbstractEntity> {
     ResponseEntity<T> findById (Integer id);
     ResponseEntity<List<T>> findAll();
-    ResponseEntity save (T entity);
+    ResponseEntity<T> save (T entity);
     ResponseEntity update (T entity);
     ResponseEntity delete (Integer id);
 }

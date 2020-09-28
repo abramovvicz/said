@@ -46,9 +46,9 @@ public class MeasurementController implements IMeasurementController {
     @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public ResponseEntity save(@RequestBody Measurement measurement) {
-        boolean isSaved = measurementService.save(measurement);
-        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+    public ResponseEntity<Measurement> save(@RequestBody Measurement measurement) {
+        Measurement savedMeasurement = measurementService.save(measurement);
+        return Objects.isNull(savedMeasurement) ? ResponseEntity.badRequest().body(new Measurement()) : ResponseEntity.ok(savedMeasurement);
     }
 
     @Override

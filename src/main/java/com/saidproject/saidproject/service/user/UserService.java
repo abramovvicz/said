@@ -27,7 +27,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean save(User entity) {
+    public User save(User entity) {
         return userRepo.save(entity);
     }
 

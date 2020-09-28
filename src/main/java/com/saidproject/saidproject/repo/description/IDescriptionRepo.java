@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IDescriptionRepo extends IRepo<Description> {
     List<Description> findAllForMeasurement(Integer measurementId);
-    boolean saveAll (List<Description> descriptionList);
+    List<Description> saveAll (List<Description> descriptionList, Integer measurementId);
 }

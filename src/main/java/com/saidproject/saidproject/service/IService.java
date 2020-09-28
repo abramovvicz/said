@@ -9,7 +9,7 @@ public interface IService <T extends AbstractEntity> {
 
     List<T> findAll();
 
-    boolean save(T entity);
+    T save(T entity);
 
     boolean update(T entity);
 

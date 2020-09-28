@@ -3,12 +3,15 @@ package com.saidproject.saidproject.repo.user;
 import com.saidproject.saidproject.dao.mappers.UserMapper;
 import com.saidproject.saidproject.dao.user.User;
 import com.saidproject.saidproject.repo.AbstractEntity;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -41,21 +44,52 @@ public class UserRepo extends AbstractEntity implements IUserRepo {
     }
 
     @Override
-    public boolean save(User entity) {
+    public User save(User user) {
         var sql = "insert into users (name, surname, username, password, role, created_at, updated_at) values(?, ?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, entity.getName(), entity.getSurname(), entity.getUserName(), entity.getPassword(), entity.getRole().toString(), entity.getCreatedAt(), entity.getUpdatedAt()) == SQL_OPERATION_SUCCESS;
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> setValuesInPreparedStatement(connection.prepareStatement(sql), user), keyHolder);
+        user.setId(keyHolder.getKey().intValue());
+        return user;
     }
 
     @Override
-    public boolean update(User entity) {
-        var sql = "update users set name= ?, surname= ?, username= ?, password= ?, role= ? ,created_at = ? , updated_at= ? where id = " + entity.getId();
-        return jdbcTemplate.update(sql, entity.getName(), entity.getSurname(), entity.getUserName(), entity.getPassword(), entity.getRole().toString(), entity.getCreatedAt(), entity.getUpdatedAt()) == SQL_OPERATION_SUCCESS;
+    public boolean update(User user) {
+        var sql = "update users set name= ?, surname= ?, username= ?, password= ?, role= ? ,created_at = ? , updated_at= ? where id = " + user.getId();
+        return jdbcTemplate.update(sql, getUserSetter(user)) == SQL_OPERATION_SUCCESS;
     }
 
     @Override
     public boolean delete(Integer id) {
         var sql = "delete users where id = " + id;
         return jdbcTemplate.update(sql, id) == SQL_OPERATION_SUCCESS;
+    }
+
+    private PreparedStatementSetter getUserSetter(User user) {
+        return preparedStatement -> {
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getSurname());
+            preparedStatement.setString(3, user.getUserName());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(5, user.getRole().toString());
+            preparedStatement.setDate(6, convertToSqlDate(user.getCreatedAt()));
+            preparedStatement.setDate(7, convertToSqlDate(user.getUpdatedAt()));
+        };
+    }
+
+    private PreparedStatement setValuesInPreparedStatement(PreparedStatement preparedStatement, User user) throws SQLException {
+        preparedStatement.setString(1, user.getName());
+        preparedStatement.setString(2, user.getSurname());
+        preparedStatement.setString(3, user.getUserName());
+        preparedStatement.setString(4, user.getPassword());
+        preparedStatement.setString(5, user.getRole().toString());
+        preparedStatement.setDate(6, convertToSqlDate(user.getCreatedAt()));
+        preparedStatement.setDate(7, convertToSqlDate(user.getUpdatedAt()));
+
+        return preparedStatement;
+    }
+
+    private java.sql.Date convertToSqlDate(java.util.Date dateToConvert) {
+        return new java.sql.Date(dateToConvert.getTime());
     }
 
 }

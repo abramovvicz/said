@@ -43,9 +43,9 @@ public class UserController implements IUserController {
     @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @DateTimeFormat(pattern = "YYYY-mm-dd")
-    public ResponseEntity save(@RequestBody User entity) {
-        boolean isSaved = userService.save(entity);
-        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+    public ResponseEntity<User> save(@RequestBody User entity) {
+        User savedUser = userService.save(entity);
+        return Objects.isNull(savedUser) ? ResponseEntity.badRequest().body(new User()) : ResponseEntity.ok(savedUser);
     }
 
     @Override

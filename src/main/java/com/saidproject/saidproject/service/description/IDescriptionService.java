@@ -9,5 +9,5 @@ public interface IDescriptionService extends IService<Description> {
 
     List<Description> findAllForMeasurement(int id);
 
-    boolean saveAll(List<Description> descriptions);
+    List<Description> saveAll(List<Description> descriptions, Integer measurementParentId);
 }

@@ -2,6 +2,7 @@ package com.saidproject.saidproject.service.description;
 
 import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.repo.description.IDescriptionRepo;
+import javassist.runtime.Desc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ public class DescriptionService implements IDescriptionService {
     private IDescriptionRepo descriptionRepo;
 
     @Override
+
     public Description findById(int id) {
         return descriptionRepo.findById(id);
     }
@@ -29,12 +31,12 @@ public class DescriptionService implements IDescriptionService {
     }
 
     @Override
-    public boolean saveAll(List<Description> descriptions) {
-        return descriptionRepo.saveAll(descriptions);
+    public List<Description> saveAll(List<Description> descriptions, Integer measurementParentId) {
+        return descriptionRepo.saveAll(descriptions, measurementParentId);
     }
 
     @Override
-    public boolean save(Description entity) {
+    public Description save(Description entity) {
         return descriptionRepo.save(entity);
     }
 

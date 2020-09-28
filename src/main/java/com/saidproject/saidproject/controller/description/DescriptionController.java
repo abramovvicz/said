@@ -38,7 +38,7 @@ public class DescriptionController implements IDescriptionController {
     @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Description> findById(@PathVariable Integer id) {
         Description description = descriptionService.findById(id);
-        return Objects.isNull(description) ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(description, HttpStatus.OK);
+        return Objects.isNull(description) ? ResponseEntity.badRequest().body(new Description()) : ResponseEntity.ok(description);
     }
 
     @Override
@@ -51,18 +51,18 @@ public class DescriptionController implements IDescriptionController {
     @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public ResponseEntity save(@RequestBody Description entity) {
-        boolean isSaved = descriptionService.save(entity);
-        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+    public ResponseEntity<Description> save(@RequestBody Description entity) {
+        Description savedUser = descriptionService.save(entity);
+        return new ResponseEntity(savedUser,  HttpStatus.CREATED);
     }
 
-    @Override
-    @PostMapping(value = "/addAll/" , consumes = MediaType.APPLICATION_JSON_VALUE )
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public ResponseEntity saveAll(@RequestBody List<Description> descriptions) {
-        boolean isSaved = descriptionService.saveAll(descriptions);
-        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
-    }
+//    @Override
+//    @PostMapping(value = "/addAll/" , consumes = MediaType.APPLICATION_JSON_VALUE )
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    public ResponseEntity saveAll(@RequestBody List<Description> descriptions) {
+//        boolean isSaved = descriptionService.saveAll(descriptions);
+//        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+//    }
 
 
     @Override
