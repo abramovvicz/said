@@ -2,6 +2,8 @@ package com.saidproject.saidproject.repo.description;
 
 import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.dao.mappers.DescriptionMapper;
+import com.saidproject.saidproject.utils.Constants;
+import com.saidproject.saidproject.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -23,8 +25,6 @@ import java.util.stream.Collectors;
 @Repository
 public class DescriptionRepo implements IDescriptionRepo {
 
-    private static final int SQL_OPERATION_SUCCESS = 1;
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -37,15 +37,11 @@ public class DescriptionRepo implements IDescriptionRepo {
         return jdbcTemplate.query(sql, descriptionMapper);
     }
 
-    public List<Description> saveAll(List<Description> descriptions, Integer measurementParentId) {
+    @Override
+    public List<Description> saveAll(List<Description> descriptions) {
         var sql = "insert into descriptions (measurement_id, name, status, comments, created_at, updated_at) values(?, ?, ?, ?, ?, ?)";
         jdbcTemplate.batchUpdate(sql, setParameters(descriptions));
-        assignParentMeasurementId(descriptions, measurementParentId);
         return descriptions;
-    }
-
-    private void assignParentMeasurementId(List<Description> descriptions, Integer measurementParentId) {
-        descriptions.forEach(description -> description.setMeasurementId(measurementParentId));
     }
 
     @Override
@@ -64,7 +60,8 @@ public class DescriptionRepo implements IDescriptionRepo {
     public Description save(Description description) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         var sql = "insert into descriptions (measurement_id, name, status, comments, created_at, updated_at) values(?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(connection -> setValuesInPreparedStatement(connection.prepareStatement(sql), description), keyHolder);
+        jdbcTemplate.update(connection -> setValuesInPreparedStatement(
+                connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), description), keyHolder);
         description.setId(keyHolder.getKey().intValue());
         return description;
     }
@@ -72,13 +69,13 @@ public class DescriptionRepo implements IDescriptionRepo {
     @Override
     public boolean update(Description description) {
         var sql = "update descriptions set measurement_id = ?, name = ?, status = ?, comments = ?, created_at = ?, updated_at = ? where id = " + description.getId();
-        return jdbcTemplate.update(sql, getDescriptionSetter(description)) == SQL_OPERATION_SUCCESS;
+        return jdbcTemplate.update(sql, getDescriptionSetter(description)) == Constants.SQL_OPERATION_SUCCESS;
     }
 
     @Override
     public boolean delete(Integer id) {
         var sql = "delete descriptions where id = " + id;
-        return jdbcTemplate.update(sql) == SQL_OPERATION_SUCCESS;
+        return jdbcTemplate.update(sql) == Constants.SQL_OPERATION_SUCCESS;
     }
 
     private List<Object[]> setParameters(List<Description> descriptions) {
@@ -95,8 +92,8 @@ public class DescriptionRepo implements IDescriptionRepo {
             preparedStatement.setString(2, description.getName());
             preparedStatement.setInt(3, description.getStatus());
             preparedStatement.setString(4, description.getComments());
-            preparedStatement.setDate(5, convertToSqlDate(description.getCreatedAt()));
-            preparedStatement.setDate(6, convertToSqlDate(description.getUpdatedAt()));
+            preparedStatement.setDate(5, Utils.convertToSqlDate(description.getCreatedAt()));
+            preparedStatement.setDate(6, Utils.convertToSqlDate(description.getUpdatedAt()));
         };
     }
 
@@ -105,13 +102,9 @@ public class DescriptionRepo implements IDescriptionRepo {
         preparedStatement.setString(2, description.getName());
         preparedStatement.setInt(3, description.getStatus());
         preparedStatement.setString(4, description.getComments());
-        preparedStatement.setDate(5, convertToSqlDate(description.getCreatedAt()));
-        preparedStatement.setDate(6, convertToSqlDate(description.getUpdatedAt()));
+        preparedStatement.setDate(5, Utils.convertToSqlDate(description.getCreatedAt()));
+        preparedStatement.setDate(6, Utils.convertToSqlDate(description.getUpdatedAt()));
 
         return preparedStatement;
-    }
-
-    private java.sql.Date convertToSqlDate(java.util.Date dateToConvert) {
-        return new java.sql.Date(dateToConvert.getTime());
     }
 }

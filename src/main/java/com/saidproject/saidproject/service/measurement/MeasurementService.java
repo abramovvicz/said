@@ -23,8 +23,13 @@ public class MeasurementService implements  IMeasurementService{
     public Measurement save(Measurement measurement) {
         Measurement insertedMeasurement = measurementRepo.save(measurement);
         List<Description> descriptions = measurement.getDescriptions();
-        descriptionRepo.saveAll(descriptions,insertedMeasurement.getId());
+        assignParentMeasurementId(descriptions, insertedMeasurement.getId());
+        descriptionRepo.saveAll(descriptions);
         return insertedMeasurement;
+    }
+
+    private void assignParentMeasurementId(List<Description> descriptions, Integer measurementParentId) {
+        descriptions.forEach(description -> description.setMeasurementId(measurementParentId));
     }
 
     public List<Measurement> findAll() {

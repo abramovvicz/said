@@ -3,6 +3,8 @@ package com.saidproject.saidproject.repo.user;
 import com.saidproject.saidproject.dao.mappers.UserMapper;
 import com.saidproject.saidproject.dao.user.User;
 import com.saidproject.saidproject.repo.AbstractEntity;
+import com.saidproject.saidproject.utils.Constants;
+import com.saidproject.saidproject.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
@@ -12,12 +14,11 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
 public class UserRepo extends AbstractEntity implements IUserRepo {
-
-    private static final int SQL_OPERATION_SUCCESS = 1;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -47,7 +48,8 @@ public class UserRepo extends AbstractEntity implements IUserRepo {
     public User save(User user) {
         var sql = "insert into users (name, surname, username, password, role, created_at, updated_at) values(?, ?, ?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> setValuesInPreparedStatement(connection.prepareStatement(sql), user), keyHolder);
+        jdbcTemplate.update(connection -> setValuesInPreparedStatement(
+                connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), user), keyHolder);
         user.setId(keyHolder.getKey().intValue());
         return user;
     }
@@ -55,13 +57,13 @@ public class UserRepo extends AbstractEntity implements IUserRepo {
     @Override
     public boolean update(User user) {
         var sql = "update users set name= ?, surname= ?, username= ?, password= ?, role= ? ,created_at = ? , updated_at= ? where id = " + user.getId();
-        return jdbcTemplate.update(sql, getUserSetter(user)) == SQL_OPERATION_SUCCESS;
+        return jdbcTemplate.update(sql, getUserSetter(user)) == Constants.SQL_OPERATION_SUCCESS;
     }
 
     @Override
     public boolean delete(Integer id) {
         var sql = "delete users where id = " + id;
-        return jdbcTemplate.update(sql, id) == SQL_OPERATION_SUCCESS;
+        return jdbcTemplate.update(sql, id) == Constants.SQL_OPERATION_SUCCESS;
     }
 
     private PreparedStatementSetter getUserSetter(User user) {
@@ -71,8 +73,8 @@ public class UserRepo extends AbstractEntity implements IUserRepo {
             preparedStatement.setString(3, user.getUserName());
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setString(5, user.getRole().toString());
-            preparedStatement.setDate(6, convertToSqlDate(user.getCreatedAt()));
-            preparedStatement.setDate(7, convertToSqlDate(user.getUpdatedAt()));
+            preparedStatement.setDate(6, Utils.convertToSqlDate(user.getCreatedAt()));
+            preparedStatement.setDate(7, Utils.convertToSqlDate(user.getUpdatedAt()));
         };
     }
 
@@ -82,14 +84,9 @@ public class UserRepo extends AbstractEntity implements IUserRepo {
         preparedStatement.setString(3, user.getUserName());
         preparedStatement.setString(4, user.getPassword());
         preparedStatement.setString(5, user.getRole().toString());
-        preparedStatement.setDate(6, convertToSqlDate(user.getCreatedAt()));
-        preparedStatement.setDate(7, convertToSqlDate(user.getUpdatedAt()));
+        preparedStatement.setDate(6, Utils.convertToSqlDate(user.getCreatedAt()));
+        preparedStatement.setDate(7, Utils.convertToSqlDate(user.getUpdatedAt()));
 
         return preparedStatement;
     }
-
-    private java.sql.Date convertToSqlDate(java.util.Date dateToConvert) {
-        return new java.sql.Date(dateToConvert.getTime());
-    }
-
 }

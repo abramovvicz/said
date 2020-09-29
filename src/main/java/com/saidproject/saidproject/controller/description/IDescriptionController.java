@@ -10,5 +10,5 @@ import java.util.List;
 public interface IDescriptionController extends IController<Description> {
 
     ResponseEntity<List<Description>> findAllByMeasurementId(@PathVariable("id") Integer id);
-//    ResponseEntity saveAll(List<Description> descriptions);
+    ResponseEntity<List<Description>> saveAll(List<Description> descriptions);
 }

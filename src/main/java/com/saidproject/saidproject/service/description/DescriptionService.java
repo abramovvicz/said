@@ -31,8 +31,8 @@ public class DescriptionService implements IDescriptionService {
     }
 
     @Override
-    public List<Description> saveAll(List<Description> descriptions, Integer measurementParentId) {
-        return descriptionRepo.saveAll(descriptions, measurementParentId);
+    public List<Description> saveAll(List<Description> descriptions) {
+        return descriptionRepo.saveAll(descriptions);
     }
 
     @Override

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,7 +40,6 @@ public class MeasurementController implements IMeasurementController {
         List<Measurement> all = measurementService.findAll();
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
-
 
     @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)

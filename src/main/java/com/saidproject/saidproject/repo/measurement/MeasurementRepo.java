@@ -4,9 +4,10 @@ import com.google.common.collect.Iterables;
 import com.google.common.io.ByteSource;
 import com.saidproject.saidproject.dao.mappers.MeasurementExtractor;
 import com.saidproject.saidproject.dao.measurement.Measurement;
+import com.saidproject.saidproject.utils.Constants;
+import com.saidproject.saidproject.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -16,13 +17,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class MeasurementRepo implements IMeasurementRepo {
-
-    private static final int SQL_OPERATION_SUCCESS = 1;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -39,7 +39,7 @@ public class MeasurementRepo implements IMeasurementRepo {
 
     @Override
     public List<Measurement> findAll() {
-        var sql = "SELECT * FROM measurements right join descriptions on measurements.id = descriptions.measurement_id;";
+        var sql = "SELECT * FROM measurements left join descriptions on measurements.id = descriptions.measurement_id;";
         return new ArrayList<>(jdbcTemplate.query(sql, measurementExtractor));
     }
 
@@ -49,7 +49,8 @@ public class MeasurementRepo implements IMeasurementRepo {
                 + "values (?,?,?,?,?,?,?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> setValuesInPreparedStatement(connection.prepareStatement(sql), measurement), keyHolder);
+        jdbcTemplate.update(connection -> setValuesInPreparedStatement(
+                connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), measurement), keyHolder);
         measurement.setId(keyHolder.getKey().intValue());
         return measurement;
     }
@@ -57,28 +58,13 @@ public class MeasurementRepo implements IMeasurementRepo {
     @Override
     public boolean update(Measurement measurement) {
         var sql = "update measurements set address = ?, hydrant_type = ?, hydrant_subtype = ?, hydrant_diameter = ?, created_at = ?, updated_at = ?, photo = ? WHERE id = " + measurement.getId();
-        return jdbcTemplate.update(sql, getMeasurementSetter(measurement)) == SQL_OPERATION_SUCCESS;
+        return jdbcTemplate.update(sql, getMeasurementSetter(measurement)) == Constants.SQL_OPERATION_SUCCESS;
     }
 
     @Override
     public boolean delete(Integer id) {
         var sql = "DELETE from measurements where ID=  " + id;
-        return jdbcTemplate.update(sql) == SQL_OPERATION_SUCCESS;
-    }
-
-    private java.sql.Date convertToSqlDate(java.util.Date dateToConvert) {
-        return new java.sql.Date(dateToConvert.getTime());
-    }
-
-    private InputStream convertByteArrayToBlob(byte[] photoAsBytes) {
-        InputStream inputStream = null;
-        try {
-            inputStream = ByteSource.wrap(photoAsBytes).openStream();
-
-        } catch (IOException e) {
-            //TODO ADD LOG OR CUSTOM EXCEPTION HERE
-        }
-        return inputStream;
+        return jdbcTemplate.update(sql) == Constants.SQL_OPERATION_SUCCESS;
     }
 
     private PreparedStatementSetter getMeasurementSetter(Measurement measurement) {
@@ -87,9 +73,9 @@ public class MeasurementRepo implements IMeasurementRepo {
             preparedStatement.setString(2, measurement.getHydrantType().toString());
             preparedStatement.setString(3, measurement.getHydrantSubType().toString());
             preparedStatement.setString(4, measurement.getHydrantDiameter().toString());
-            preparedStatement.setDate(5, convertToSqlDate(measurement.getCreatedAt()));
-            preparedStatement.setDate(6, convertToSqlDate(measurement.getUpdatedAt()));
-            preparedStatement.setBlob(7, convertByteArrayToBlob(measurement.getPhoto()));
+            preparedStatement.setDate(5, Utils.convertToSqlDate(measurement.getCreatedAt()));
+            preparedStatement.setDate(6, Utils.convertToSqlDate(measurement.getUpdatedAt()));
+            preparedStatement.setBlob(7, Utils.convertByteArrayToBlob(measurement.getPhoto()));
         };
     }
 
@@ -98,9 +84,9 @@ public class MeasurementRepo implements IMeasurementRepo {
         preparedStatement.setString(2, measurement.getHydrantType().toString());
         preparedStatement.setString(3, measurement.getHydrantSubType().toString());
         preparedStatement.setString(4, measurement.getHydrantDiameter().toString());
-        preparedStatement.setDate(5, convertToSqlDate(measurement.getCreatedAt()));
-        preparedStatement.setDate(6, convertToSqlDate(measurement.getUpdatedAt()));
-        preparedStatement.setBlob(7, convertByteArrayToBlob(measurement.getPhoto()));
+        preparedStatement.setDate(5, Utils.convertToSqlDate(measurement.getCreatedAt()));
+        preparedStatement.setDate(6, Utils.convertToSqlDate(measurement.getUpdatedAt()));
+        preparedStatement.setBlob(7, Utils.convertByteArrayToBlob(measurement.getPhoto()));
 
         return preparedStatement;
     }
