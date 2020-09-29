@@ -6,21 +6,18 @@ import com.saidproject.saidproject.utils.Constants;
 import com.saidproject.saidproject.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 @Repository
 public class DescriptionRepo implements IDescriptionRepo {
@@ -34,36 +31,38 @@ public class DescriptionRepo implements IDescriptionRepo {
     @Override
     public List<Description> findAllForMeasurement(Integer measurementId) {
         var sql = "select * from descriptions where MEASUREMENT_ID= " + measurementId;
-        return jdbcTemplate.query(sql, descriptionMapper);
+        List<Description> descriptions = jdbcTemplate.query(sql, descriptionMapper);
+        return Objects.isNull(descriptions) ? Collections.emptyList() : descriptions;
     }
 
     @Override
     public List<Description> saveAll(List<Description> descriptions) {
         var sql = "insert into descriptions (measurement_id, name, status, comments, created_at, updated_at) values(?, ?, ?, ?, ?, ?)";
         jdbcTemplate.batchUpdate(sql, setParameters(descriptions));
-        return descriptions;
+        return Objects.isNull(descriptions) ? Collections.emptyList() : descriptions;
     }
 
     @Override
     public Description findById(int id) {
         var sql = "select * from descriptions where id= " + id;
-        return jdbcTemplate.queryForObject(sql, descriptionMapper);
+        Description description = jdbcTemplate.queryForObject(sql, descriptionMapper);
+        return Objects.isNull(description) ? new Description() : description;
     }
 
     @Override
     public List<Description> findAll() {
         var sql = "select * from descriptions";
-        return jdbcTemplate.query(sql, descriptionMapper);
+        List<Description> descriptions = jdbcTemplate.query(sql, descriptionMapper);
+        return Objects.isNull(descriptions) ? Collections.emptyList() : descriptions;
     }
 
     @Override
     public Description save(Description description) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         var sql = "insert into descriptions (measurement_id, name, status, comments, created_at, updated_at) values(?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(connection -> setValuesInPreparedStatement(
-                connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), description), keyHolder);
+        jdbcTemplate.update(connection -> setValuesInPreparedStatement(connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), description), keyHolder);
         description.setId(keyHolder.getKey().intValue());
-        return description;
+        return Objects.isNull(description) ? new Description() : description;
     }
 
     @Override

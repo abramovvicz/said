@@ -1,7 +1,6 @@
 package com.saidproject.saidproject.repo.measurement;
 
 import com.google.common.collect.Iterables;
-import com.google.common.io.ByteSource;
 import com.saidproject.saidproject.dao.mappers.MeasurementExtractor;
 import com.saidproject.saidproject.dao.measurement.Measurement;
 import com.saidproject.saidproject.utils.Constants;
@@ -13,13 +12,12 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class MeasurementRepo implements IMeasurementRepo {
@@ -34,7 +32,8 @@ public class MeasurementRepo implements IMeasurementRepo {
     public Measurement findById(int id) {
         var sql = "select * from measurements inner join descriptions on descriptions.measurement_id = measurements.id where measurements.id = " + id;
         ArrayList<Measurement> measurements = new ArrayList<>(jdbcTemplate.query(sql, measurementExtractor));
-        return Iterables.getFirst(measurements, new Measurement());
+        Measurement measurement = Iterables.getFirst(measurements, new Measurement());
+        return Objects.isNull(measurement) ? new Measurement() : measurement;
     }
 
     @Override
@@ -45,14 +44,12 @@ public class MeasurementRepo implements IMeasurementRepo {
 
     @Override
     public Measurement save(Measurement measurement) {
-        var sql = "insert into measurements (address, hydrant_type, hydrant_subtype, hydrant_diameter, created_at, updated_at, photo)"
-                + "values (?,?,?,?,?,?,?)";
+        var sql = "insert into measurements (address, hydrant_type, hydrant_subtype, hydrant_diameter, created_at, updated_at, photo)" + "values (?,?,?,?,?,?,?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> setValuesInPreparedStatement(
-                connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), measurement), keyHolder);
+        jdbcTemplate.update(connection -> setValuesInPreparedStatement(connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), measurement), keyHolder);
         measurement.setId(keyHolder.getKey().intValue());
-        return measurement;
+        return Objects.isNull(measurement) ? new Measurement() : measurement;
     }
 
     @Override
@@ -79,7 +76,7 @@ public class MeasurementRepo implements IMeasurementRepo {
         };
     }
 
-    private PreparedStatement setValuesInPreparedStatement (PreparedStatement preparedStatement, Measurement measurement) throws SQLException {
+    private PreparedStatement setValuesInPreparedStatement(PreparedStatement preparedStatement, Measurement measurement) throws SQLException {
         preparedStatement.setString(1, measurement.getAddress());
         preparedStatement.setString(2, measurement.getHydrantType().toString());
         preparedStatement.setString(3, measurement.getHydrantSubType().toString());

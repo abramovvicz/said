@@ -15,7 +15,9 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class UserRepo extends AbstractEntity implements IUserRepo {
@@ -29,29 +31,31 @@ public class UserRepo extends AbstractEntity implements IUserRepo {
     @Override
     public User findByUserName(String name) {
         var sql = "select * from users where name= ?" + name;
-        return jdbcTemplate.queryForObject(sql, userMapper);
+        User user = jdbcTemplate.queryForObject(sql, userMapper);
+        return Objects.isNull(user) ? new User() : user;
     }
 
     @Override
     public User findById(int id) {
         var sql = "select * from users where id= " + id;
-        return jdbcTemplate.queryForObject(sql, userMapper);
+        User user = jdbcTemplate.queryForObject(sql, userMapper);
+        return Objects.isNull(user) ? new User() : user;
     }
 
     @Override
     public List<User> findAll() {
         var sql = "select * from users";
-        return jdbcTemplate.query(sql, userMapper);
+        List<User> users = jdbcTemplate.query(sql, userMapper);
+        return users.isEmpty() ? Collections.emptyList() : users;
     }
 
     @Override
     public User save(User user) {
         var sql = "insert into users (name, surname, username, password, role, created_at, updated_at) values(?, ?, ?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> setValuesInPreparedStatement(
-                connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), user), keyHolder);
+        jdbcTemplate.update(connection -> setValuesInPreparedStatement(connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), user), keyHolder);
         user.setId(keyHolder.getKey().intValue());
-        return user;
+        return Objects.isNull(user) ? new User() : user;
     }
 
     @Override

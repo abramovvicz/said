@@ -3,7 +3,6 @@ package com.saidproject.saidproject.controller.description;
 import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.service.description.IDescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.websocket.server.PathParam;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,7 +31,7 @@ public class DescriptionController implements IDescriptionController {
     @GetMapping(value = "for/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Description>> findAllByMeasurementId(@PathVariable("id") Integer measurementId) {
         List<Description> allByMeasurementId = descriptionService.findAllForMeasurement(measurementId);
-        return new ResponseEntity<>(allByMeasurementId, HttpStatus.OK);
+        return allByMeasurementId.isEmpty() ? ResponseEntity.badRequest().body(Collections.emptyList()) : ResponseEntity.ok(allByMeasurementId);
     }
 
     @Override
@@ -46,20 +45,18 @@ public class DescriptionController implements IDescriptionController {
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Description>> findAll() {
         List<Description> descriptions = descriptionService.findAll();
-        return new ResponseEntity<>(descriptions, HttpStatus.OK);
+        return descriptions.isEmpty() ? ResponseEntity.badRequest().body(Collections.emptyList()) : ResponseEntity.ok(descriptions);
     }
 
     @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public ResponseEntity<Description> save(@RequestBody Description entity) {
-        Description savedUser = descriptionService.save(entity);
-        return new ResponseEntity(savedUser,  HttpStatus.CREATED);
+        Description savedDescription = descriptionService.save(entity);
+        return Objects.isNull(savedDescription) ? ResponseEntity.badRequest().body(new Description()) : ResponseEntity.ok(savedDescription);
     }
 
     @Override
-    @PostMapping(value = "/addAll/" , consumes = MediaType.APPLICATION_JSON_VALUE )
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @PostMapping(value = "/addAll/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Description>> saveAll(@RequestBody List<Description> descriptions) {
         List<Description> savedDescriptions = descriptionService.saveAll(descriptions);
         return savedDescriptions.isEmpty() ? ResponseEntity.badRequest().body(new ArrayList<>()) : ResponseEntity.ok(savedDescriptions);
@@ -68,7 +65,6 @@ public class DescriptionController implements IDescriptionController {
 
     @Override
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public ResponseEntity update(@RequestBody Description entity) {
         boolean isSaved = descriptionService.update(entity);
         return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);

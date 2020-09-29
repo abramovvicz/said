@@ -16,7 +16,7 @@ public class Utils {
             inputStream = ByteSource.wrap(photoAsBytes).openStream();
 
         } catch (IOException e) {
-            //TODO ADD LOG OR CUSTOM EXCEPTION HERE
+            //TODO: ADD LOG OR CUSTOM EXCEPTION HERE
         }
         return inputStream;
     }

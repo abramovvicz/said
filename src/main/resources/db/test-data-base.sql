@@ -10,7 +10,7 @@ VALUES (1, 'parametr pierwszy', 0, 'test comments')
 , (2,'parametr pierwszy', 2, 'comments')
 , (3, 'parametr 100 ', 1, 'chuj' );
 
-INSERT INTO users (name, surname, username, password, role)
-VALUES ('bartosz', 'abramovvicz', 'dzik_programowania', 'trudne_haslo', 'ADMIN')
-, ('lukasz', 'tarala', 'ogorek', 'latwe_haslo', 'ADMIN')
-, ('imie', 'nazwisko', 'nicknejm', 'dupa123', 'USER');
+INSERT INTO users (name, surname, username, password, role, created_at)
+VALUES ('bartosz', 'abramovvicz', 'dzik_programowania', 'trudne_haslo', 'ADMIN', '2020-09-29')
+, ('lukasz', 'tarala', 'ogorek', 'latwe_haslo', 'ADMIN', '2020-09-29')
+, ('imie', 'nazwisko', 'nicknejm', 'dupa123', 'USER', '2020-09-29');
