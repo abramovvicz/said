@@ -1,6 +1,7 @@
 package com.saidproject.saidproject.controller.measurement;
 
 import com.saidproject.saidproject.dao.measurement.Measurement;
+import com.saidproject.saidproject.exceptions.NotFoundException;
 import com.saidproject.saidproject.service.measurement.IMeasurementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class MeasurementController implements IMeasurementController {
 
     @Override
     @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Measurement> findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Measurement> findById(@PathVariable("id") Integer id) throws NotFoundException {
         Measurement measurement = measurementService.findById(id);
         return Objects.isNull(measurement) ? ResponseEntity.badRequest().body(new Measurement()) : ResponseEntity.ok(measurement);
 
@@ -36,7 +37,7 @@ public class MeasurementController implements IMeasurementController {
 
     @Override
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Measurement>> findAll() {
+    public ResponseEntity<List<Measurement>> findAll() throws NotFoundException {
         List<Measurement> allMeasurements = measurementService.findAll();
         return allMeasurements.isEmpty() ? ResponseEntity.badRequest().body(Collections.emptyList()) : ResponseEntity.ok(allMeasurements);
     }

@@ -1,6 +1,7 @@
 package com.saidproject.saidproject.controller.description;
 
 import com.saidproject.saidproject.dao.description.Description;
+import com.saidproject.saidproject.exceptions.NotFoundException;
 import com.saidproject.saidproject.service.description.IDescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,21 +30,21 @@ public class DescriptionController implements IDescriptionController {
 
     @Override
     @GetMapping(value = "for/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Description>> findAllByMeasurementId(@PathVariable("id") Integer measurementId) {
+    public ResponseEntity<List<Description>> findAllByMeasurementId(@PathVariable("id") Integer measurementId) throws NotFoundException {
         List<Description> allByMeasurementId = descriptionService.findAllForMeasurement(measurementId);
         return allByMeasurementId.isEmpty() ? ResponseEntity.badRequest().body(Collections.emptyList()) : ResponseEntity.ok(allByMeasurementId);
     }
 
     @Override
     @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Description> findById(@PathVariable Integer id) {
+    public ResponseEntity<Description> findById(@PathVariable Integer id) throws NotFoundException{
         Description description = descriptionService.findById(id);
         return Objects.isNull(description) ? ResponseEntity.badRequest().body(new Description()) : ResponseEntity.ok(description);
     }
 
     @Override
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Description>> findAll() {
+    public ResponseEntity<List<Description>> findAll() throws NotFoundException {
         List<Description> descriptions = descriptionService.findAll();
         return descriptions.isEmpty() ? ResponseEntity.badRequest().body(Collections.emptyList()) : ResponseEntity.ok(descriptions);
     }
@@ -57,7 +58,7 @@ public class DescriptionController implements IDescriptionController {
 
     @Override
     @PostMapping(value = "/addAll/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Description>> saveAll(@RequestBody List<Description> descriptions) {
+    public ResponseEntity<List<Description>> saveAll(@RequestBody List<Description> descriptions) throws NotFoundException{
         List<Description> savedDescriptions = descriptionService.saveAll(descriptions);
         return savedDescriptions.isEmpty() ? ResponseEntity.badRequest().body(new ArrayList<>()) : ResponseEntity.ok(savedDescriptions);
     }

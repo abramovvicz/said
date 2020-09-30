@@ -1,9 +1,9 @@
 package com.saidproject.saidproject.controller.user;
 
 import com.saidproject.saidproject.dao.user.User;
+import com.saidproject.saidproject.exceptions.NotFoundException;
 import com.saidproject.saidproject.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.EntityNotFoundException;
 import javax.websocket.server.PathParam;
 import java.util.Collections;
 import java.util.List;
@@ -31,14 +30,14 @@ public class UserController implements IUserController {
 
     @Override
     @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> findById(@PathVariable("id") Integer id) throws EmptyResultDataAccessException {
+    public ResponseEntity<User> findById(@PathVariable("id") Integer id) throws NotFoundException {
         User user = userService.findById(id);
         return Objects.isNull(user) ? ResponseEntity.badRequest().body(new User()) : ResponseEntity.ok(user);
     }
 
     @Override
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<User>> findAll() throws NotFoundException {
         List<User> allUsers = userService.findAll();
         return allUsers.isEmpty() ? ResponseEntity.badRequest().body(Collections.emptyList()) : ResponseEntity.ok(allUsers);
     }

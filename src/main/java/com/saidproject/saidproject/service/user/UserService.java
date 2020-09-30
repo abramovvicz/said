@@ -1,8 +1,8 @@
 package com.saidproject.saidproject.service.user;
 
 import com.saidproject.saidproject.dao.user.User;
+import com.saidproject.saidproject.exceptions.NotFoundException;
 import com.saidproject.saidproject.repo.user.IUserRepo;
-import com.saidproject.saidproject.repo.user.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +15,23 @@ public class UserService implements IUserService {
     private IUserRepo userRepo;
 
     public User findByUsername(String name) {
-     return userRepo.findByUserName(name);
+        return userRepo.findByUserName(name);
     }
 
-    public User findById(int id) {
-        return userRepo.findById(id);
+    public User findById(int id) throws NotFoundException {
+        User user = userRepo.findById(id);
+        if (user == null) {
+            throw new NotFoundException("User not found");
+        }
+        return user;
     }
 
-    public List<User> findAll() {
-        return userRepo.findAll();
+    public List<User> findAll() throws NotFoundException {
+        List<User> users = userRepo.findAll();
+        if (users.isEmpty()) {
+            throw new NotFoundException("Users not found");
+        }
+        return users;
     }
 
     @Override

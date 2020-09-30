@@ -2,6 +2,7 @@ package com.saidproject.saidproject.service.measurement;
 
 import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.dao.measurement.Measurement;
+import com.saidproject.saidproject.exceptions.NotFoundException;
 import com.saidproject.saidproject.repo.description.IDescriptionRepo;
 import com.saidproject.saidproject.repo.measurement.IMeasurementRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,20 @@ public class MeasurementService implements  IMeasurementService{
         descriptions.forEach(description -> description.setMeasurementId(measurementParentId));
     }
 
-    public List<Measurement> findAll() {
-        return measurementRepo.findAll();
+    public List<Measurement> findAll() throws NotFoundException {
+        List<Measurement> measurements = measurementRepo.findAll();
+        if (measurements.isEmpty()) {
+            throw new NotFoundException("Measurements not exits");
+        }
+        return measurements;
     }
 
-    public Measurement findById(int id) {
-        return measurementRepo.findById(id);
+    public Measurement findById(int id) throws NotFoundException {
+        Measurement measurement = measurementRepo.findById(id);
+        if (measurement == null) {
+            throw new NotFoundException("Measurement not exists");
+        }
+        return measurement;
     }
 
     public boolean update(Measurement measurement) {
