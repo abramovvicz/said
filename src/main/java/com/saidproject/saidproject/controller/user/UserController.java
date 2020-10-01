@@ -6,7 +6,6 @@ import com.saidproject.saidproject.service.user.UserService;
 import com.saidproject.saidproject.utils.ResultMessage;
 import com.saidproject.saidproject.utils.ResultStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,12 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.websocket.server.PathParam;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
@@ -50,29 +46,65 @@ public class UserController implements IUserController {
 
     @Override
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<User>> findAll() throws NotFoundException {
+    public ResponseEntity<Map<String, Object>> findAll() throws NotFoundException {
         List<User> allUsers = userService.findAll();
-        return allUsers.isEmpty() ? ResponseEntity.badRequest().body(Collections.emptyList()) : ResponseEntity.ok(allUsers);
+        Map<String, Object> result = new HashMap<>();
+        if (allUsers != null && !allUsers.isEmpty()) {
+            result.put(ResultMessage.RESULT_KEY, allUsers);
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
+            return ResponseEntity.ok(result);
+        } else {
+            result.put(ResultMessage.MESSAGE_KEY, "List of all users is empty");
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.ERROR);
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> save(@RequestBody User entity) {
+    public ResponseEntity<Map<String, Object>> save(@RequestBody User entity) {
+        Map<String, Object> result = new HashMap<>();
         User savedUser = userService.save(entity);
-        return Objects.isNull(savedUser) ? ResponseEntity.badRequest().body(new User()) : ResponseEntity.ok(savedUser);
+        if (savedUser != null) {
+            result.put(ResultMessage.RESULT_KEY, savedUser);
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
+            return ResponseEntity.ok(result);
+        } else {
+            result.put(ResultMessage.MESSAGE_KEY, "Somethings gone wrong, please try again.");
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.ERROR);
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @Override
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity update(@RequestBody User entity) {
+    public ResponseEntity<Map<String, Object>> update(@RequestBody User entity) {
+        Map<String, Object> result = new HashMap<>();
         boolean isSaved = userService.update(entity);
-        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+        if (isSaved) {
+            result.put(ResultMessage.RESULT_KEY, entity);
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
+            return ResponseEntity.ok(result);
+        } else {
+            result.put(ResultMessage.MESSAGE_KEY, "Somethings gone wrong, please try again.");
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.ERROR);
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @Override
     @DeleteMapping(value = "/{id}/")
-    public ResponseEntity delete(@PathParam("id") Integer id) {
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable("id") Integer id) {
+        Map<String, Object> result = new HashMap<>();
         boolean isDeleted = userService.delete(id);
-        return new ResponseEntity(isDeleted ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        if (isDeleted) {
+            result.put(ResultMessage.RESULT_KEY, id);
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
+            return ResponseEntity.ok(result);
+        } else {
+            result.put(ResultMessage.MESSAGE_KEY, "Could delete user, please try again.");
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.ERROR);
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 }

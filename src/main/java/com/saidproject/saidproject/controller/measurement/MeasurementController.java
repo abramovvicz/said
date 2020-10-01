@@ -3,8 +3,9 @@ package com.saidproject.saidproject.controller.measurement;
 import com.saidproject.saidproject.dao.measurement.Measurement;
 import com.saidproject.saidproject.exceptions.NotFoundException;
 import com.saidproject.saidproject.service.measurement.IMeasurementService;
+import com.saidproject.saidproject.utils.ResultMessage;
+import com.saidproject.saidproject.utils.ResultStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/measurements")
@@ -29,37 +30,81 @@ public class MeasurementController implements IMeasurementController {
 
     @Override
     @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Measurement> findById(@PathVariable("id") Integer id) throws NotFoundException {
+    public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") Integer id) throws NotFoundException {
+        Map<String, Object> result = new HashMap<>();
         Measurement measurement = measurementService.findById(id);
-        return Objects.isNull(measurement) ? ResponseEntity.badRequest().body(new Measurement()) : ResponseEntity.ok(measurement);
-
+        if (measurement != null) {
+            result.put(ResultMessage.RESULT_KEY, measurement);
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
+            return ResponseEntity.ok(result);
+        } else {
+            result.put(ResultMessage.MESSAGE_KEY, "Measurement with id: " + id + " not found");
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.ERROR);
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @Override
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Measurement>> findAll() throws NotFoundException {
+    public ResponseEntity<Map<String, Object>> findAll() throws NotFoundException {
+        Map<String, Object> result = new HashMap<>();
         List<Measurement> allMeasurements = measurementService.findAll();
-        return allMeasurements.isEmpty() ? ResponseEntity.badRequest().body(Collections.emptyList()) : ResponseEntity.ok(allMeasurements);
+        if (allMeasurements != null && !allMeasurements.isEmpty()) {
+            result.put(ResultMessage.RESULT_KEY, allMeasurements);
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
+            return ResponseEntity.ok(result);
+        } else {
+            result.put(ResultMessage.MESSAGE_KEY, "Measurements not found");
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.ERROR);
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Measurement> save(@RequestBody Measurement measurement) {
+    public ResponseEntity<Map<String, Object>> save(@RequestBody Measurement measurement) {
+        Map<String, Object> result = new HashMap<>();
         Measurement savedMeasurement = measurementService.save(measurement);
-        return Objects.isNull(savedMeasurement) ? ResponseEntity.badRequest().body(new Measurement()) : ResponseEntity.ok(savedMeasurement);
+        if (savedMeasurement != null) {
+            result.put(ResultMessage.RESULT_KEY, savedMeasurement);
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
+            return ResponseEntity.ok(result);
+        } else {
+            result.put(ResultMessage.MESSAGE_KEY, "Something gone wrong please try again");
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.ERROR);
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @Override
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity update(@RequestBody Measurement measurement) {
+    public ResponseEntity<Map<String, Object>> update(@RequestBody Measurement measurement) {
+        Map<String, Object> result = new HashMap<>();
         boolean isSaved = measurementService.update(measurement);
-        return new ResponseEntity(isSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+        if (isSaved) {
+            result.put(ResultMessage.RESULT_KEY, measurement);
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
+            return ResponseEntity.ok(result);
+        } else {
+            result.put(ResultMessage.MESSAGE_KEY, "Something gone wrong please try again");
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.ERROR);
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @Override
     @DeleteMapping(value = "/{id}/")
-    public ResponseEntity delete(@PathVariable("id") Integer id) {
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable("id") Integer id) {
         boolean isDeleted = measurementService.delete(id);
-        return new ResponseEntity(isDeleted ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+        Map<String, Object> result = new HashMap<>();
+        if (isDeleted) {
+            result.put(ResultMessage.RESULT_KEY, id);
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
+            return ResponseEntity.ok(result);
+        } else {
+            result.put(ResultMessage.MESSAGE_KEY, "Something gone wrong please try again");
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.ERROR);
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 }

@@ -7,10 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Map;
 
-public interface IDescriptionController extends IController<Description> {
+public interface IDescriptionController extends IController<Map<String, Object>, Description> {
 
-    ResponseEntity<List<Description>> findAllByMeasurementId(@PathVariable("id") Integer id) throws NotFoundException;
+    ResponseEntity<Map<String, Object>> findAllByMeasurementId(@PathVariable("id") Integer id) throws NotFoundException;
 
-    ResponseEntity<List<Description>> saveAll(List<Description> descriptions) throws NotFoundException;
+    ResponseEntity<Map<String, Object>> saveAll(List<Description> descriptions) throws NotFoundException;
 }

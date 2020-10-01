@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 public interface IController<T, U extends AbstractEntity> {
-    ResponseEntity<Map<T, U>> findById(Integer id) throws NotFoundException;
+    ResponseEntity<T> findById(Integer id) throws NotFoundException;
 
-    ResponseEntity<List<T>> findAll() throws NotFoundException;
+    ResponseEntity<T> findAll() throws NotFoundException;
 
-    ResponseEntity<T> save(T entity);
+    ResponseEntity<T> save(U entity);
 
-    ResponseEntity update(T entity);
+    ResponseEntity<T> update(U entity);
 
-    ResponseEntity delete(Integer id);
+    ResponseEntity<T> delete(Integer id);
 }
