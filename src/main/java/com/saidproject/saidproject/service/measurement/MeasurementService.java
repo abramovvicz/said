@@ -36,7 +36,7 @@ public class MeasurementService implements  IMeasurementService{
     public List<Measurement> findAll() throws NotFoundException {
         List<Measurement> measurements = measurementRepo.findAll();
         if (measurements.isEmpty()) {
-            throw new NotFoundException("Measurements not exits");
+            throw new NotFoundException("Measurements not found");
         }
         return measurements;
     }
@@ -44,7 +44,7 @@ public class MeasurementService implements  IMeasurementService{
     public Measurement findById(int id) throws NotFoundException {
         Measurement measurement = measurementRepo.findById(id);
         if (measurement == null) {
-            throw new NotFoundException("Measurement not exists");
+            throw new NotFoundException("Measurement not found");
         }
         return measurement;
     }
