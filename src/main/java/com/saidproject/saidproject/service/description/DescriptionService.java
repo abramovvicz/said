@@ -19,7 +19,7 @@ public class DescriptionService implements IDescriptionService {
     public Description findById(int id) throws NotFoundException {
         Description description = descriptionRepo.findById(id);
         if (description == null){
-            throw new NotFoundException("Description not found");
+            throw new NotFoundException("Description with id: " + id + " not found");
         }
         return description;
     }
@@ -37,7 +37,7 @@ public class DescriptionService implements IDescriptionService {
     public List<Description> findAllForMeasurement(int id) throws NotFoundException {
         List<Description> descriptions = descriptionRepo.findAllForMeasurement(id);
         if(descriptions.isEmpty()){
-            throw new NotFoundException("Descriptions not found");
+            throw new NotFoundException("Descriptions for measurement with id: " + id + "not found");
         }
         return descriptions;
     }

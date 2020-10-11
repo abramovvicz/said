@@ -77,7 +77,7 @@ public class MeasurementController implements IMeasurementController {
             result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
             return ResponseEntity.ok(result);
         } else {
-            result.put(ResultMessage.MESSAGE_KEY, "Something gone wrong please try again");
+            result.put(ResultMessage.MESSAGE_KEY, "Something went wrong, please try again");
             result.put(ResultMessage.STATUS_KEY, ResultStatus.ERROR);
             return ResponseEntity.badRequest().body(result);
         }
@@ -93,7 +93,7 @@ public class MeasurementController implements IMeasurementController {
             result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
             return ResponseEntity.ok(result);
         } else {
-            result.put(ResultMessage.MESSAGE_KEY, "Something gone wrong please try again");
+            result.put(ResultMessage.MESSAGE_KEY, "Something went wrong, please try again");
             result.put(ResultMessage.STATUS_KEY, ResultStatus.ERROR);
             return ResponseEntity.badRequest().body(result);
         }
@@ -109,7 +109,7 @@ public class MeasurementController implements IMeasurementController {
             result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
             return ResponseEntity.ok(result);
         } else {
-            result.put(ResultMessage.MESSAGE_KEY, "Something gone wrong please try again");
+            result.put(ResultMessage.MESSAGE_KEY, "Something went wrong, please try again");
             result.put(ResultMessage.STATUS_KEY, ResultStatus.ERROR);
             return ResponseEntity.badRequest().body(result);
         }
