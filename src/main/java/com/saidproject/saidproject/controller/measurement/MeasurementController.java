@@ -35,20 +35,6 @@ public class MeasurementController implements IMeasurementController {
     public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") Integer id) throws NotFoundException {
         Map<String, Object> result = new HashMap<>();
         Measurement measurement = measurementService.findById(id);
-        /**
-        TEMP TEST TO DELETE
-         */
-        Chart chart = new Chart();
-        chart.setYData(new double[]{2.0, 4.0, 1.0});
-        chart.setxData(new double[]{9.0, 4.0, 9.0});
-        try {
-            chart.createChart();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        /**
-         * END DELETE   
-         */
         if (measurement != null) {
             result.put(ResultMessage.RESULT_KEY, measurement);
             result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);

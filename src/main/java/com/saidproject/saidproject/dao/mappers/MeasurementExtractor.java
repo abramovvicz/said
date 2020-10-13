@@ -9,7 +9,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.util.StringUtils;
 
-import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,6 +34,9 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
                 var hydrantDiameter = resultSet.getString("hydrant_diameter");
                 var createdAt = resultSet.getDate("created_at");
                 var updatedAt = resultSet.getDate("updated_at");
+                var staticPressure = resultSet.getDouble("static_pressure");
+                var dynamicPressure = resultSet.getDouble("dynamic_pressure");
+                var hydrantEfficiency = resultSet.getDouble("hydrant_efficiency");
                 long createdAtTime = Objects.isNull(createdAt) ? 0L : createdAt.getTime();
                 long updatedAtTime = Objects.isNull(updatedAt) ? 0L : updatedAt.getTime();
                 Date createdAtDate = new Date(createdAtTime);
@@ -46,11 +48,12 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
                 measurement.setHydrantType(StringUtils.isEmpty(hydrantType) ? HydrantType.UNDEFINED : HydrantType.valueOf(hydrantType));
                 measurement.setHydrantSubType(StringUtils.isEmpty(hydrantSubType) ? HydrantSubType.UNDEFINED : HydrantSubType.valueOf(hydrantSubType));
                 measurement.setHydrantDiameter(StringUtils.isEmpty(hydrantDiameter) ? HydrantDiameter.UNDEFINED : HydrantDiameter.valueOf(hydrantDiameter));
+                measurement.setStaticPressure(staticPressure);
+                measurement.setDynamicPressure(dynamicPressure);
+                measurement.setHydrantEfficiency(hydrantEfficiency);
                 measurement.setCreatedAt(createdAtDate);
                 measurement.setUpdatedAt(updatedAtDate);
-
                 measurement.setPhoto(resultSet.getBytes("photo"));
-
                 measurement.setDescriptions(new ArrayList<>());
             }
 

@@ -5,10 +5,13 @@ import com.saidproject.saidproject.dao.measurement.Measurement;
 import com.saidproject.saidproject.exceptions.NotFoundException;
 import com.saidproject.saidproject.repo.description.IDescriptionRepo;
 import com.saidproject.saidproject.repo.measurement.IMeasurementRepo;
+import com.saidproject.saidproject.utils.Chart;
+import com.saidproject.saidproject.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -26,6 +29,30 @@ public class MeasurementService implements  IMeasurementService{
         List<Description> descriptions = measurement.getDescriptions();
         assignParentMeasurementId(descriptions, insertedMeasurement.getId());
         descriptionRepo.saveAll(descriptions);
+
+        /**
+         * temporary creating chart from measurements
+         * TODO:move to implemantion where pdf is genereted
+         *
+         */
+
+        double staticPressure = measurement.getStaticPressure();
+        double dynamicPressure = measurement.getDynamicPressure();
+        double hydrantEfficiency = measurement.getHydrantEfficiency();
+
+        Chart chart = new Chart();
+        chart.setYData(new double[]{staticPressure, dynamicPressure});
+        chart.setXData(new double[]{Constants.START_POINT_MEASUREMENT, hydrantEfficiency});
+        try {
+            chart.createChart();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        /**
+         * end
+         */
         return insertedMeasurement;
     }
 

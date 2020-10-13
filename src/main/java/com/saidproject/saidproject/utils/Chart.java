@@ -15,11 +15,11 @@ public class Chart {
     private double[] xData = {};
     private double[] yData = {};
 
-    public double[] getxData() {
+    public double[] getXData() {
         return xData;
     }
 
-    public void setxData(double[] xData) {
+    public void setXData(double[] xData) {
         this.xData = xData;
     }
 
@@ -30,8 +30,6 @@ public class Chart {
     public void setYData(double[] yData) {
         this.yData = yData;
     }
-
-
 
     public void createChart() throws IOException {
 
@@ -46,6 +44,5 @@ public class Chart {
 
         BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapEncoder.BitmapFormat.JPG);
         BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapEncoder.BitmapFormat.JPG, 150);
-
     }
 }

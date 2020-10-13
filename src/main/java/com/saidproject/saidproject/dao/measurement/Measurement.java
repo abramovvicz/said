@@ -1,19 +1,55 @@
 package com.saidproject.saidproject.dao.measurement;
 
-import com.google.common.base.Objects;
 import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.repo.AbstractEntity;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Measurement extends AbstractEntity {
 
     private String address;
+
     private HydrantType hydrantType;
+
     private HydrantSubType hydrantSubType;
+
     private HydrantDiameter hydrantDiameter;
+
     private List<Description> descriptions;
+
     private byte[] photo;
+
+    private double staticPressure;
+
+    private double dynamicPressure;
+
+    private double hydrantEfficiency;
+
+    public double getStaticPressure() {
+        return staticPressure;
+    }
+
+    public void setStaticPressure(double staticPressure) {
+        this.staticPressure = staticPressure;
+    }
+
+    public double getDynamicPressure() {
+        return dynamicPressure;
+    }
+
+    public void setDynamicPressure(double dynamicPressure) {
+        this.dynamicPressure = dynamicPressure;
+    }
+
+    public double getHydrantEfficiency() {
+        return hydrantEfficiency;
+    }
+
+    public void setHydrantEfficiency(double hydrantEfficiency) {
+        this.hydrantEfficiency = hydrantEfficiency;
+    }
 
     public byte[] getPhoto() {
         return photo;
@@ -65,15 +101,7 @@ public class Measurement extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "Measurement{" +
-                "id='" + getId() + '\'' +
-                "address='" + address + '\'' +
-                ", hydrantType=" + hydrantType +
-                ", hydrantSubType=" + hydrantSubType +
-                ", hydrantDiameter=" + hydrantDiameter +
-                ", descriptions=" + descriptions +
-                ", createdAt=" + getCreatedAt() +
-                '}';
+        return "Measurement{" + "address='" + address + '\'' + ", hydrantType=" + hydrantType + ", hydrantSubType=" + hydrantSubType + ", hydrantDiameter=" + hydrantDiameter + ", descriptions=" + descriptions + ", photo=" + Arrays.toString(photo) + ", staticPressure=" + staticPressure + ", dynamicPressure=" + dynamicPressure + ", hydrantEfficiency=" + hydrantEfficiency + '}';
     }
 
     @Override
@@ -81,16 +109,13 @@ public class Measurement extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Measurement that = (Measurement) o;
-        return Objects.equal(address, that.address) &&
-                hydrantType == that.hydrantType &&
-                hydrantSubType == that.hydrantSubType &&
-                hydrantDiameter == that.hydrantDiameter &&
-                Objects.equal(descriptions, that.descriptions) &&
-                Objects.equal(getCreatedAt(), that.getCreatedAt());
+        return Double.compare(that.staticPressure, staticPressure) == 0 && Double.compare(that.dynamicPressure, dynamicPressure) == 0 && Double.compare(that.hydrantEfficiency, hydrantEfficiency) == 0 && Objects.equals(address, that.address) && hydrantType == that.hydrantType && hydrantSubType == that.hydrantSubType && hydrantDiameter == that.hydrantDiameter && Objects.equals(descriptions, that.descriptions) && Arrays.equals(photo, that.photo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(address, hydrantType, hydrantSubType, hydrantDiameter, descriptions, getCreatedAt());
+        int result = Objects.hash(address, hydrantType, hydrantSubType, hydrantDiameter, descriptions, staticPressure, dynamicPressure, hydrantEfficiency);
+        result = 31 * result + Arrays.hashCode(photo);
+        return result;
     }
 }
