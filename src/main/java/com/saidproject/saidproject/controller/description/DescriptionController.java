@@ -29,7 +29,7 @@ public class DescriptionController implements IDescriptionController {
     public IDescriptionService descriptionService;
 
     @Override
-    @GetMapping(value = "for/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/for/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> findAllByMeasurementId(@PathVariable("id") Integer measurementId) throws NotFoundException {
         Map<String, Object> result = new HashMap<>();
         List<Description> allByMeasurementId = descriptionService.findAllForMeasurement(measurementId);
