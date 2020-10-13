@@ -30,7 +30,7 @@ public class UserRepo extends AbstractEntity implements IUserRepo {
 
     @Override
     public User findByUserName(String name) {
-        var sql = "select * from users where username = '" + name + "';";
+        var sql = "select * from users where name= ?" + name;
         User user = jdbcTemplate.queryForObject(sql, userMapper);
         return Objects.isNull(user) ? new User() : user;
     }

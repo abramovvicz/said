@@ -12,5 +12,5 @@ VALUES (1, 'parametr pierwszy', 0, 'test comments')
 
 INSERT INTO users (name, surname, username, password, role, created_at)
 VALUES ('bartosz', 'abramovvicz', 'dzik_programowania', 'trudne_haslo', 'ADMIN', '2020-09-29')
-, ('lukasz', 'tarala', 'ogorek', '{noop}latwe_haslo', 'ADMIN', '2020-09-29')
-, ('imie', 'nazwisko', 'nicknejm', '{noop}dupa123', 'USER', '2020-09-29');
+, ('lukasz', 'tarala', 'ogorek', 'latwe_haslo', 'ADMIN', '2020-09-29')
+, ('imie', 'nazwisko', 'nicknejm', 'dupa123', 'USER', '2020-09-29');
