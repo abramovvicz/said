@@ -3,7 +3,7 @@ package com.saidproject.saidproject.controller.measurement;
 import com.saidproject.saidproject.dao.measurement.Measurement;
 import com.saidproject.saidproject.exceptions.NotFoundException;
 import com.saidproject.saidproject.service.measurement.IMeasurementService;
-import com.saidproject.saidproject.utils.CreateExcelFile;
+import com.saidproject.saidproject.utils.Chart;
 import com.saidproject.saidproject.utils.ResultMessage;
 import com.saidproject.saidproject.utils.ResultStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,11 +34,11 @@ public class MeasurementController implements IMeasurementController {
     public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") Integer id) throws NotFoundException {
         Map<String, Object> result = new HashMap<>();
         Measurement measurement = measurementService.findById(id);
-        try {
-            CreateExcelFile.writeFile(measurement, "measurement.xlsx");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Chart chart = new Chart();
+        chart.setyData1(new double[]{1.0, 2.0, 3.0});
+        chart.setyData(new double[]{2.0, 4.0, 1.0});
+        chart.setxData1(new double[]{2.0, 4.0, 1.0});
+        chart.setxData(new double[]{9.0, 4.0, 9.0});
         if (measurement != null) {
             result.put(ResultMessage.RESULT_KEY, measurement);
             result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
