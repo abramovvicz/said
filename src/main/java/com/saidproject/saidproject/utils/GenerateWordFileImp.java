@@ -1,5 +1,7 @@
 package com.saidproject.saidproject.utils;
 
+import com.google.gson.Gson;
+import com.saidproject.saidproject.dao.measurement.document.MeasurementFieldDocument;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.UnderlinePatterns;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -9,12 +11,18 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Map;
+import java.util.Set;
 
-public class GenerateWordFileImp implements GenerateWordFile {
+public class GenerateWordFileImp implements GenerateWordFile<String, String> {
+
     public static String output = "rest-with-spring.docx";
+    private final Gson gson = new Gson();
 
-    public String convertToString(String fileName){
-        return "";
+    @Override
+    public Map<String, String> convert() {
+        MeasurementFieldDocument fieldDocument = gson.fromJson(JsonFileReader.readFile("src/main/resources/documentStructure.json"), MeasurementFieldDocument.class);
+        return fieldDocument.getHeaderFooter();
     }
 
     @Override
