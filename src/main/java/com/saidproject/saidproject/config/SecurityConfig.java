@@ -22,21 +22,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * This method is run everytime our application obtains a request
      * and checks the request against filters
-     * @param http
+     * @param httpSecurity
      * @throws Exception
      */
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable()
-//                .httpBasic().and()
-//                .authorizeRequests()
-//                .antMatchers("/swagger*/**", "/v2/api-docs", "/webjars/**", "/configuration/**").permitAll() //swagger
-//                .antMatchers(HttpMethod.GET, "/users/").permitAll()
-//                .antMatchers(HttpMethod.POST, "/users/").permitAll()
-//                .antMatchers(HttpMethod.DELETE, "/users/").hasRole("ADMIN")
-//                .and()
-//                .authorizeRequests().antMatchers("/console/**").permitAll()
-//                .anyRequest().hasRole("USER,ADMIN");
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        //disabled csrf in order to let http clients perform REST request
+        httpSecurity.csrf().disable();
+        httpSecurity.headers().frameOptions().disable();
+
+        //enabling h2-console
+        httpSecurity.authorizeRequests().antMatchers("/").permitAll().and()
+                .authorizeRequests().antMatchers("/h2-console/**").permitAll();
 
     }
 
