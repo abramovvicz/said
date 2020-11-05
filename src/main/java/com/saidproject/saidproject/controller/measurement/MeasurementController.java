@@ -6,6 +6,7 @@ import com.saidproject.saidproject.service.measurement.IMeasurementService;
 import com.saidproject.saidproject.utils.Chart;
 import com.saidproject.saidproject.utils.ResultMessage;
 import com.saidproject.saidproject.utils.ResultStatus;
+import io.swagger.annotations.ApiImplicitParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,7 @@ public class MeasurementController implements IMeasurementController {
 
     @Override
     @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header", example = "Bearer access_token")
     public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") Integer id) throws NotFoundException {
         Map<String, Object> result = new HashMap<>();
         Measurement measurement = measurementService.findById(id);
@@ -48,6 +50,7 @@ public class MeasurementController implements IMeasurementController {
 
     @Override
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header", example = "Bearer access_token")
     public ResponseEntity<Map<String, Object>> findAll() throws NotFoundException {
         Map<String, Object> result = new HashMap<>();
         List<Measurement> allMeasurements = measurementService.findAll();
@@ -64,6 +67,7 @@ public class MeasurementController implements IMeasurementController {
 
     @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header", example = "Bearer access_token")
     public ResponseEntity<Map<String, Object>> save(@RequestBody Measurement measurement) {
         Map<String, Object> result = new HashMap<>();
         Measurement savedMeasurement = measurementService.save(measurement);
@@ -80,6 +84,7 @@ public class MeasurementController implements IMeasurementController {
 
     @Override
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header", example = "Bearer access_token")
     public ResponseEntity<Map<String, Object>> update(@RequestBody Measurement measurement) {
         Map<String, Object> result = new HashMap<>();
         boolean isSaved = measurementService.update(measurement);
@@ -96,6 +101,7 @@ public class MeasurementController implements IMeasurementController {
 
     @Override
     @DeleteMapping(value = "/{id}/")
+    @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header", example = "Bearer access_token")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable("id") Integer id) {
         boolean isDeleted = measurementService.delete(id);
         Map<String, Object> result = new HashMap<>();
