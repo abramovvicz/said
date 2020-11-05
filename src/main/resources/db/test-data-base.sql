@@ -12,6 +12,9 @@ VALUES (1, 'parametr pierwszy', 0, 'test comments')
 , (3, 'parametr 100 ', 1, 'chuj' );
 
 INSERT INTO users (name, surname, username, password, role, created_at)
-VALUES ('bartosz', 'abramovvicz', 'dzik_programowania', 'trudne_haslo', 'ADMIN', '2020-09-29')
-, ('lukasz', 'tarala', 'ogorek', '{noop}latwe_haslo', 'ADMIN', '2020-09-29')
-, ('imie', 'nazwisko', 'nicknejm', '{noop}dupa123', 'USER', '2020-09-29');
+--trudne_haslo
+VALUES ('bartosz', 'abramovvicz', 'dzik_programowania', '$2a$10$gyVqD2zBf8D2KcqGfbR1Ue.Lvs.31kUNYi1O6lwTHZTWZlbVdteOq', 'ADMIN', '2020-09-29')
+--latwe_haslo
+, ('lukasz', 'tarala', 'ogorek', '$2a$10$TAgQylfSaMTQHDDJwNX3oucdJmdKYBKKpvhm7eO3Od4ktq7s/BTeC', 'ADMIN', '2020-09-29')
+--dupa123
+, ('imie', 'nazwisko', 'nicknejm', '$2a$10$w/rMVnWXl/lUDibbq8Urc.aX/ePf7p0T1TxQTUDoRzuRU9ZUaZRGC', 'USER', '2020-09-29');

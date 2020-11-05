@@ -125,6 +125,28 @@
             <version>2.3.4.RELEASE</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
+<!--    THESE TWO DEPENDENCIES ARE NEEDED BECAUSE IN JAVA 11    javax.xml.bind.DatatypeConverter IS NOT PROVIDED, THUS JAVA WEB TOKEN CANNOT BE CREATED  -->
+<!--    PLEASE REFER TO https://stackoverflow.com/questions/43574426/java-how-to-resolve-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexceptio/43574427#43574427    -->
+        <!-- API, java.xml.bind module -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+
+        <!-- Runtime, com.sun.xml.bind module -->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.2</version>
+        </dependency>
 
     </dependencies>
 
