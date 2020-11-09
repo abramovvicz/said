@@ -4,8 +4,11 @@ import com.saidproject.saidproject.dao.measurement.Measurement;
 import com.saidproject.saidproject.exceptions.NotFoundException;
 import com.saidproject.saidproject.service.measurement.IMeasurementService;
 import com.saidproject.saidproject.utils.Chart;
+import com.saidproject.saidproject.utils.CreateExcelFile;
 import com.saidproject.saidproject.utils.ResultMessage;
 import com.saidproject.saidproject.utils.ResultStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +29,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/measurements")
 public class MeasurementController implements IMeasurementController {
+
+    static final Logger logger = LoggerFactory.getLogger(MeasurementController.class);
 
     @Autowired
     private IMeasurementService measurementService;
@@ -65,6 +70,8 @@ public class MeasurementController implements IMeasurementController {
     @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> save(@RequestBody Measurement measurement) {
+        logger.info("ataken na post");
+
         Map<String, Object> result = new HashMap<>();
         Measurement savedMeasurement = measurementService.save(measurement);
         if (savedMeasurement != null) {
