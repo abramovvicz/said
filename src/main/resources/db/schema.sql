@@ -4,6 +4,7 @@ DROP TABLE if exists users;
 
 CREATE TABLE measurements (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR (80) NOT NULL,
     address VARCHAR(50) NOT NULL,
     hydrant_type VARCHAR(20) NOT NULL,
     hydrant_subtype VARCHAR (20) NOT NULL,
@@ -20,7 +21,7 @@ CREATE TABLE descriptions (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     measurement_id INT NOT NULL,
     name VARCHAR(50) NOT NULL,
-    status INT,
+    status VARCHAR(50),
     comments VARCHAR(50),
     created_at DATE,
     updated_at DATE

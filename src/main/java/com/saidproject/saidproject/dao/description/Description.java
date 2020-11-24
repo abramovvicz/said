@@ -10,7 +10,7 @@ public class Description extends AbstractEntity {
 
     private String name;
 
-    private int status;
+    private String status;
 
     private String comments;
 
@@ -22,11 +22,11 @@ public class Description extends AbstractEntity {
         this.name = name;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

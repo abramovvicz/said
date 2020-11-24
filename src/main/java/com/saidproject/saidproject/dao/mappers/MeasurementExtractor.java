@@ -28,6 +28,7 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
             var measurement = measurementMap.get(Objects.isNull(measurementId) ? 0 : measurementId);
             if (measurement == null) {
                 var id = resultSet.getInt("id");
+                var title = resultSet.getString("title");
                 var address = resultSet.getString("address");
                 var hydrantType = resultSet.getString("hydrant_type");
                 var hydrantSubType = resultSet.getString("hydrant_subtype");
@@ -44,6 +45,7 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
 
                 measurement = new Measurement();
                 measurement.setId(id);
+                measurement.setTitle(StringUtils.isEmpty(title) ? "" : title);
                 measurement.setAddress(StringUtils.isEmpty(address) ? "" : address);
                 measurement.setHydrantType(StringUtils.isEmpty(hydrantType) ? HydrantType.UNDEFINED : HydrantType.valueOf(hydrantType));
                 measurement.setHydrantSubType(StringUtils.isEmpty(hydrantSubType) ? HydrantSubType.UNDEFINED : HydrantSubType.valueOf(hydrantSubType));
@@ -60,7 +62,7 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
             var descriptionId = resultSet.getInt("descriptions.id");
             var measurementParentId = resultSet.getInt("descriptions.measurement_id");
             var descriptionName = resultSet.getString("descriptions.name");
-            var descriptionStatus = resultSet.getInt("descriptions.status");
+            var descriptionStatus = resultSet.getString("descriptions.status");
             var descriptionComments = resultSet.getString("descriptions.comments");
 
             Description description = new Description();
@@ -68,7 +70,7 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
             description.setMeasurementId(Objects.isNull(measurementParentId) ? 0 : measurementParentId);
             description.setName(StringUtils.isEmpty(descriptionName) ? "" : descriptionName);
             description.setComments(StringUtils.isEmpty(descriptionComments) ? "" : descriptionComments);
-            description.setStatus(Objects.isNull(descriptionStatus) ? 0 : descriptionStatus);
+            description.setStatus(StringUtils.isEmpty(descriptionStatus) ? "" : descriptionStatus);
             measurement.getDescriptions().add(description);
 
             measurementMap.put(measurementId, measurement);

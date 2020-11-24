@@ -89,7 +89,7 @@ public class DescriptionRepo implements IDescriptionRepo {
         return preparedStatement -> {
             preparedStatement.setInt(1, description.getMeasurementId());
             preparedStatement.setString(2, description.getName());
-            preparedStatement.setInt(3, description.getStatus());
+            preparedStatement.setString(3, description.getStatus());
             preparedStatement.setString(4, description.getComments());
             preparedStatement.setDate(5, Utils.convertToSqlDate(description.getCreatedAt()));
             preparedStatement.setDate(6, Utils.convertToSqlDate(description.getUpdatedAt()));
@@ -99,7 +99,7 @@ public class DescriptionRepo implements IDescriptionRepo {
     private PreparedStatement setValuesInPreparedStatement(PreparedStatement preparedStatement, Description description) throws SQLException {
         preparedStatement.setInt(1, description.getMeasurementId());
         preparedStatement.setString(2, description.getName());
-        preparedStatement.setInt(3, description.getStatus());
+        preparedStatement.setString(3, description.getStatus());
         preparedStatement.setString(4, description.getComments());
         preparedStatement.setDate(5, Utils.convertToSqlDate(description.getCreatedAt()));
         preparedStatement.setDate(6, Utils.convertToSqlDate(description.getUpdatedAt()));

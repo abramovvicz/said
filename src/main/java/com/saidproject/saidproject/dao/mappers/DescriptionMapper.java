@@ -15,7 +15,7 @@ public class DescriptionMapper implements RowMapper<Description> {
         var descriptionId = resultSet.getInt("descriptions.id");
         var measurementParentId = resultSet.getInt("descriptions.measurement_id");
         var descriptionName = resultSet.getString("descriptions.name");
-        var descriptionStatus = resultSet.getInt("descriptions.status");
+        var descriptionStatus = resultSet.getString("descriptions.status");
         var descriptionComments = resultSet.getString("descriptions.comments");
 
         Description description = new Description();
@@ -23,7 +23,7 @@ public class DescriptionMapper implements RowMapper<Description> {
         description.setMeasurementId(Objects.isNull(measurementParentId) ? 0 : measurementParentId);
         description.setName(StringUtils.isEmpty(descriptionName) ? "" : descriptionName);
         description.setComments(StringUtils.isEmpty(descriptionComments) ? "" : descriptionComments);
-        description.setStatus(Objects.isNull(descriptionStatus) ? 0 : descriptionStatus);
+        description.setStatus(StringUtils.isEmpty(descriptionStatus) ? "" : descriptionStatus);
         return description;
     }
 }
