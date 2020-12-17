@@ -1,8 +1,9 @@
-package com.saidproject.saidproject.repo.user;
+package com.saidproject.saidproject.repo.h2.user;
 
 import com.saidproject.saidproject.dao.mappers.UserMapper;
 import com.saidproject.saidproject.dao.user.User;
 import com.saidproject.saidproject.repo.AbstractEntity;
+import com.saidproject.saidproject.repo.api.IUserRepo;
 import com.saidproject.saidproject.utils.Constants;
 import com.saidproject.saidproject.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Repository
-public class UserRepo extends AbstractEntity implements IUserRepo {
+public class H2UserRepo extends AbstractEntity implements IUserRepo {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

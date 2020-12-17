@@ -1,10 +1,12 @@
-package com.saidproject.saidproject.repo.description;
+package com.saidproject.saidproject.repo.postgres.description;
 
 import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.dao.mappers.DescriptionMapper;
+import com.saidproject.saidproject.repo.api.IDescriptionRepo;
 import com.saidproject.saidproject.utils.Constants;
 import com.saidproject.saidproject.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
