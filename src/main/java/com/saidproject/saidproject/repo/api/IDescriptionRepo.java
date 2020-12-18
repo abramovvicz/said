@@ -1,4 +1,4 @@
-package com.saidproject.saidproject.repo.description;
+package com.saidproject.saidproject.repo.api;
 
 import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.repo.IRepo;

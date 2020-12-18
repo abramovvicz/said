@@ -4,7 +4,9 @@ import com.saidproject.saidproject.dao.mappers.DescriptionMapper;
 import com.saidproject.saidproject.dao.mappers.MeasurementExtractor;
 import com.saidproject.saidproject.dao.mappers.UserMapper;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -12,7 +14,11 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import javax.sql.DataSource;
 
 @Configuration
-public class TestConfiguration {
+@Profile("dev")
+@ComponentScan(basePackages={"com.saidproject.saidproject.controller", "com.saidproject.saidproject.dao", "com.saidproject.saidproject.exceptions",
+        "com.saidproject.saidproject.repo.h2", "com.saidproject.saidproject.service"})
+public class H2Configuration {
+
 
     @Bean
     public JdbcTemplate jdbcTemplate() {

@@ -2,7 +2,7 @@ package com.saidproject.saidproject.service.description;
 
 import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.exceptions.NotFoundException;
-import com.saidproject.saidproject.repo.description.IDescriptionRepo;
+import com.saidproject.saidproject.repo.api.IDescriptionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,6 @@ public class DescriptionService implements IDescriptionService {
     private IDescriptionRepo descriptionRepo;
 
     @Override
-
     public Description findById(int id) throws NotFoundException {
         Description description = descriptionRepo.findById(id);
         if (description == null){

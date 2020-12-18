@@ -1,10 +1,12 @@
-package com.saidproject.saidproject.repo.description;
+package com.saidproject.saidproject.repo.postgres.description;
 
 import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.dao.mappers.DescriptionMapper;
+import com.saidproject.saidproject.repo.api.IDescriptionRepo;
 import com.saidproject.saidproject.utils.Constants;
 import com.saidproject.saidproject.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -30,28 +32,28 @@ public class DescriptionRepo implements IDescriptionRepo {
 
     @Override
     public List<Description> findAllForMeasurement(Integer measurementId) {
-        var sql = "select * from descriptions where MEASUREMENT_ID= " + measurementId;
+        var sql = "SELECT * FROM descriptions WHERE MEASUREMENT_ID= " + measurementId;
         List<Description> descriptions = jdbcTemplate.query(sql, descriptionMapper);
         return Objects.isNull(descriptions) ? Collections.emptyList() : descriptions;
     }
 
     @Override
     public List<Description> saveAll(List<Description> descriptions) {
-        var sql = "insert into descriptions (measurement_id, name, status, comments, created_at, updated_at) values(?, ?, ?, ?, ?, ?)";
+        var sql = "INSERT INTO descriptions (measurement_id, name, status, comments, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
         jdbcTemplate.batchUpdate(sql, setParameters(descriptions));
         return Objects.isNull(descriptions) ? Collections.emptyList() : descriptions;
     }
 
     @Override
     public Description findById(int id) {
-        var sql = "select * from descriptions where id= " + id;
+        var sql = "SELECT * FROM descriptions WHERE id= " + id;
         Description description = jdbcTemplate.queryForObject(sql, descriptionMapper);
         return Objects.isNull(description) ? new Description() : description;
     }
 
     @Override
     public List<Description> findAll() {
-        var sql = "select * from descriptions";
+        var sql = "SELECT * FROM descriptions";
         List<Description> descriptions = jdbcTemplate.query(sql, descriptionMapper);
         return Objects.isNull(descriptions) ? Collections.emptyList() : descriptions;
     }
@@ -59,21 +61,21 @@ public class DescriptionRepo implements IDescriptionRepo {
     @Override
     public Description save(Description description) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        var sql = "insert into descriptions (measurement_id, name, status, comments, created_at, updated_at) values(?, ?, ?, ?, ?, ?)";
+        var sql = "INSERT INTO descriptions (measurement_id, name, status, comments, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(connection -> setValuesInPreparedStatement(connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), description), keyHolder);
-        description.setId(keyHolder.getKey().intValue());
+        description.setId((Integer) keyHolder.getKeys().get("id"));
         return Objects.isNull(description) ? new Description() : description;
     }
 
     @Override
     public boolean update(Description description) {
-        var sql = "update descriptions set measurement_id = ?, name = ?, status = ?, comments = ?, created_at = ?, updated_at = ? where id = " + description.getId();
+        var sql = "UPDATE descriptions SET measurement_id = ?, name = ?, status = ?, comments = ?, created_at = ?, updated_at = ? where id = " + description.getId();
         return jdbcTemplate.update(sql, getDescriptionSetter(description)) == Constants.SQL_OPERATION_SUCCESS;
     }
 
     @Override
     public boolean delete(Integer id) {
-        var sql = "delete descriptions where id = " + id;
+        var sql = "DELETE FROM descriptions WHERE id = " + id;
         return jdbcTemplate.update(sql) == Constants.SQL_OPERATION_SUCCESS;
     }
 
@@ -89,7 +91,7 @@ public class DescriptionRepo implements IDescriptionRepo {
         return preparedStatement -> {
             preparedStatement.setInt(1, description.getMeasurementId());
             preparedStatement.setString(2, description.getName());
-            preparedStatement.setString(3, description.getStatus());
+            preparedStatement.setInt(3, description.getStatus());
             preparedStatement.setString(4, description.getComments());
             preparedStatement.setDate(5, Utils.convertToSqlDate(description.getCreatedAt()));
             preparedStatement.setDate(6, Utils.convertToSqlDate(description.getUpdatedAt()));
@@ -99,7 +101,7 @@ public class DescriptionRepo implements IDescriptionRepo {
     private PreparedStatement setValuesInPreparedStatement(PreparedStatement preparedStatement, Description description) throws SQLException {
         preparedStatement.setInt(1, description.getMeasurementId());
         preparedStatement.setString(2, description.getName());
-        preparedStatement.setString(3, description.getStatus());
+        preparedStatement.setInt(3, description.getStatus());
         preparedStatement.setString(4, description.getComments());
         preparedStatement.setDate(5, Utils.convertToSqlDate(description.getCreatedAt()));
         preparedStatement.setDate(6, Utils.convertToSqlDate(description.getUpdatedAt()));
