@@ -12,11 +12,11 @@ public class DescriptionMapper implements RowMapper<Description> {
 
     @Override
     public Description mapRow(ResultSet resultSet, int i) throws SQLException {
-        var descriptionId = resultSet.getInt("descriptions.id");
-        var measurementParentId = resultSet.getInt("descriptions.measurement_id");
-        var descriptionName = resultSet.getString("descriptions.name");
-        var descriptionStatus = resultSet.getInt("descriptions.status");
-        var descriptionComments = resultSet.getString("descriptions.comments");
+        var descriptionId = resultSet.getInt("id");
+        var measurementParentId = resultSet.getInt("measurement_id");
+        var descriptionName = resultSet.getString("name");
+        var descriptionStatus = resultSet.getInt("status");
+        var descriptionComments = resultSet.getString("comments");
 
         Description description = new Description();
         description.setId(Objects.isNull(descriptionId) ? 0 : descriptionId);

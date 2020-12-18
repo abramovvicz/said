@@ -32,7 +32,7 @@ public class H2MeasurementRepo implements IMeasurementRepo {
 
     @Override
     public Measurement findById(int id) {
-        var sql = "select * from measurements inner join descriptions on descriptions.measurement_id = measurements.id where measurements.id = " + id;
+        var sql = "select * from measurements left join descriptions on descriptions.measurement_id = measurements.id where measurements.id = " + id;
         ArrayList<Measurement> measurements = new ArrayList<>(jdbcTemplate.query(sql, measurementExtractor));
         Measurement measurement = Iterables.getFirst(measurements, new Measurement());
         return Objects.isNull(measurement) ? new Measurement() : measurement;

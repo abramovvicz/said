@@ -32,43 +32,43 @@ public class UserRepo extends AbstractEntity implements IUserRepo {
 
     @Override
     public User findByUserName(String name) {
-        var sql = "select * from users where name= ?" + name;
+        var sql = "SELECT * FROM users WHERE name= ?" + name;
         User user = jdbcTemplate.queryForObject(sql, userMapper);
         return Objects.isNull(user) ? new User() : user;
     }
 
     @Override
     public User findById(int id) {
-        var sql = "select * from users where id= " + id;
+        var sql = "SELECT * FROM users WHERE id= " + id;
         User user = jdbcTemplate.queryForObject(sql, userMapper);
         return Objects.isNull(user) ? new User() : user;
     }
 
     @Override
     public List<User> findAll() {
-        var sql = "select * from users";
+        var sql = "SELECT * FROM users";
         List<User> users = jdbcTemplate.query(sql, userMapper);
         return users.isEmpty() ? Collections.emptyList() : users;
     }
 
     @Override
     public User save(User user) {
-        var sql = "insert into users (name, surname, username, password, role, created_at, updated_at) values(?, ?, ?, ?, ?, ?, ?)";
+        var sql = "INSERT INTO users (name, surname, username, password, role, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> setValuesInPreparedStatement(connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), user), keyHolder);
-        user.setId(keyHolder.getKey().intValue());
+        user.setId((Integer) keyHolder.getKeys().get("id"));
         return Objects.isNull(user) ? new User() : user;
     }
 
     @Override
     public boolean update(User user) {
-        var sql = "update users set name= ?, surname= ?, username= ?, password= ?, role= ? ,created_at = ? , updated_at= ? where id = " + user.getId();
+        var sql = "UPDATE users set name= ?, surname= ?, username= ?, password= ?, role= ? ,created_at = ? , updated_at= ? WHERE id = " + user.getId();
         return jdbcTemplate.update(sql, getUserSetter(user)) == Constants.SQL_OPERATION_SUCCESS;
     }
 
     @Override
     public boolean delete(Integer id) {
-        var sql = "delete users where id = " + id;
+        var sql = "DELETE FROM users WHERE id = " + id;
         return jdbcTemplate.update(sql, id) == Constants.SQL_OPERATION_SUCCESS;
     }
 
