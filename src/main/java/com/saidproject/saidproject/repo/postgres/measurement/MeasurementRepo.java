@@ -33,7 +33,7 @@ public class MeasurementRepo implements IMeasurementRepo {
 
     @Override
     public Measurement findById(int id) {
-        var sql = "SELECT measurements.id AS \"measurements.id\", address, hydrant_type, hydrant_subtype, hydrant_diameter, static_pressure, dynamic_pressure, hydrant_efficiency, photo, measurements.created_at AS \"measurements.created_at\", measurements.updated_at AS \"measurements.updated_at\",\n" +
+        var sql = "SELECT measurements.id AS \"measurements.id\", title, address, hydrant_type, hydrant_subtype, hydrant_diameter, static_pressure, dynamic_pressure, hydrant_efficiency, photo, measurements.created_at AS \"measurements.created_at\", measurements.updated_at AS \"measurements.updated_at\",\n" +
                 "descriptions.id AS \"descriptions.id\", descriptions.measurement_id AS \"descriptions.measurement_id\", descriptions.name AS \"descriptions.name\", descriptions.status AS \"descriptions.status\", descriptions.comments AS \"descriptions.comments\", descriptions.created_at AS \"descriptions.created_at\", descriptions.updated_at AS \"descriptions.updated_at\"\n" +
                 "FROM measurements LEFT JOIN descriptions ON descriptions.measurement_id = measurements.id where measurements.id = " + id;
         ArrayList<Measurement> measurements = new ArrayList<>(jdbcTemplate.query(sql, measurementExtractor));
@@ -43,7 +43,7 @@ public class MeasurementRepo implements IMeasurementRepo {
 
     @Override
     public List<Measurement> findAll() {
-        var sql =  "SELECT measurements.id AS \"measurements.id\", address, hydrant_type, hydrant_subtype, hydrant_diameter, static_pressure, dynamic_pressure, hydrant_efficiency, photo, measurements.created_at as \"measurements.created_at\", measurements.updated_at as \"measurements.updated_at\",\n" +
+        var sql =  "SELECT measurements.id AS \"measurements.id\", title, address, hydrant_type, hydrant_subtype, hydrant_diameter, static_pressure, dynamic_pressure, hydrant_efficiency, photo, measurements.created_at as \"measurements.created_at\", measurements.updated_at as \"measurements.updated_at\",\n" +
                 "descriptions.id AS \"descriptions.id\", descriptions.measurement_id AS \"descriptions.measurement_id\", descriptions.name AS \"descriptions.name\", descriptions.status AS \"descriptions.status\", descriptions.comments AS \"descriptions.comments\", descriptions.created_at AS \"descriptions.created_at\", descriptions.updated_at AS \"descriptions.updated_at\"\n" +
                 "FROM measurements LEFT JOIN descriptions ON measurements.id = descriptions.measurement_id;";
         return new ArrayList<>(jdbcTemplate.query(sql, measurementExtractor));

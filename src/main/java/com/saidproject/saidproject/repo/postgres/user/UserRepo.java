@@ -62,14 +62,14 @@ public class UserRepo extends AbstractEntity implements IUserRepo {
 
     @Override
     public boolean update(User user) {
-        var sql = "UPDATE users set name= ?, surname= ?, username= ?, password= ?, role= ? ,created_at = ? , updated_at= ? WHERE id = " + user.getId();
+        var sql = "UPDATE users SET name= ?, surname= ?, username= ?, password= ?, role= ? ,created_at = ? , updated_at= ? WHERE id = " + user.getId();
         return jdbcTemplate.update(sql, getUserSetter(user)) == Constants.SQL_OPERATION_SUCCESS;
     }
 
     @Override
     public boolean delete(Integer id) {
         var sql = "DELETE FROM users WHERE id = " + id;
-        return jdbcTemplate.update(sql, id) == Constants.SQL_OPERATION_SUCCESS;
+        return jdbcTemplate.update(sql) == Constants.SQL_OPERATION_SUCCESS;
     }
 
     private PreparedStatementSetter getUserSetter(User user) {
