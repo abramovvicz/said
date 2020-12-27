@@ -15,7 +15,7 @@ public class UserService implements IUserService {
     private IUserRepo userRepo;
 
     public User findByUsername(String name) {
-        return userRepo.findByUserName(name);
+        return userRepo.findByUserName(name).orElse(null);
     }
 
     public User findById(int id) throws NotFoundException {

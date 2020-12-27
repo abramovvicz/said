@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -20,6 +21,7 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 public class UserRepo extends AbstractEntity implements IUserRepo {
@@ -30,11 +32,14 @@ public class UserRepo extends AbstractEntity implements IUserRepo {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
-    public User findByUserName(String name) {
-        var sql = "SELECT * FROM users WHERE name= ?" + name;
+    public Optional<User> findByUserName(String name) {
+        var sql = "SELECT * FROM users WHERE username = '" + name + "';";
         User user = jdbcTemplate.queryForObject(sql, userMapper);
-        return Objects.isNull(user) ? new User() : user;
+        return Optional.of(user);
     }
 
     @Override
@@ -55,6 +60,10 @@ public class UserRepo extends AbstractEntity implements IUserRepo {
     public User save(User user) {
         var sql = "INSERT INTO users (name, surname, username, password, role, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
         jdbcTemplate.update(connection -> setValuesInPreparedStatement(connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), user), keyHolder);
         user.setId((Integer) keyHolder.getKeys().get("id"));
         return Objects.isNull(user) ? new User() : user;

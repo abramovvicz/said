@@ -19,6 +19,7 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 public class H2UserRepo extends AbstractEntity implements IUserRepo {
@@ -30,10 +31,10 @@ public class H2UserRepo extends AbstractEntity implements IUserRepo {
     private UserMapper userMapper;
 
     @Override
-    public User findByUserName(String name) {
+    public Optional<User> findByUserName(String name) {
         var sql = "select * from users where name= ?" + name;
         User user = jdbcTemplate.queryForObject(sql, userMapper);
-        return Objects.isNull(user) ? new User() : user;
+        return Optional.of(user);
     }
 
     @Override
