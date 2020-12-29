@@ -11,6 +11,8 @@ public class Measurement extends AbstractEntity {
 
     private String title;
 
+    private String protocol;
+
     private String address;
 
     private HydrantType hydrantType;
@@ -107,6 +109,14 @@ public class Measurement extends AbstractEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
     }
 
     @Override
