@@ -2,7 +2,7 @@ package com.saidproject.saidproject.service.user;
 
 import com.saidproject.saidproject.dao.user.User;
 import com.saidproject.saidproject.exceptions.NotFoundException;
-import com.saidproject.saidproject.repo.user.IUserRepo;
+import com.saidproject.saidproject.repo.api.IUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

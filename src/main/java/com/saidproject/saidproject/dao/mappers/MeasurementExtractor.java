@@ -27,14 +27,15 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
             var measurementId = resultSet.getInt("measurements.id");
             var measurement = measurementMap.get(Objects.isNull(measurementId) ? 0 : measurementId);
             if (measurement == null) {
-                var id = resultSet.getInt("id");
+                var id = resultSet.getInt("measurements.id");
                 var title = resultSet.getString("title");
+                var protocol = resultSet.getString("protocol");
                 var address = resultSet.getString("address");
                 var hydrantType = resultSet.getString("hydrant_type");
                 var hydrantSubType = resultSet.getString("hydrant_subtype");
                 var hydrantDiameter = resultSet.getString("hydrant_diameter");
-                var createdAt = resultSet.getDate("created_at");
-                var updatedAt = resultSet.getDate("updated_at");
+                var createdAt = resultSet.getDate("measurements.created_at");
+                var updatedAt = resultSet.getDate("measurements.updated_at");
                 var staticPressure = resultSet.getDouble("static_pressure");
                 var dynamicPressure = resultSet.getDouble("dynamic_pressure");
                 var hydrantEfficiency = resultSet.getDouble("hydrant_efficiency");
@@ -45,6 +46,7 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
 
                 measurement = new Measurement();
                 measurement.setId(id);
+                measurement.setProtocol(StringUtils.isEmpty(protocol)? "": protocol);
                 measurement.setTitle(StringUtils.isEmpty(title) ? "" : title);
                 measurement.setAddress(StringUtils.isEmpty(address) ? "" : address);
                 measurement.setHydrantType(StringUtils.isEmpty(hydrantType) ? HydrantType.UNDEFINED : HydrantType.valueOf(hydrantType));

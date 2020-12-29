@@ -1,4 +1,4 @@
-package com.saidproject.saidproject.repo.user;
+package com.saidproject.saidproject.repo.api;
 
 import com.saidproject.saidproject.dao.user.User;
 import com.saidproject.saidproject.repo.IRepo;

@@ -1,11 +1,13 @@
-package com.saidproject.saidproject.repo.measurement;
+package com.saidproject.saidproject.repo.h2.measurement;
 
 import com.google.common.collect.Iterables;
 import com.saidproject.saidproject.dao.mappers.MeasurementExtractor;
 import com.saidproject.saidproject.dao.measurement.Measurement;
+import com.saidproject.saidproject.repo.api.IMeasurementRepo;
 import com.saidproject.saidproject.utils.Constants;
 import com.saidproject.saidproject.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -20,7 +22,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Repository
-public class MeasurementRepo implements IMeasurementRepo {
+public class H2MeasurementRepo implements IMeasurementRepo {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -30,7 +32,7 @@ public class MeasurementRepo implements IMeasurementRepo {
 
     @Override
     public Measurement findById(int id) {
-        var sql = "select * from measurements inner join descriptions on descriptions.measurement_id = measurements.id where measurements.id = " + id;
+        var sql = "select * from measurements left join descriptions on descriptions.measurement_id = measurements.id where measurements.id = " + id;
         ArrayList<Measurement> measurements = new ArrayList<>(jdbcTemplate.query(sql, measurementExtractor));
         Measurement measurement = Iterables.getFirst(measurements, new Measurement());
         return Objects.isNull(measurement) ? new Measurement() : measurement;
