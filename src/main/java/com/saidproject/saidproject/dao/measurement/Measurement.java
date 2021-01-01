@@ -124,18 +124,18 @@ public class Measurement extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Measurement that = (Measurement) o;
-        return Double.compare(that.staticPressure, staticPressure) == 0 && Double.compare(that.dynamicPressure, dynamicPressure) == 0 && Double.compare(that.hydrantEfficiency, hydrantEfficiency) == 0 && Objects.equals(title, that.title) && Objects.equals(address, that.address) && hydrantType == that.hydrantType && hydrantSubType == that.hydrantSubType && hydrantDiameter == that.hydrantDiameter && Objects.equals(descriptions, that.descriptions) && Arrays.equals(photo, that.photo);
+        return Double.compare(that.staticPressure, staticPressure) == 0 && Double.compare(that.dynamicPressure, dynamicPressure) == 0 && Double.compare(that.hydrantEfficiency, hydrantEfficiency) == 0 && Objects.equals(title, that.title) && Objects.equals(protocol, that.protocol) && Objects.equals(address, that.address) && hydrantType == that.hydrantType && hydrantSubType == that.hydrantSubType && hydrantDiameter == that.hydrantDiameter && Objects.equals(descriptions, that.descriptions) && Arrays.equals(photo, that.photo);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(title, address, hydrantType, hydrantSubType, hydrantDiameter, descriptions, staticPressure, dynamicPressure, hydrantEfficiency);
+        int result = Objects.hash(title, protocol, address, hydrantType, hydrantSubType, hydrantDiameter, descriptions, staticPressure, dynamicPressure, hydrantEfficiency);
         result = 31 * result + Arrays.hashCode(photo);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Measurement{" + "title='" + title + '\'' + ", address='" + address + '\'' + ", hydrantType=" + hydrantType + ", hydrantSubType=" + hydrantSubType + ", hydrantDiameter=" + hydrantDiameter + ", descriptions=" + descriptions + ", photo=" + Arrays.toString(photo) + ", staticPressure=" + staticPressure + ", dynamicPressure=" + dynamicPressure + ", hydrantEfficiency=" + hydrantEfficiency + '}';
+        return "Measurement{" + "title='" + title + '\'' + ", protocol='" + protocol + '\'' + ", address='" + address + '\'' + ", hydrantType=" + hydrantType + ", hydrantSubType=" + hydrantSubType + ", hydrantDiameter=" + hydrantDiameter + ", descriptions=" + descriptions + ", photo=" + Arrays.toString(photo) + ", staticPressure=" + staticPressure + ", dynamicPressure=" + dynamicPressure + ", hydrantEfficiency=" + hydrantEfficiency + '}';
     }
 }

@@ -5,6 +5,7 @@ DROP TABLE if exists users;
 CREATE TABLE measurements (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR (80) NOT NULL,
+    protocol VARCHAR (80) NOT NULL,
     address VARCHAR(50) NOT NULL,
     hydrant_type VARCHAR(20) NOT NULL,
     hydrant_subtype VARCHAR (20) NOT NULL,

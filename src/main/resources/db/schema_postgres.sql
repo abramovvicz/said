@@ -1,6 +1,7 @@
 CREATE TABLE measurements (
     id SERIAL PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
+    protocol VARCHAR(50)NOT NULL,
     address VARCHAR(50) NOT NULL,
     hydrant_type VARCHAR(20) NOT NULL,
     hydrant_subtype VARCHAR (20) NOT NULL,
