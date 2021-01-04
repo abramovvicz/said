@@ -29,7 +29,7 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
             if (measurement == null) {
                 var id = resultSet.getInt("measurements.id");
                 var title = resultSet.getString("title");
-                var protocol = resultSet.getString("protocol");
+                var protocolId = resultSet.getInt("protocol_id");
                 var address = resultSet.getString("address");
                 var hydrantType = resultSet.getString("hydrant_type");
                 var hydrantSubType = resultSet.getString("hydrant_subtype");
@@ -46,7 +46,7 @@ public class MeasurementExtractor implements ResultSetExtractor<List<Measurement
 
                 measurement = new Measurement();
                 measurement.setId(id);
-                measurement.setProtocol(StringUtils.isEmpty(protocol)? "": protocol);
+                measurement.setProtocolId(protocolId);
                 measurement.setTitle(StringUtils.isEmpty(title) ? "" : title);
                 measurement.setAddress(StringUtils.isEmpty(address) ? "" : address);
                 measurement.setHydrantType(StringUtils.isEmpty(hydrantType) ? HydrantType.UNDEFINED : HydrantType.valueOf(hydrantType));

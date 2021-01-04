@@ -1,9 +1,12 @@
-INSERT INTO measurements (title, protocol, address, hydrant_type, hydrant_subtype, hydrant_diameter, static_pressure,
+INSERT INTO protocol (title) VALUES ('protocol 1'), ('protocol 2');
+
+INSERT INTO measurements (title, protocol_id, address, hydrant_type, hydrant_subtype, hydrant_diameter, static_pressure,
 dynamic_pressure, hydrant_efficiency, created_at, photo)
-VALUES ('title1', 'protocol1', 'dupa', 'INSIDE', 'UNDEFINED', 'DN25', '0.43', '1.3', '4.12', '2004-12-31', ''),
-('title2', 'protocol2','test1', 'INSIDE', 'UNDEFINED', 'DN33', '0.43', '1.3', '4.12', '2012-01-01', ''),
- ('title3', 'protocol3','dupa2', 'OUTSIDE','UNDERGROUND', 'DN80','0.43', '1.3', '4.12','2020-04-05', ''),
-  ('title4', 'protocol4','dupa3', 'OUTSIDE','GROUND', 'DN100','0.43', '1.3', '4.12', '1982-11-12', FILE_READ('classpath:/db/said.jpg'));
+VALUES ('title1', 1, 'dupa', 'INSIDE', 'UNDEFINED', 'DN25/DR22', '0.43', '1.3', '4.12', '2004-12-31', ''),
+('title2', 1,'test1', 'INSIDE', 'UNDEFINED', 'DN33/DR26', '0.43', '1.3', '4.12', '2012-01-01', ''),
+ ('title3', 2,'dupa2', 'OUTSIDE','UNDERGROUND', 'DN80/DP26','0.43', '1.3', '4.12','2020-04-05', ''),
+  ('title4', 2,'dupa3', 'OUTSIDE','GROUND', 'DN100/DP32','0.43', '1.3', '4.12', '1982-11-12', FILE_READ('classpath:/db/said.jpg'));
+
 
 INSERT INTO descriptions (measurement_id, name, status, comments)
 VALUES (1, 'parametr pierwszy', 'ok', 'test comments')
