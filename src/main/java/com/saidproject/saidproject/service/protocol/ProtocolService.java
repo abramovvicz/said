@@ -12,14 +12,18 @@ import java.util.List;
 @Service
 @Transactional
 public class ProtocolService implements IProtocolService {
-
-
+    
     @Autowired
     private H2ProtocolRepo h2ProtocolRepo;
 
     @Override
     public Protocol findById(int id) throws NotFoundException {
-        return null;
+        Protocol protocolById = h2ProtocolRepo.findById(id);
+        if (protocolById == null) {
+            throw new NotFoundException("Protocol not found");
+        }
+
+        return protocolById;
     }
 
     @Override

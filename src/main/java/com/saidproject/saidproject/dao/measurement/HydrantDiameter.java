@@ -2,14 +2,17 @@ package com.saidproject.saidproject.dao.measurement;
 
 import io.swagger.annotations.ApiModel;
 
-import java.util.Arrays;
-
 @ApiModel
 public enum HydrantDiameter {
 
-    DN25("DN25/DR10"), DN33("DN33/DR12"), DN52("DN52/DR13"),
-    DN80("DN80/DP22"), DN80B("DN80/DP26"), DN100("DN100/DP32"), DN150("DN150/DP37"),
-    DN200("DN200/DP"), UNDEFINED("UNDEFINED");
+    DN25_DR10("DN25/DR10"),
+    DN33_DR12("DN33/DR12"),
+    DN52_DR13("DN52/DR13"),
+    DN80_DP22("DN80/DP22"),
+    DN80_DP26("DN80/DP26"),
+    DN100_DP32("DN100/DP32"),
+    DN150_DP37("DN150/DP37"),
+    UNDEFINED("UNDEFINED");
 
     private String value;
 

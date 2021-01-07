@@ -1,5 +1,6 @@
 package com.saidproject.saidproject.repo.h2.protocol;
 
+import com.google.common.collect.Iterables;
 import com.saidproject.saidproject.dao.mappers.ProtocolMapper;
 import com.saidproject.saidproject.dao.protocol.Protocol;
 import com.saidproject.saidproject.repo.api.IProtocol;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,7 +29,10 @@ public class H2ProtocolRepo implements IProtocol {
 
     @Override
     public Protocol findById(int id) {
-        return null;
+        var sql = "select * from protocol left join measurements on measurements.protocol_id = protocol.id left join descriptions on descriptions.measurement_id = measurements.id where protocol_id = " + id;
+        ArrayList<Protocol> query = new ArrayList<>(jdbcTemplate.query(sql, protocolMapper));
+        Protocol protocol = Iterables.getFirst(query, new Protocol());
+        return Objects.isNull(protocol) ? new Protocol() : protocol;
     }
 
     @Override
