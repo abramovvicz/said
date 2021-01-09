@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 @Configuration
 @Profile("dev")
 @ComponentScan(basePackages={"com.saidproject.saidproject.controller", "com.saidproject.saidproject.dao", "com.saidproject.saidproject.exceptions",
-        "com.saidproject.saidproject.repo.h2", "com.saidproject.saidproject.service"})
+        "com.saidproject.saidproject.repo.h2", "com.saidproject.saidproject.service", "com.saidproject.saidproject.report"})
 public class H2Configuration {
 
 
