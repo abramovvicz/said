@@ -2,6 +2,7 @@ package com.saidproject.saidproject.dao.mappers;
 
 import com.saidproject.saidproject.dao.measurement.Measurement;
 import com.saidproject.saidproject.dao.protocol.Protocol;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.util.StringUtils;
 
@@ -12,7 +13,8 @@ import java.util.Objects;
 
 public class ProtocolMapper implements RowMapper<Protocol> {
 
-    MeasurementExtractor measurementExtractor = new MeasurementExtractor();
+    @Autowired
+    MeasurementExtractor measurementExtractor;
 
     @Override
     public Protocol mapRow(ResultSet resultSet, int i) throws SQLException {
