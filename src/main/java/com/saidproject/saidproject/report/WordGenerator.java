@@ -3,18 +3,26 @@ package com.saidproject.saidproject.report;
 import com.saidproject.saidproject.dao.measurement.HydrantType;
 import com.saidproject.saidproject.dao.measurement.Measurement;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
+import org.apache.poi.xwpf.usermodel.BreakType;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
-import org.apache.poi.xwpf.usermodel.UnderlinePatterns;
+import org.apache.poi.xwpf.usermodel.TableRowAlign;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFFooter;
 import org.apache.poi.xwpf.usermodel.XWPFHeader;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTJc;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSimpleField;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STJc;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STOnOff;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -42,6 +50,7 @@ public class WordGenerator {
 
         //title
         XWPFDocument document = new XWPFDocument();
+        document.createTOC();
         XWPFParagraph title = document.createParagraph();
         title.setAlignment(ParagraphAlignment.CENTER);
 
@@ -73,6 +82,7 @@ public class WordGenerator {
         run.setFontSize(20);
         run.setColor("990000"); //red
         run.setBold(true);
+        run.setStyle(headerTitle);
 
         XWPFParagraph paragraphSubtitle = header.createParagraph();
         paragraphSubtitle.setAlignment(ParagraphAlignment.CENTER);
@@ -99,8 +109,6 @@ public class WordGenerator {
         run.setText(footerContent);
 
 
-
-
         XWPFRun titleRun = title.createRun();
         titleRun.setText("RAPORT Z OBIEKTU");
         titleRun.setColor("009933");
@@ -111,6 +119,9 @@ public class WordGenerator {
         // Creating Table
         XWPFTable tab = document.createTable();
         XWPFTableRow row = tab.getRow(0); // First row
+        tab.setTableAlignment(TableRowAlign.CENTER); //table right aligned
+        tab.setWidth("100%");
+
         // Columns
         row.getCell(0).setText("Arkusz Badania Hydrantu");
         row.addNewTableCell().setText("Name");
@@ -130,6 +141,13 @@ public class WordGenerator {
         String string1 = "this should be a table";
         XWPFRun para1Run = para1.createRun();
         para1Run.setText(string1);
+
+
+        // spis treści
+        CTP ctP = para1.getCTP();
+        CTSimpleField toc = ctP.addNewFldSimple();
+        toc.setInstr("TOC \\o \"1-2\" \\h \\z \\u");
+        toc.setDirty(STOnOff.ON);
 
         FileOutputStream out = new FileOutputStream(output);
         document.write(out);
