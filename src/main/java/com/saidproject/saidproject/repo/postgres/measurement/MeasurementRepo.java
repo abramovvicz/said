@@ -33,7 +33,7 @@ public class MeasurementRepo implements IMeasurementRepo {
 
     @Override
     public Measurement findById(int id) {
-        var sql = "SELECT measurements.id AS \"measurements.id\", title, protocol, address, hydrant_type, hydrant_subtype, hydrant_diameter, static_pressure, dynamic_pressure, hydrant_efficiency, photo, measurements.created_at AS \"measurements.created_at\", measurements.updated_at AS \"measurements.updated_at\",\n" +
+        var sql = "SELECT measurements.id AS \"measurements.id\", title , protocol_id, address, hydrant_type, hydrant_subtype, hydrant_diameter, static_pressure, dynamic_pressure, hydrant_efficiency, photo, measurements.created_at AS \"measurements.created_at\", measurements.updated_at AS \"measurements.updated_at\",\n" +
                 "descriptions.id AS \"descriptions.id\", descriptions.measurement_id AS \"descriptions.measurement_id\", descriptions.name AS \"descriptions.name\", descriptions.status AS \"descriptions.status\", descriptions.comments AS \"descriptions.comments\", descriptions.created_at AS \"descriptions.created_at\", descriptions.updated_at AS \"descriptions.updated_at\"\n" +
                 "FROM measurements LEFT JOIN descriptions ON descriptions.measurement_id = measurements.id where measurements.id = " + id;
         ArrayList<Measurement> measurements = new ArrayList<>(jdbcTemplate.query(sql, measurementExtractor));
@@ -52,7 +52,7 @@ public class MeasurementRepo implements IMeasurementRepo {
     @Override
     public Measurement save(Measurement measurement) {
         var sql = "insert into measurements (title, protocol_id, address, hydrant_type, hydrant_subtype, hydrant_diameter, static_pressure, dynamic_pressure, hydrant_efficiency, created_at, updated_at, photo)" + "values (?,?,?,?,?,?,?,?,?,?,?,?)";
-
+        System.out.println("Leci z postgresa zamiast z H2");
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> setValuesInPreparedStatement(connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), measurement), keyHolder);
         measurement.setId((Integer)keyHolder.getKeys().get("id"));

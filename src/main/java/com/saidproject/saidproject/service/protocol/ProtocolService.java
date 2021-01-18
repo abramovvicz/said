@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -28,13 +29,16 @@ public class ProtocolService implements IProtocolService {
 
     @Override
     public List<Protocol> findAll() throws NotFoundException {
-        return null;
+        List<Protocol> protocols = h2ProtocolRepo.findAll();
+        if (protocols == null) {
+            throw new NotFoundException("Protocols not found");
+        }
+        return protocols;
     }
 
     @Override
     public Protocol save(Protocol protocol) {
-        Protocol savedProtocol = h2ProtocolRepo.save(protocol);
-        return savedProtocol;
+        return h2ProtocolRepo.save(protocol);
     }
 
     @Override

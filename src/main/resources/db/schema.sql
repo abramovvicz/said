@@ -6,9 +6,7 @@ DROP TABLE if exists users;
 
 CREATE TABLE protocol(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR (80) NOT NULL,
-    created_at DATE,
-    updated_at DATE
+    title VARCHAR (80) NOT NULL
 );
 
 CREATE TABLE measurements (

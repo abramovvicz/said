@@ -1,7 +1,12 @@
+CREATE TABLE protocol(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR (80) NOT NULL
+);
+
 CREATE TABLE measurements (
     id SERIAL PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
-    protocol VARCHAR(50)NOT NULL,
+    protocol_id INT NOT NULL,
     address VARCHAR(50) NOT NULL,
     hydrant_type VARCHAR(20) NOT NULL,
     hydrant_subtype VARCHAR (20) NOT NULL,

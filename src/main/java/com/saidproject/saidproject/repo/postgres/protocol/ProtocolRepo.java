@@ -1,7 +1,7 @@
 package com.saidproject.saidproject.repo.postgres.protocol;
 
 import com.google.common.collect.Iterables;
-import com.saidproject.saidproject.dao.mappers.ProtocolMapper;
+import com.saidproject.saidproject.dao.mappers.ProtocolExtractor;
 import com.saidproject.saidproject.dao.protocol.Protocol;
 import com.saidproject.saidproject.repo.api.IProtocol;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,13 @@ public class ProtocolRepo implements IProtocol {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    ProtocolMapper protocolMapper;
+    ProtocolExtractor protocolExtractor;
 
 
     @Override
     public Protocol findById(int id) {
         var sql = "select * from protocol where id= " + id;
-        ArrayList<Protocol> protocols = new ArrayList<>(jdbcTemplate.query(sql, protocolMapper));
+        ArrayList<Protocol> protocols = new ArrayList<>(jdbcTemplate.query(sql, protocolExtractor));
         Protocol protocol = Iterables.getFirst(protocols, new Protocol());
         return Objects.isNull(protocol) ? new Protocol() : protocol;
 
@@ -38,7 +38,8 @@ public class ProtocolRepo implements IProtocol {
 
     @Override
     public List<Protocol> findAll() {
-        return null;
+        var sql = "select * from protocol left join measurements on measurements.protocol_id = protocol.id left join descriptions on descriptions.measurement_id = measurements.id";
+        return new ArrayList<>(jdbcTemplate.query(sql, protocolExtractor));
     }
 
     @Override

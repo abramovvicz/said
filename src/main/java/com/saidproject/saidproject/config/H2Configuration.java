@@ -2,7 +2,7 @@ package com.saidproject.saidproject.config;
 
 import com.saidproject.saidproject.dao.mappers.DescriptionMapper;
 import com.saidproject.saidproject.dao.mappers.MeasurementExtractor;
-import com.saidproject.saidproject.dao.mappers.ProtocolMapper;
+import com.saidproject.saidproject.dao.mappers.ProtocolExtractor;
 import com.saidproject.saidproject.dao.mappers.UserMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -52,7 +52,7 @@ public class H2Configuration {
     }
 
     @Bean
-    public ProtocolMapper protocolMapper(){
-        return new ProtocolMapper();
+    public ProtocolExtractor protocolExtractor(){
+        return new ProtocolExtractor();
     }
 }

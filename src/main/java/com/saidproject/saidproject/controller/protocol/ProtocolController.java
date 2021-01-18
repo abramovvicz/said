@@ -1,6 +1,5 @@
 package com.saidproject.saidproject.controller.protocol;
 
-import com.saidproject.saidproject.dao.measurement.Measurement;
 import com.saidproject.saidproject.dao.protocol.Protocol;
 import com.saidproject.saidproject.exceptions.NotFoundException;
 import com.saidproject.saidproject.service.protocol.IProtocolService;
@@ -14,10 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -46,13 +47,26 @@ public class ProtocolController implements IProtocolController {
     }
 
     @Override
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> findAll() throws NotFoundException {
-        return null;
+        logger.info("this is it");
+
+        Map<String, Object> result = new HashMap<>();
+        List<Protocol> protocols = protocolService.findAll();
+        if (protocols != null) {
+            result.put(ResultMessage.RESULT_KEY, protocols);
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
+            return ResponseEntity.ok(result);
+        } else {
+            result.put(ResultMessage.MESSAGE_KEY, "Protocols not found");
+            result.put(ResultMessage.STATUS_KEY, ResultStatus.ERROR);
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Object>> save(Protocol protocol) {
+    public ResponseEntity<Map<String, Object>> save(@RequestBody Protocol protocol) {
         logger.info("ataken na post protocol");
 
         Map<String, Object> result = new HashMap<>();
