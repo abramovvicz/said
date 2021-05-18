@@ -30,8 +30,9 @@ public class H2ProtocolRepo implements IProtocol {
 
     @Override
     public Protocol findById(int id) {
-        var sql = "select * from protocol left join measurements on measurements.protocol_id = protocol.id left join descriptions on descriptions.measurement_id = measurements.id where protocol_id = " + id;
+        var sql = "select * from protocol left join measurements on measurements.protocol_id = protocol.id left join descriptions on descriptions.measurement_id = measurements.id where protocol.id = " + id;
         List<Protocol> query = jdbcTemplate.query(sql, protocolExtractor);
+        System.out.println(query);
         Protocol protocol = Iterables.getFirst(query, new Protocol());
         return Objects.isNull(protocol) ? new Protocol() : protocol;
     }
@@ -45,10 +46,10 @@ public class H2ProtocolRepo implements IProtocol {
     @Override
     public Protocol save(Protocol protocol) {
         var sql = "insert into protocol (title)" + "values (?)";
-        System.out.println("dupa idzie z h2 " + protocol);
-        KeyHolder keyHolder = new GeneratedKeyHolder();
+        KeyHolder keyHolder = new GeneratedKeyHolder(); // keyHolder rozwiazanie problemu idka
         jdbcTemplate.update(connection -> setValuesInPreparedStatement(connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS), protocol), keyHolder);
         protocol.setId(keyHolder.getKey().intValue());
+        System.out.println("dupa idzie z h2 " + protocol);
         return Objects.isNull(protocol) ? new Protocol() : protocol;
     }
 
