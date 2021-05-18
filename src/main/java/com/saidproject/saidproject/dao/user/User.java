@@ -1,18 +1,38 @@
 package com.saidproject.saidproject.dao.user;
 
 import com.google.common.base.Objects;
-import com.saidproject.saidproject.repo.AbstractEntity;
-import io.swagger.annotations.ApiModelProperty;
 
-public class User extends AbstractEntity {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
-    private String name;
-    private String surname;
+@Entity
+@Table(name = "user")
+public class User {
+
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    public Set<Role> roles = new HashSet<>();
+    @Id
+    @Column(name = "user_id")
+    private long id;
+    @Id
+    @Column(name = "user_name")
+    private String firstName;
+    @Id
+    @Column(name = "last_name")
+    private String lastName;
+    @Id
+    @Column(name = "user_name")
     private String userName;
+    @Id
+    @Column(name = "password")
     private String password;
-
-    @ApiModelProperty
-    public Role role;
 
     public String getPassword() {
         return password;
@@ -22,20 +42,20 @@ public class User extends AbstractEntity {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getUserName() {
@@ -46,12 +66,20 @@ public class User extends AbstractEntity {
         this.userName = userName;
     }
 
-    public Role getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override
@@ -59,25 +87,17 @@ public class User extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equal(name, user.name) &&
-                Objects.equal(surname, user.surname) &&
-                Objects.equal(userName, user.userName) &&
-                role == user.role;
+        return Objects.equal(firstName, user.firstName) && Objects.equal(lastName, user.lastName) && Objects.equal(userName, user.userName) && roles == user.roles;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name, surname, userName, role);
+        return Objects.hashCode(firstName, lastName, userName, roles);
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", userName='" + userName + '\'' +
-                ", role=" + role +
-                '}';
+        return "User{" + "name='" + firstName + '\'' + ", surname='" + lastName + '\'' + ", userName='" + userName + '\'' + ", role=" + roles + '}';
     }
 
     public enum Role {

@@ -22,8 +22,8 @@ public class UserMapper implements RowMapper<User> {
 
         User user = new User();
         user.setId(id);
-        user.setName(StringUtils.isEmpty(name) ? "" : name);
-        user.setSurname(StringUtils.isEmpty(surname) ? "" : surname);
+        user.setFirstName(StringUtils.isEmpty(name) ? "" : name);
+        user.setLastName(StringUtils.isEmpty(surname) ? "" : surname);
         user.setUserName(StringUtils.isEmpty(userName) ? "" : userName);
         user.setPassword(StringUtils.isEmpty(password) ? "" : password);
         user.setRole(StringUtils.isEmpty(role) ? User.Role.USER : User.Role.valueOf(role));

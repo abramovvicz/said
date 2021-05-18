@@ -73,24 +73,24 @@ public class H2UserRepo extends AbstractEntity implements IUserRepo {
 
     private PreparedStatementSetter getUserSetter(User user) {
         return preparedStatement -> {
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getSurname());
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getUserName());
             preparedStatement.setString(4, user.getPassword());
-            preparedStatement.setString(5, user.getRole().toString());
-            preparedStatement.setDate(6, Utils.convertToSqlDate(user.getCreatedAt()));
-            preparedStatement.setDate(7, Utils.convertToSqlDate(user.getUpdatedAt()));
+//            preparedStatement.setString(5, user.getRole().toString());
+//            preparedStatement.setDate(6, Utils.convertToSqlDate(user.getCreatedAt()));
+//            preparedStatement.setDate(7, Utils.convertToSqlDate(user.getUpdatedAt()));
         };
     }
 
     private PreparedStatement setValuesInPreparedStatement(PreparedStatement preparedStatement, User user) throws SQLException {
-        preparedStatement.setString(1, user.getName());
-        preparedStatement.setString(2, user.getSurname());
+        preparedStatement.setString(1, user.getFirstName());
+        preparedStatement.setString(2, user.getLastName());
         preparedStatement.setString(3, user.getUserName());
         preparedStatement.setString(4, user.getPassword());
-        preparedStatement.setString(5, user.getRole().toString());
-        preparedStatement.setDate(6, Utils.convertToSqlDate(user.getCreatedAt()));
-        preparedStatement.setDate(7, Utils.convertToSqlDate(user.getUpdatedAt()));
+//        preparedStatement.setString(5, user.getRole().toString());
+//        preparedStatement.setDate(6, Utils.convertToSqlDate(user.getCreatedAt()));
+//        preparedStatement.setDate(7, Utils.convertToSqlDate(user.getUpdatedAt()));
 
         return preparedStatement;
     }
