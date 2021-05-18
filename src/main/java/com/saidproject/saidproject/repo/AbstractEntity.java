@@ -15,11 +15,13 @@ public abstract class AbstractEntity {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "create_at")
+    @Column(name="created_at")
     private Date createdAt;
 
-    @Column(name = "update_at")
+    @Column(name="updated_at")
     private Date updatedAt;
+
+
 
     public int getId() {
         return id;
