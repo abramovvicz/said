@@ -3,19 +3,12 @@ package com.saidproject.saidproject.dao.user;
 import com.google.common.base.Objects;
 import com.saidproject.saidproject.repo.AbstractEntity;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name="user")
+@Table(name="users")
 public class User extends AbstractEntity {
 
     @Column(name = "role")

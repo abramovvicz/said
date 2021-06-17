@@ -57,7 +57,7 @@ public class MeasurementService implements  IMeasurementService{
     }
 
     private void assignParentMeasurementId(List<Description> descriptions, Integer measurementParentId) {
-        descriptions.forEach(description -> description.setMeasurementId(measurementParentId));
+//        descriptions.forEach(description -> description.setProtocolId(measurementParentId));
     }
 
     public List<Measurement> findAll() throws NotFoundException {

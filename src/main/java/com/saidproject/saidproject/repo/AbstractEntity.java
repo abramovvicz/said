@@ -1,14 +1,22 @@
 package com.saidproject.saidproject.repo;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @MappedSuperclass
-public abstract class AbstractEntity {
+@Repository
+public abstract class AbstractEntity implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

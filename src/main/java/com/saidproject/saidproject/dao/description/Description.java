@@ -2,16 +2,22 @@ package com.saidproject.saidproject.dao.description;
 
 import com.saidproject.saidproject.repo.AbstractEntity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 
+@Entity
+@Table(name = "description")
 public class Description extends AbstractEntity {
 
-    private int measurementId;
-
+    @Column(name = "description_name")
     private String name;
 
+    @Column(name = "status")
     private String status;
 
+    @Column(name = "comments")
     private String comments;
 
     public String getName() {
@@ -38,13 +44,6 @@ public class Description extends AbstractEntity {
         this.comments = comments;
     }
 
-    public int getMeasurementId() {
-        return measurementId;
-    }
-
-    public void setMeasurementId(int measurementId) {
-        this.measurementId = measurementId;
-    }
 
     @Override
     public String toString() {
@@ -61,14 +60,13 @@ public class Description extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Description that = (Description) o;
-        return measurementId == that.measurementId &&
-                status == that.status &&
+        return status == that.status &&
                 name.equals(that.name) &&
                 comments.equals(that.comments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(measurementId, name, status, comments);
+        return Objects.hash(name, status, comments);
     }
 }

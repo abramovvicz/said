@@ -1,10 +1,15 @@
-DROP TABLE if exists measurements;
-DROP TABLE if exists details;
-DROP TABLE if exists users;
+DROP TABLE IF EXISTS measurements CASCADE;
+DROP TABLE IF EXISTS measurement CASCADE;
+DROP TABLE IF EXISTS description CASCADE;
+DROP TABLE IF EXISTS descriptions CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS dupa CASCADE;
 
-CREATE TABLE measurements (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR (80) NOT NULL,
+
+
+CREATE TABLE measurement (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(50) NOT NULL,
     address VARCHAR(50) NOT NULL,
     hydrant_type VARCHAR(20) NOT NULL,
     hydrant_subtype VARCHAR (20) NOT NULL,
@@ -12,23 +17,25 @@ CREATE TABLE measurements (
     static_pressure NUMERIC NOT NULL,
     dynamic_pressure NUMERIC NOT NULL,
     hydrant_efficiency  NUMERIC  NOT NULL,
-    photo blob,
+    photo bytea,
     created_at DATE,
     updated_at DATE
 );
 
-CREATE TABLE descriptions (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ALTER TABLE measurement ALTER COLUMN photo SET STORAGE EXTERNAL;
+
+CREATE TABLE description (
+    id SERIAL PRIMARY KEY,
     measurement_id INT NOT NULL,
     name VARCHAR(50) NOT NULL,
-    status VARCHAR(50),
+    status VARCHAR(5),
     comments VARCHAR(50),
     created_at DATE,
     updated_at DATE
 );
 
 CREATE TABLE users (
-        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         name VARCHAR(50) NOT NULL,
         surname VARCHAR(50) NOT NULL,
         username VARCHAR(50) NOT NULL,
