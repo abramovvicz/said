@@ -1,16 +1,21 @@
 package com.saidproject.saidproject.dao.measurement;
 
 import com.saidproject.saidproject.dao.description.Description;
-import com.saidproject.saidproject.repo.AbstractEntity;
 
 import javax.persistence.*;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "measurement")
-public class Measurement extends AbstractEntity {
+public class Measurement  {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "title")
     private String title;
@@ -41,6 +46,12 @@ public class Measurement extends AbstractEntity {
 
     @Column(name = "hydrant_efficiency")
     private double hydrantEfficiency;
+
+    @Column(name="created_at")
+    private Date createdAt;
+
+    @Column(name="updated_at")
+    private Date updatedAt;
 
     public double getStaticPressure() {
         return staticPressure;
@@ -122,6 +133,29 @@ public class Measurement extends AbstractEntity {
         this.title = title;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(Object o) {
