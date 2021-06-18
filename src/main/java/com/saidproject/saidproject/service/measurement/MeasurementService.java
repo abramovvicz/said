@@ -25,7 +25,7 @@ public class MeasurementService implements  IMeasurementService{
     private IDescriptionRepo descriptionRepo;
 
     public Measurement save(Measurement measurement) {
-        Measurement insertedMeasurement = measurementRepo.saveRepo(measurement);
+        Measurement insertedMeasurement = measurementRepo.save(measurement);
         List<Description> descriptions = measurement.getDescriptions();
         assignParentMeasurementId(descriptions, insertedMeasurement.getId());
         descriptionRepo.saveAll(descriptions);

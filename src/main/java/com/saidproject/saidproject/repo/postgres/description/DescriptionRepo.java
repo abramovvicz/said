@@ -2,18 +2,46 @@ package com.saidproject.saidproject.repo.postgres.description;
 
 import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.repo.api.IDescriptionRepo;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface DescriptionRepo extends JpaRepository<Description, Integer> {
+public class DescriptionRepo implements IDescriptionRepo {
 
 
+    @Override
+    public Description findById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Description> findAll() {
+        return null;
+    }
+
+    @Override
+    public Description save(Description entity) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Description entity) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        return false;
+    }
+
+    @Override
+    public List<Description> findAllForMeasurement(Integer measurementId) {
+        return null;
+    }
+
+    @Override
+    public List<Description> saveAll(List<Description> descriptionList) {
+        return null;
+    }
 }

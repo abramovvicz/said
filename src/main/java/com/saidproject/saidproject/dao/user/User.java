@@ -1,23 +1,15 @@
 package com.saidproject.saidproject.dao.user;
 
 import com.google.common.base.Objects;
+import com.saidproject.saidproject.repo.AbstractEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
 
 @Entity
-@Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private int id;
+@Table(name="users")
+public class User extends AbstractEntity {
 
     @Column(name = "role")
     public Role role;
@@ -33,12 +25,6 @@ public class User {
 
     @Column(name = "password")
     private String password;
-
-    @Column(name="created_at")
-    private Date createdAt;
-
-    @Column(name="updated_at")
-    private Date updatedAt;
 
     public String getPassword() {
         return password;
@@ -78,30 +64,6 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     @Override

@@ -2,16 +2,36 @@ package com.saidproject.saidproject.repo.postgres.measurement;
 
 import com.saidproject.saidproject.dao.measurement.Measurement;
 import com.saidproject.saidproject.repo.api.IMeasurementRepo;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface MeasurementRepo extends IMeasurementRepo {
+public class MeasurementRepo implements IMeasurementRepo {
 
+
+    @Override
+    public Measurement findById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Measurement> findAll() {
+        return null;
+    }
+
+    @Override
+    public Measurement save(Measurement entity) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Measurement entity) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        return false;
+    }
 }

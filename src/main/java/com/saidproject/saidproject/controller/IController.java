@@ -1,7 +1,11 @@
 package com.saidproject.saidproject.controller;
 
 import com.saidproject.saidproject.exceptions.NotFoundException;
+import com.saidproject.saidproject.repo.AbstractEntity;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+import java.util.Map;
 
 public interface IController<T, U extends AbstractEntity> {
     ResponseEntity<T> findById(Integer id) throws NotFoundException;

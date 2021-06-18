@@ -48,7 +48,7 @@ public class DescriptionService implements IDescriptionService {
 
     @Override
     public Description save(Description entity) {
-        return descriptionRepo.saveRepo(entity);
+        return descriptionRepo.save(entity);
     }
 
     @Override
@@ -58,6 +58,6 @@ public class DescriptionService implements IDescriptionService {
 
     @Override
     public boolean delete(Integer id) {
-        return descriptionRepo.deleteById(id);
+        return descriptionRepo.delete(id);
     }
 }

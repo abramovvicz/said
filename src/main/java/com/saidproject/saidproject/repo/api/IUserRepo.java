@@ -1,8 +1,8 @@
 package com.saidproject.saidproject.repo.api;
 
 import com.saidproject.saidproject.dao.user.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import com.saidproject.saidproject.repo.IRepo;
 
-public interface IUserRepo extends JpaRepository<User, Integer> {
+public interface IUserRepo extends IRepo<User> {
+    User findByUserName(String name);
 }

@@ -1,6 +1,7 @@
 package com.saidproject.saidproject.service;
 
 import com.saidproject.saidproject.exceptions.NotFoundException;
+import com.saidproject.saidproject.repo.AbstractEntity;
 
 import java.util.List;
 
