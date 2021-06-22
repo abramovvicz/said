@@ -19,11 +19,7 @@ public class UserService implements IUserService {
     }
 
     public User findById(int id) throws NotFoundException {
-        User user = userRepo.findById(id);
-        if (user == null) {
-            throw new NotFoundException("User not found");
-        }
-        return user;
+        return userRepo.getOne(id);
     }
 
     public List<User> findAll() throws NotFoundException {
@@ -35,17 +31,21 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User save(User entity) {
+    public User saveDescription(User entity) {
         return userRepo.save(entity);
     }
 
     @Override
-    public boolean update(User entity) {
-        return userRepo.update(entity);
+    public User update(User entity) {
+        return userRepo.save(entity);
     }
 
     @Override
     public boolean delete(Integer id) {
-        return userRepo.delete(id);
+        if (userRepo.existsById(id)) {
+            userRepo.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

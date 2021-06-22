@@ -10,9 +10,9 @@ public interface IService<T extends AbstractEntity> {
 
     List<T> findAll() throws NotFoundException;
 
-    T save(T entity);
+    T saveDescription(T entity);
 
-    boolean update(T entity);
+    T update(T entity);
 
     boolean delete(Integer id);
 }

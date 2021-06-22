@@ -1,15 +1,18 @@
 package com.saidproject.saidproject.dao.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.Objects;
 import com.saidproject.saidproject.repo.AbstractEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
-@Table(name="users")
-public class User extends AbstractEntity {
+@Table(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class User extends AbstractEntity implements Serializable {
 
     @Column(name = "role")
     public Role role;

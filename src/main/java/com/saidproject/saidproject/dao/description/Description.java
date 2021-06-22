@@ -1,5 +1,6 @@
 package com.saidproject.saidproject.dao.description;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.saidproject.saidproject.repo.AbstractEntity;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "description")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Description extends AbstractEntity {
 
     @Column(name = "description_name")

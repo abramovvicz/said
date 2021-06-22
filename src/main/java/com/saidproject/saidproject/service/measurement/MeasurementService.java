@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class MeasurementService implements  IMeasurementService{
+public class MeasurementService implements IMeasurementService {
 
     @Autowired
     private IMeasurementRepo measurementRepo;
@@ -24,8 +24,9 @@ public class MeasurementService implements  IMeasurementService{
     @Autowired
     private IDescriptionRepo descriptionRepo;
 
-    public Measurement save(Measurement measurement) {
-        Measurement insertedMeasurement = measurementRepo.save(measurement);
+    public Measurement saveDescription(Measurement measurement) {
+//        Measurement insertedMeasurement = measurementRepo.saveDescription(measurement);
+        Measurement insertedMeasurement = new Measurement();
         List<Description> descriptions = measurement.getDescriptions();
         assignParentMeasurementId(descriptions, insertedMeasurement.getId());
         descriptionRepo.saveAll(descriptions);
@@ -69,18 +70,22 @@ public class MeasurementService implements  IMeasurementService{
     }
 
     public Measurement findById(int id) throws NotFoundException {
-        Measurement measurement = measurementRepo.findById(id);
+        Measurement measurement = measurementRepo.getOne(id);
         if (measurement == null) {
             throw new NotFoundException("Measurement not found");
         }
         return measurement;
     }
 
-    public boolean update(Measurement measurement) {
-        return measurementRepo.update(measurement);
+    public Measurement update(Measurement measurement) {
+        return measurementRepo.save(measurement);
     }
 
     public boolean delete(Integer id) {
-        return measurementRepo.delete(id);
+        if (measurementRepo.existsById(id)) {
+            measurementRepo.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

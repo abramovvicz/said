@@ -5,8 +5,6 @@ DROP TABLE IF EXISTS descriptions CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS dupa CASCADE;
 
-
-
 CREATE TABLE measurement (
     id SERIAL PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
@@ -36,9 +34,9 @@ CREATE TABLE description (
 
 CREATE TABLE users (
         id SERIAL PRIMARY KEY,
-        name VARCHAR(50) NOT NULL,
-        surname VARCHAR(50) NOT NULL,
-        username VARCHAR(50) NOT NULL,
+        first_name VARCHAR(50) NOT NULL,
+        last_name VARCHAR(50) NOT NULL,
+        user_name VARCHAR(50) NOT NULL,
         password VARCHAR(50) NOT NULL,
         role VARCHAR(50) NOT NULL,
         created_at DATE,

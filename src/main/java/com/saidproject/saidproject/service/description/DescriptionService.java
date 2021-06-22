@@ -16,8 +16,8 @@ public class DescriptionService implements IDescriptionService {
 
     @Override
     public Description findById(int id) throws NotFoundException {
-        Description description = descriptionRepo.findById(id);
-        if (description == null){
+        Description description = descriptionRepo.getOne(id);
+        if (description == null) {
             throw new NotFoundException("Description with id: " + id + " not found");
         }
         return description;
@@ -26,16 +26,16 @@ public class DescriptionService implements IDescriptionService {
     @Override
     public List<Description> findAll() throws NotFoundException {
         List<Description> descriptions = descriptionRepo.findAll();
-        if(descriptions.isEmpty()){
-           throw new NotFoundException("Descriptions not found");
+        if (descriptions.isEmpty()) {
+            throw new NotFoundException("Descriptions not found");
         }
         return descriptions;
     }
 
     @Override
-    public List<Description> findAllForMeasurement(int id) throws NotFoundException {
-        List<Description> descriptions = descriptionRepo.findAllForMeasurement(id);
-        if(descriptions.isEmpty()){
+    public List<Description> findAllForMeasurement(Iterable id) throws NotFoundException {
+        List<Description> descriptions = descriptionRepo.findAllById(id);
+        if (descriptions.isEmpty()) {
             throw new NotFoundException("Descriptions for measurement with id: " + id + "not found");
         }
         return descriptions;
@@ -47,17 +47,21 @@ public class DescriptionService implements IDescriptionService {
     }
 
     @Override
-    public Description save(Description entity) {
+    public Description saveDescription(Description entity) {
         return descriptionRepo.save(entity);
     }
 
     @Override
-    public boolean update(Description entity) {
-        return descriptionRepo.update(entity);
+    public Description update(Description entity) {
+        return descriptionRepo.save(entity);
     }
 
     @Override
     public boolean delete(Integer id) {
-        return descriptionRepo.delete(id);
+        if (descriptionRepo.existsById(id)) {
+            descriptionRepo.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

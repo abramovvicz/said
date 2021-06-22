@@ -11,7 +11,7 @@ import java.util.Map;
 
 public interface IDescriptionController extends IController<Map<String, Object>, Description> {
 
-    ResponseEntity<Map<String, Object>> findAllByMeasurementId(@PathVariable("id") Integer id) throws NotFoundException;
+    ResponseEntity<Map<String, Object>> findAllByMeasurementId(@PathVariable("id") Iterable id) throws NotFoundException;
 
     ResponseEntity<Map<String, Object>> saveAll(List<Description> descriptions) throws NotFoundException;
 }

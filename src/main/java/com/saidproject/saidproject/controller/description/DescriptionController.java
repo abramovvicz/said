@@ -30,7 +30,7 @@ public class DescriptionController implements IDescriptionController {
 
     @Override
     @GetMapping(value = "for/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Object>> findAllByMeasurementId(@PathVariable("id") Integer measurementId) throws NotFoundException {
+    public ResponseEntity<Map<String, Object>> findAllByMeasurementId(@PathVariable("id") Iterable measurementId) throws NotFoundException {
         Map<String, Object> result = new HashMap<>();
         List<Description> allByMeasurementId = descriptionService.findAllForMeasurement(measurementId);
         if (allByMeasurementId != null && !allByMeasurementId.isEmpty()) {
@@ -46,7 +46,7 @@ public class DescriptionController implements IDescriptionController {
 
     @Override
     @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Object>> findById(@PathVariable Integer id) throws NotFoundException {
+    public ResponseEntity<Map<String, Object>> findById(@PathVariable int id) throws NotFoundException {
         Map<String, Object> result = new HashMap<>();
         Description description = descriptionService.findById(id);
         if (description != null) {
@@ -79,7 +79,7 @@ public class DescriptionController implements IDescriptionController {
     @Override
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> save(@RequestBody Description entity) {
-        Description savedDescription = descriptionService.save(entity);
+        Description savedDescription = descriptionService.saveDescription(entity);
         Map<String, Object> result = new HashMap<>();
         if (savedDescription != null) {
             result.put(ResultMessage.RESULT_KEY, savedDescription);
@@ -112,9 +112,9 @@ public class DescriptionController implements IDescriptionController {
     @Override
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> update(@RequestBody Description entity) {
-        boolean isSaved = descriptionService.update(entity);
+        Description userUpdated = descriptionService.update(entity);
         Map<String, Object> result = new HashMap<>();
-        if (isSaved) {
+        if (userUpdated != null) {
             result.put(ResultMessage.RESULT_KEY, entity);
             result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
             return ResponseEntity.ok(result);

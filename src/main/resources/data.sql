@@ -91,12 +91,13 @@ VALUES
   );
 INSERT INTO
   users (
-    NAME,
-    surname,
-    username,
+    first_name,
+    last_name,
+    user_name,
     password,
     role,
-    created_at
+    created_at,
+    updated_at
   )
 VALUES
   (
@@ -104,7 +105,8 @@ VALUES
     'abramovvicz',
     'dzik_programowania',
     'trudne_haslo',
-    'ADMIN',
+    0,
+    '2020-09-29',
     '2020-09-29'
   ),
   (
@@ -112,7 +114,8 @@ VALUES
     'tarala',
     'ogorek',
     'latwe_haslo',
-    'ADMIN',
+    0,
+    '2020-09-29',
     '2020-09-29'
   ),
   (
@@ -120,7 +123,8 @@ VALUES
     'nazwisko',
     'nicknejm',
     'dupa123',
-    'USER',
+    0,
+    '2020-09-29',
     '2020-09-29'
   ),
   (
@@ -128,6 +132,7 @@ VALUES
     'kotynia',
     'pk',
     'kot',
-    'USER',
+    0,
+    '2020-09-29',
     '2020-09-29'
   );

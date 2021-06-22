@@ -1,15 +1,20 @@
 package com.saidproject.saidproject.dao.measurement;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.saidproject.saidproject.dao.description.Description;
 import com.saidproject.saidproject.repo.AbstractEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "measurement")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Measurement extends AbstractEntity {
 
     @Column(name = "title")

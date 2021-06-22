@@ -3,8 +3,6 @@ package com.saidproject.saidproject.controller.user;
 import com.saidproject.saidproject.dao.user.User;
 import com.saidproject.saidproject.exceptions.NotFoundException;
 import com.saidproject.saidproject.service.user.UserService;
-import com.saidproject.saidproject.utils.GenerateWordFile;
-import com.saidproject.saidproject.utils.GenerateWordFileImp;
 import com.saidproject.saidproject.utils.ResultMessage;
 import com.saidproject.saidproject.utils.ResultStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +30,10 @@ public class UserController implements IUserController {
 
     @Override
     @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") Integer id) throws NotFoundException {
+    public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") int id) throws NotFoundException {
         Map<String, Object> result = new HashMap<>();
+        System.out.println("ID FROM CONTROLLER:  " + id);
+        System.out.println("USER FROM CONTROLER: " + userService.findById(id));
         User user = userService.findById(id);
         if (user != null) {
             result.put(ResultMessage.RESULT_KEY, user);
@@ -66,7 +66,7 @@ public class UserController implements IUserController {
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> save(@RequestBody User entity) {
         Map<String, Object> result = new HashMap<>();
-        User savedUser = userService.save(entity);
+        User savedUser = userService.saveDescription(entity);
         if (savedUser != null) {
             result.put(ResultMessage.RESULT_KEY, savedUser);
             result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
@@ -82,8 +82,8 @@ public class UserController implements IUserController {
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> update(@RequestBody User entity) {
         Map<String, Object> result = new HashMap<>();
-        boolean isSaved = userService.update(entity);
-        if (isSaved) {
+        User user = userService.update(entity);
+        if (user != null) {
             result.put(ResultMessage.RESULT_KEY, entity);
             result.put(ResultMessage.STATUS_KEY, ResultStatus.OK);
             return ResponseEntity.ok(result);
