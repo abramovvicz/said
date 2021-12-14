@@ -9,6 +9,7 @@ import com.saidproject.saidproject.utils.ResultStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,6 +34,13 @@ public class MeasurementController implements IMeasurementController {
     @Autowired
     private MeasurementService measurementService;
 
+    @Value("${exampleListValue}")
+    private List<String> someValue;
+
+
+    @Value("${spring.datasource.url}")
+    private String urlJdbc;
+
     @Override
     @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") int id) throws NotFoundException {
@@ -52,6 +60,8 @@ public class MeasurementController implements IMeasurementController {
     @Override
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> findAll() throws NotFoundException {
+        System.out.println("exampleListValue" + someValue);
+        System.out.println("urlJDBC" + urlJdbc);
         Map<String, Object> result = new HashMap<>();
         List<Measurement> allMeasurements = measurementService.findAll();
         if (allMeasurements != null && !allMeasurements.isEmpty()) {
