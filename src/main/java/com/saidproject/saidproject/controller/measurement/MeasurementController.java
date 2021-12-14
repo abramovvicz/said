@@ -3,6 +3,7 @@ package com.saidproject.saidproject.controller.measurement;
 import com.saidproject.saidproject.dao.measurement.Measurement;
 import com.saidproject.saidproject.exceptions.NotFoundException;
 import com.saidproject.saidproject.service.measurement.IMeasurementService;
+import com.saidproject.saidproject.service.measurement.MeasurementService;
 import com.saidproject.saidproject.utils.ResultMessage;
 import com.saidproject.saidproject.utils.ResultStatus;
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ public class MeasurementController implements IMeasurementController {
     static final Logger logger = LoggerFactory.getLogger(MeasurementController.class);
 
     @Autowired
-    private IMeasurementService measurementService;
+    private MeasurementService measurementService;
 
     @Override
     @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
