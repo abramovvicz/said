@@ -63,6 +63,9 @@ public class MeasurementService implements IMeasurementService {
 
     public List<Measurement> findAll() throws NotFoundException {
         List<Measurement> measurements = measurementRepo.findAll();
+        for (Measurement measurement : measurements) {
+            System.out.println(measurement);
+        }
         if (measurements.isEmpty()) {
             throw new NotFoundException("Measurements not found");
         }
