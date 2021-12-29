@@ -19,6 +19,9 @@ spring:
           lob:
             non_contextual_creation: true
 exampleListValue: ${EXAMPLE_VALUE}
+data:
+  rest:
+    base-path: /api
 
 logging:
   file:
@@ -28,5 +31,14 @@ logging:
 
 ---
 spring:
-  profiles: h2usage
+  profiles: testH2
   datasource:
+    driverClassName: org.h2.Driver
+    url: url:jdbc:h2:mem:testdb
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true

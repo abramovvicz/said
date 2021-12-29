@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/checkProfile")
-public class ProfileController {
+public class SomeControllerToChange {
     @Autowired
     Environment env;
 
