@@ -18,4 +18,15 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-exampleListValue: 1,2,3
+exampleListValue: ${EXAMPLE_VALUE}
+
+logging:
+  file:
+    name: logs/said-log.log
+  level:
+    root: INFO
+
+---
+spring:
+  profiles: h2usage
+  datasource:

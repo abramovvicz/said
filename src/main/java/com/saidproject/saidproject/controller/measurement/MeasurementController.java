@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,6 +45,11 @@ public class MeasurementController implements IMeasurementController {
     @Override
     @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") int id) throws NotFoundException {
+        System.out.println("DEMO:" + someValue);
+        System.out.println("DEMO first "  + someValue.get(0));
+        System.out.println("DEMO second "  + someValue.get(1));
+        System.out.println("DEMO third "  + someValue.get(2));
+        System.out.println("DEMO2:" + urlJdbc);
         Map<String, Object> result = new HashMap<>();
         Measurement measurement = measurementService.findById(id);
         if (measurement != null) {
