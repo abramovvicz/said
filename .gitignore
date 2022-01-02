@@ -1,3 +1,9 @@
+#ignore log files:
+**/logs
+**/logs/said-log.log
+*.log
+logs/
+logs
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -124,8 +130,6 @@ fabric.properties
 *.Icon
 *Icon
 
-#log files:
-logs/**
-logs/
-*.log
-*.gz
+
+
+logs/said-log.log

@@ -1,16 +1,12 @@
 package com.saidproject.saidproject.controller.measurement;
 
-import com.saidproject.saidproject.dao.measurement.Measurement;
+ import com.saidproject.saidproject.dao.measurement.Measurement;
 import com.saidproject.saidproject.exceptions.NotFoundException;
-import com.saidproject.saidproject.service.measurement.IMeasurementService;
 import com.saidproject.saidproject.service.measurement.MeasurementService;
 import com.saidproject.saidproject.utils.ResultMessage;
 import com.saidproject.saidproject.utils.ResultStatus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,31 +25,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/measurements")
 @CrossOrigin("*")
 public class MeasurementController implements IMeasurementController {
 
-    static final Logger logger = LoggerFactory.getLogger(MeasurementController.class);
-
     @Autowired
     private MeasurementService measurementService;
-
-    @Value("${exampleListValue}")
-    private List<String> someValue;
-
-
-    @Value("${spring.datasource.url}")
-    private String urlJdbc;
 
     @Override
     @GetMapping(value = "/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") int id) throws NotFoundException {
-        System.out.println("DEMO:" + someValue);
-        System.out.println("DEMO first "  + someValue.get(0));
-        System.out.println("DEMO second "  + someValue.get(1));
-        System.out.println("DEMO third "  + someValue.get(2));
-        System.out.println("DEMO2:" + urlJdbc);
         Map<String, Object> result = new HashMap<>();
         Measurement measurement = measurementService.findById(id);
         if (measurement != null) {
@@ -70,8 +53,6 @@ public class MeasurementController implements IMeasurementController {
     @Override
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> findAll() throws NotFoundException {
-        System.out.println("exampleListValue" + someValue);
-        System.out.println("urlJDBC" + urlJdbc);
         Map<String, Object> result = new HashMap<>();
         List<Measurement> allMeasurements = measurementService.findAll();
         if (allMeasurements != null && !allMeasurements.isEmpty()) {
@@ -89,8 +70,6 @@ public class MeasurementController implements IMeasurementController {
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Map<String, Object>> save(@RequestBody Measurement measurement) {
-        logger.info("ataken na post");
-
         Map<String, Object> result = new HashMap<>();
         Measurement savedMeasurement = measurementService.saveDescription(measurement);
         if (savedMeasurement != null) {
