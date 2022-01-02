@@ -125,6 +125,7 @@ fabric.properties
 *Icon
 
 #log files:
+logs/**
 logs/
 *.log
 *.gz
