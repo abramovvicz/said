@@ -34,7 +34,7 @@ public class DescriptionService implements IDescriptionService {
 
     @Override
     public List<Description> findAllForMeasurement(Iterable id) throws NotFoundException {
-        List<Description> descriptions = descriptionRepo.findAllById(id);
+        List descriptions = descriptionRepo.findAllById(id);
         if (descriptions.isEmpty()) {
             throw new NotFoundException("Descriptions for measurement with id: " + id + "not found");
         }

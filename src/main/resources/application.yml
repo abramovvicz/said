@@ -42,3 +42,24 @@ spring:
   h2:
     console:
       enabled: true
+
+---
+spring:
+  profiles: webflux
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgres://localhost:5432/said
+    username: postgres
+    password: admin
+    initialization-mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true

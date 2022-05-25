@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IDescriptionService extends IService<Description> {
 
-    List<Description> findAllForMeasurement(Iterable id) throws NotFoundException;
+    List<Description> findAllForMeasurement(Iterable<Integer> id) throws NotFoundException;
 
     List<Description> saveAll(List<Description> descriptions) throws NotFoundException;
 }
