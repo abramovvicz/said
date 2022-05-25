@@ -1,3 +1,9 @@
+#ignore log files:
+**/logs
+**/logs/said-log.log
+*.log
+logs/
+logs
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -40,8 +46,7 @@ buildNumber.properties
 *.md
 *.cmd
 
-mvnm
-
+mvn
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
 # since they will be recreated, and may cause churn.  Uncomment if using
@@ -120,3 +125,11 @@ fabric.properties
 .idea/codestream.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij
+
+#icon? files
+*.Icon
+*Icon
+
+
+
+logs/said-log.log

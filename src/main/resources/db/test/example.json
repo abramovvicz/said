@@ -1,0 +1,25 @@
+  {
+    "address": "nowy adres",
+    "createdAt": "2020-09-29T08:49:58.817Z",
+    "descriptions": [
+      {
+        "comments": "nowy detail",
+        "createdAt": "2020-09-29T08:49:58.817Z",
+        "name": "jakiś tam detail",
+        "status": 0,
+        "updatedAt": "2020-09-29T08:49:58.817Z"
+      },
+      {
+        "comments": "kolejny nowy detail",
+        "createdAt": "2020-09-29T08:49:58.817Z",
+        "name": "super detail detail",
+        "status": 1,
+        "updatedAt": "2020-09-30T08:49:58.817Z"
+      }
+    ],
+    "hydrantDiameter": "DN100",
+    "hydrantSubType": "UNDERGROUND",
+    "hydrantType": "INSIDE",
+    "photo" : "",
+    "updatedAt": "2020-09-29T08:49:58.817Z"
+  }
